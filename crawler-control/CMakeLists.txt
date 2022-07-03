@@ -17,11 +17,17 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
 
-if(BUILD_TESTING)
+set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
+include_directories(${INCLUDE_DIR})
+
+add_executable(crawler-node src/crawler-node.cpp)
+ament_target_dependencies(crawler-node rclcpp std_msgs)
+target_link_libraries(crawler-node -lEposCmd)
+
+if(BUILD_TESTINGstd_msgs)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
   # uncomment the line when a copyright and license is not present in all source files
