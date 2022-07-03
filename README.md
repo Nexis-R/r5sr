@@ -1,4 +1,4 @@
-# R5SR ROS2-foxy Pakages
+# R5SR ROS2-foxy Packages
 
 ## packages list
 
