@@ -2,5 +2,5 @@
 
 ## packages list
 
-- [crawler-control](/crawler-control/README.md)
-- [manipulator-control](/manipulator-control/README.md)
+- [crawler-control](/crawler-control)
+- [manipulator-control](/manipulator-control)
