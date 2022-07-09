@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(crawler-control)
+project(crawler_control)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
 
@@ -20,16 +20,21 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 find_package(EPOS_CMD REQUIRED)
 
 include_directories(${EPOS_CMD_INCLUDE_DIR})
 
-add_executable(crawler-node src/crawler-node.cpp)
-ament_target_dependencies(crawler-node rclcpp std_msgs)
-target_link_libraries(crawler-node EPOS_CMD::EPOS_CMD)
+add_executable(crawler_node src/crawler_node.cpp)
+ament_target_dependencies(crawler_node rclcpp std_msgs)
+target_link_libraries(crawler_node EPOS_CMD::EPOS_CMD)
 
-if(BUILD_TESTINGstd_msgs)
+install(TARGETS
+  crawler_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
   # uncomment the line when a copyright and license is not present in all source files
