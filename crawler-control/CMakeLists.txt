@@ -23,8 +23,7 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(EPOS_CMD REQUIRED)
 
-set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
-include_directories(${INCLUDE_DIR})
+include_directories(${EPOS_CMD_INCLUDE_DIR})
 
 add_executable(crawler-node src/crawler-node.cpp)
 ament_target_dependencies(crawler-node rclcpp std_msgs)
