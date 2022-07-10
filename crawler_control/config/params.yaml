@@ -1,10 +1,12 @@
 /crawler_node:
   ros__parameters:
-    device_name:          "EPOS4"
-    protocol_stack_name:  "MAXON SERIAL V2"
-    interface_name:       "USB"
-    port_name:            "USB0"
-    id_host:              1
+    device_name:              "EPOS4"
+    device_name_sub:          "EPOS4"
+    protocol_stack_name:      "MAXON SERIAL V2"
+    protocol_stack_name_sub:  "CANopen"
+    interface_name:           "USB"
+    port_name:                "USB0"
+    id_host:                  1
 
     crawler_left:
       id: 1

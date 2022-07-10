@@ -26,7 +26,7 @@ find_package(EPOS_CMD REQUIRED)
 include_directories(${EPOS_CMD_INCLUDE_DIR})
 
 add_executable(crawler_node src/crawler_node.cpp)
-ament_target_dependencies(crawler_node rclcpp std_msgs)
+ament_target_dependencies(crawler_node rclcpp geometry_msgs)
 target_link_libraries(crawler_node EPOS_CMD::EPOS_CMD)
 
 install(TARGETS
