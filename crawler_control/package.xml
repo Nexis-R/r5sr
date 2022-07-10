@@ -18,5 +18,6 @@
     <build_type>ament_cmake</build_type>
     <depend>rclcpp</depend>
     <depend>geometry_msgs</depend>
+    <depend>teleop_twist_joy</depend>
   </export>
 </package>
