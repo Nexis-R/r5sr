@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
-project(crawler-control)
+project(crawler_control)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -17,9 +19,24 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(EPOS_CMD REQUIRED)
+
+include_directories(${EPOS_CMD_INCLUDE_DIR})
+
+add_executable(crawler_node src/crawler_node.cpp)
+ament_target_dependencies(crawler_node rclcpp geometry_msgs)
+target_link_libraries(crawler_node EPOS_CMD::EPOS_CMD)
+
+install(TARGETS
+  crawler_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
