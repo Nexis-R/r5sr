@@ -2,5 +2,5 @@
 
 ## packages list
 
-- [crawler_control](/crawler_control)
+- [crawler-control](/crawler-control)
 - [manipulator-control](/manipulator-control)
