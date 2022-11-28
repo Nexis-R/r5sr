@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="joy" exec="joy_node">
+    <param from="$(find-pkg-share r5sr_teleop)/config/r5sr_teleop.yaml" />
+  </node>
+  <node pkg="teleop_twist_joy" exec="teleop_node">
+    <param from="$(find-pkg-share r5sr_teleop)/config/r5sr_teleop.yaml" />
+  </node>
+</launch>
