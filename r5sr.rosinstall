@@ -1,0 +1,1 @@
+  - git: {local-name: epos, uri: git@gitlab.com:kimuralab_opensource/ros2/epos.git, version: master}

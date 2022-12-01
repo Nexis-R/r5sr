@@ -62,9 +62,10 @@ void Crawler_Control::handle_joy(const sensor_msgs::msg::Joy::SharedPtr joy) {
 }
 
 void Crawler_Control::handle_twist(const geometry_msgs::msg::Twist::SharedPtr twist) {
+  
   const float vx = twist->linear.x;
   const float va = twist->angular.z;
-  
+
   std_msgs::msg::Float32 left_speed;
   std_msgs::msg::Float32 right_speed;
   left_speed.set__data (((vx * 60) / (wheel_diameter * M_PI)) - (((60 * va) / (2 * M_PI)) * ((wheel_base * M_PI) / (wheel_diameter * M_PI))));
