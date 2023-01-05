@@ -8,8 +8,12 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 
-install(
-  DIRECTORY launch
+install(DIRECTORY
+  rviz
+  meshes
+  urdf
+  ros2_control
+  launch
   DESTINATION share/${PROJECT_NAME}
 )
 

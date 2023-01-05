@@ -1,0 +1,12 @@
+controller_list:
+  - name: arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - body1_joint
+      - body2_joint
+      - body3_joint
+      - body4_joint
+      - body5_joint
+      - body6_joint

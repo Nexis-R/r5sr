@@ -21,7 +21,7 @@
   <link name="body0_link_yaw">
     <visual>
       <geometry>
-        <mesh filename="file://$(find r5sr_description)/meshes/arm_parts_0.stl" />
+        <mesh filename="package://r5sr_description/meshes/arm_parts_0.stl" />
       </geometry>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <material name="blue"/>
@@ -31,7 +31,7 @@
   <link name="body1_link">
     <visual>
       <geometry>
-        <mesh filename="file://$(find r5sr_description)/meshes/arm_parts_1.stl" />
+        <mesh filename="package://r5sr_description/meshes/arm_parts_1.stl" />
       </geometry>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <material name="white"/>
@@ -41,7 +41,7 @@
   <link name="body2_link">
     <visual>
       <geometry>
-       <mesh filename="file://$(find r5sr_description)/meshes/arm_parts_2.stl" />
+       <mesh filename="package://r5sr_description/meshes/arm_parts_2.stl" />
       </geometry>
       <origin xyz="0 0 -0.101" rpy="0 0 0"/>
       <material name="white"/>
@@ -51,7 +51,7 @@
   <link name="body3_link">
     <visual>
       <geometry>
-        <mesh filename="file://$(find r5sr_description)/meshes/arm_parts_3.stl" />
+        <mesh filename="package://r5sr_description/meshes/arm_parts_3.stl" />
       </geometry>
       <origin xyz="0.480 0 -0.101" rpy="0 0 0"/>
       <material name="white"/>
@@ -61,7 +61,7 @@
   <link name="body4_link">
     <visual>
       <geometry>
-        <mesh filename="file://$(find r5sr_description)/meshes/arm_parts_4.stl" />
+        <mesh filename="package://r5sr_description/meshes/arm_parts_4.stl" />
       </geometry>
       <origin xyz="-0.08235 0 -0.1453" rpy="0 0 0"/>
       <material name="white"/>
@@ -71,7 +71,7 @@
   <link name="body5_link">
     <visual>
       <geometry>
-       <mesh filename="file://$(find r5sr_description)/meshes/arm_parts_5.stl" />
+       <mesh filename="package://r5sr_description/meshes/arm_parts_5.stl" />
       </geometry>
       <origin xyz="-0.12435 0 -0.19" rpy="0 0 0"/>
       <material name="white"/>
@@ -81,7 +81,7 @@
   <link name="body6_link">
     <visual>
       <geometry>
-        <mesh filename="file://$(find r5sr_description)/meshes/arm_parts_6.stl" />
+        <mesh filename="package://r5sr_description/meshes/arm_parts_6.stl" />
       </geometry>
       <origin xyz="-0.175 0 -0.22" rpy="0 0 0"/>
       <material name="blue"/>
