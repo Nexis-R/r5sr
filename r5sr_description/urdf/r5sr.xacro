@@ -9,6 +9,6 @@
 
 <!-- Import Robot ros2_control description -->
 <xacro:include filename="$(find r5sr_description)/ros2_control/r5sr_ros2_control.xacro" />
-<xacro:r5sr_ros2_control name="r5sr" />
+<xacro:r5sr_ros2_control name="r5sr" initial_positions_file="$(find r5sr_moveit_config)/config/initial_positions.yaml" />
 
 </robot>

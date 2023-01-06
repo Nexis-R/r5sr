@@ -6,6 +6,8 @@ from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import Node
 from launch.actions import ExecuteProcess
 from ament_index_python.packages import get_package_share_directory
+from launch_ros.descriptions import ComposableNode
+from launch_ros.actions import ComposableNodeContainer
 import xacro
 
 
@@ -30,6 +32,8 @@ def load_yaml(package_name, file_path):
         return None
 
 def generate_launch_description():
+    servo_yaml = load_yaml("r5sr_moveit_config", "config/r5sr_simulated_config.yaml")
+    servo_params = {"moveit_servo": servo_yaml}
 
     description_folder = "r5sr_description"
     moveit_config_folder = "r5sr_moveit_config"
@@ -129,24 +133,6 @@ def generate_launch_description():
         ],
     )
 
-    # Static TF
-    static_tf = Node(
-        package="tf2_ros",
-        executable="static_transform_publisher",
-        name="static_transform_publisher",
-        output="log",
-        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"],
-    )
-
-    # Publish TF
-    robot_state_publisher = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        name="robot_state_publisher",
-        output="both",
-        parameters=[robot_description],
-    )
-
     # ros2_control using FakeSystem as hardware
     ros2_controllers_path = os.path.join(
         get_package_share_directory(moveit_config_folder),
@@ -177,14 +163,48 @@ def generate_launch_description():
             )
         ]
 
-    # Warehouse mongodb server
-    mongodb_server_node = Node(
-        package="warehouse_ros_mongo",
-        executable="mongo_wrapper_ros.py",
-        parameters=[
-            {"warehouse_port": 33829},
-            {"warehouse_host": "localhost"},
-            {"warehouse_plugin": "warehouse_ros_mongo::MongoDatabaseConnection"},
+    # Launch as much as possible in components
+    container = ComposableNodeContainer(
+        name="r5sr_moveit_servo_container",
+        namespace="/",
+        package="rclcpp_components",
+        executable="component_container",
+        composable_node_descriptions=[
+            ComposableNode(
+                package="robot_state_publisher",
+                plugin="robot_state_publisher::RobotStatePublisher",
+                name="robot_state_publisher",
+                parameters=[robot_description],
+            ),
+            ComposableNode(
+                package="tf2_ros",
+                plugin="tf2_ros::StaticTransformBroadcasterNode",
+                name="static_tf2_broadcaster",
+                parameters=[{"child_frame_id": "/base_link", "frame_id": "/world"}],
+            ),
+            ComposableNode(
+                package="moveit_servo",
+                plugin="moveit_servo::ServoServer",
+                name="servo_server",
+                parameters=[
+                    servo_params,
+                    robot_description,
+                    robot_description_semantic,
+                ],
+                extra_arguments=[{"use_intra_process_comms": True}],
+            ),
+            ComposableNode(
+                package="moveit_servo",
+                plugin="moveit_servo::JoyToServoPub",
+                name="controller_to_servo_node",
+                extra_arguments=[{"use_intra_process_comms": True}],
+            ),
+            ComposableNode(
+                package="joy",
+                plugin="joy::Joy",
+                name="joy_node",
+                extra_arguments=[{"use_intra_process_comms": True}],
+            ),
         ],
         output="screen",
     )
@@ -192,11 +212,10 @@ def generate_launch_description():
     return LaunchDescription(
         [
             rviz_node,
-            static_tf,
-            robot_state_publisher,
             run_move_group_node,
             ros2_control_node,
-            # mongodb_server_node,
+            container,
+
         ]
         + load_controllers
     )

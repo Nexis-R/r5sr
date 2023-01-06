@@ -26,6 +26,13 @@
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <material name="blue"/>
     </visual>
+    
+    <collision>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_0.stl" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
   </link>
   
   <link name="body1_link">
@@ -36,6 +43,13 @@
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <material name="white"/>
     </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_1.stl" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
   </link>
   
   <link name="body2_link">
@@ -46,6 +60,14 @@
       <origin xyz="0 0 -0.101" rpy="0 0 0"/>
       <material name="white"/>
     </visual>
+
+    <collision>
+      <geometry>
+       <mesh filename="package://r5sr_description/meshes/arm_parts_2.stl" />
+      </geometry>
+      <origin xyz="0 0 -0.101" rpy="0 0 0"/>
+    </collision>
+
   </link>
   
   <link name="body3_link">
@@ -56,6 +78,14 @@
       <origin xyz="0.480 0 -0.101" rpy="0 0 0"/>
       <material name="white"/>
     </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_3.stl" />
+      </geometry>
+      <origin xyz="0.480 0 -0.101" rpy="0 0 0"/>
+    </collision>
+
   </link>
 
   <link name="body4_link">
@@ -66,6 +96,13 @@
       <origin xyz="-0.08235 0 -0.1453" rpy="0 0 0"/>
       <material name="white"/>
     </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_4.stl" />
+      </geometry>
+      <origin xyz="-0.08235 0 -0.1453" rpy="0 0 0"/>
+    </collision>
   </link>
 
   <link name="body5_link">
@@ -76,6 +113,12 @@
       <origin xyz="-0.12435 0 -0.19" rpy="0 0 0"/>
       <material name="white"/>
     </visual>
+
+    <collision>
+       <mesh filename="package://r5sr_description/meshes/arm_parts_5.stl" />
+      </geometry>
+      <origin xyz="-0.12435 0 -0.19" rpy="0 0 0"/>
+    </collision>
   </link>
 
   <link name="body6_link">
@@ -86,6 +129,13 @@
       <origin xyz="-0.175 0 -0.22" rpy="0 0 0"/>
       <material name="blue"/>
     </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_6.stl" />
+      </geometry>
+      <origin xyz="-0.175 0 -0.22" rpy="0 0 0"/>
+    </collision>
   </link>
 
   <joint name="body0_joint_yaw" type="fixed">
