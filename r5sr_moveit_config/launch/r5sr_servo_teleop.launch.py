@@ -39,7 +39,7 @@ def generate_launch_description():
     moveit_config_folder = "r5sr_moveit_config"
     xacro_file = "urdf/r5sr.xacro"
     srdf_file = "config/r5sr.srdf"
-    rviz_file = "rviz/run_move_group.rviz"
+    rviz_file = "rviz/r5sr_servo_teleop.rviz"
 
     # planning_context
     robot_description_config = xacro.process_file(

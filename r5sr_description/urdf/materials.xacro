@@ -4,6 +4,6 @@
    <color rgba="1 1 1 1"/>
   </material>
   <material name="blue">
-    <color rgba="0 0 0.8 1"/>
+    <color rgba="0.8 0 0 1"/>
   </material>
 </robot>
