@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<robot name="r5sr">
+
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+  <link name="base_link">
+    <visual>
+     <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.01" radius="0.02"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="body0_link_yaw">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 0.02"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+  </link>
+  
+  <link name="body1_link">
+    <visual>
+      <geometry>
+        <box size="0.1 0.2 0.04"/>
+      </geometry>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <material name="white"/>
+    </visual>
+  </link>
+  
+  <link name="body2_link">
+    <visual>
+      <geometry>
+       <box size="0.55 0.1 0.04"/>
+      </geometry>
+      <origin xyz="-0.25 0 0" rpy="0 0 0"/>
+      <material name="white"/>
+    </visual>
+  </link>
+  
+  <link name="body3_link">
+    <visual>
+      <geometry>
+        <box size="0.55 0.1 0.03"/>
+      </geometry>
+      <origin xyz="0.27 0 0.05" rpy="0 0 0"/>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <link name="body4_link">
+    <visual>
+      <geometry>
+        <box size="0.045 0.045 0.045"/>
+      </geometry>
+      <origin xyz="0.0055 0 0.005" rpy="0 0 0"/>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <link name="body5_link">
+    <visual>
+      <geometry>
+       <box size="0.06 0.03 0.03"/>
+      </geometry>
+      <origin xyz="-0.0008 0 -0.0025" rpy="0 0 0"/>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <link name="body6_link">
+    <visual>
+      <geometry>
+      <box size="0.03 0.06 0.03"/>
+      </geometry>
+      <origin xyz="0.002 0 -0.002" rpy="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <joint name="body0_joint_yaw" type="fixed">
+    <parent link="base_link"/>
+    <child link="body0_link_yaw"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="3.1415"/>
+  </joint>
+  
+  <joint name="body1_joint" type="revolute">
+    <parent link="body0_link_yaw"/>
+    <child  link="body1_link"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <limit lower="-1.575" upper="1.575" effort="0" velocity="3.1415"/>
+  </joint>
+
+  <joint name="body2_joint" type="revolute">
+    <parent link="body1_link"/>
+    <child  link="body2_link"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 0.101" rpy="0 0 0"/>
+    <limit lower="-0" upper="3.15" effort="0" velocity="3.1415"/>
+  </joint>
+
+  <joint name="body3_joint" type="revolute">
+    <parent link="body2_link"/>
+    <child  link="body3_link"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="-0.480 -0. 0" rpy="0 0 0"/>
+    <limit lower="-3.15" upper="0" effort="0" velocity="3.1415"/>
+  </joint>
+
+    <joint name="body4_joint" type="revolute">
+    <parent link="body3_link"/>
+    <child  link="body4_link"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0.56235 0 0.0443" rpy="0 0 0"/>
+    <limit lower="-3.15" upper="3.15" effort="0" velocity="3.1415"/>
+  </joint>
+
+  <joint name="body5_joint" type="revolute">
+    <parent link="body4_link"/>
+    <child  link="body5_link"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0.042 0 0.045" rpy="0 0 0"/>
+    <limit lower="-3.15" upper="3.15" effort="0" velocity="3.1415"/>
+  </joint>
+
+  <joint name="body6_joint" type="revolute">
+    <parent link="body5_link"/>
+    <child  link="body6_link"/>
+    <axis xyz="1 0 0"/>
+    <origin xyz="0.042 0 0" rpy="0 0 0"/>
+    <limit lower="-3.14159265" upper="3.14159265" effort="0" velocity="3.1415"/>
+  </joint>
+
+</robot>

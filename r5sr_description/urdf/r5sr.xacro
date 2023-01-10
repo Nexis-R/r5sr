@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<robot name="r5sr" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find r5sr_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find r5sr_description)/urdf/r5sr.trans" />
+<xacro:include filename="$(find r5sr_description)/urdf/r5sr_description.xacro" />
+
+<xacro:r5sr_description main_color="blue" sub_color="white" />
+
+<!-- Import Robot ros2_control description -->
+<xacro:include filename="$(find r5sr_description)/ros2_control/r5sr_ros2_control.xacro" />
+<xacro:r5sr_ros2_control name="r5sr" initial_positions_file="$(find r5sr_moveit_config)/config/initial_positions.yaml" />
+
+</robot>
