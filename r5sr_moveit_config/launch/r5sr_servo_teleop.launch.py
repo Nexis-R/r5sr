@@ -153,6 +153,7 @@ def generate_launch_description():
     load_controllers = []
     for controller in [
         "arm_controller",
+        "vision_arm_controller",
         "joint_state_broadcaster",
     ]:
         load_controllers += [

@@ -1,5 +1,6 @@
 controller_names:
   - arm_controller
+  - vision_arm_controller
   
 arm_controller:
     action_ns: follow_joint_trajectory
@@ -12,3 +13,16 @@ arm_controller:
       - body4_joint
       - body5_joint
       - body6_joint
+
+vision_arm_controller:
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - body1_joint
+      - body2_joint
+      - body3_joint
+      - body4_joint
+      - vision_arm_body1_joint
+      - vision_arm_body2_joint
+      - vision_arm_body3_joint

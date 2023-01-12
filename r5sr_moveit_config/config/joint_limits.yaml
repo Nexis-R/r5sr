@@ -38,3 +38,18 @@ joint_limits:
     max_velocity: 3.1415
     has_acceleration_limits: false
     max_acceleration: 0
+  vision_arm_body1_joint:
+    has_velocity_limits: true
+    max_velocity: 3.1415
+    has_acceleration_limits: false
+    max_acceleration: 0
+  vision_arm_body2_joint:
+    has_velocity_limits: true
+    max_velocity: 3.1415
+    has_acceleration_limits: false
+    max_acceleration: 0
+  vision_arm_body3_joint:
+    has_velocity_limits: true
+    max_velocity: 3.1415
+    has_acceleration_limits: false
+    max_acceleration: 0
