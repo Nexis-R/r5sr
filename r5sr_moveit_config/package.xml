@@ -16,7 +16,6 @@
   <depend>xacro</depend>
   <depend>joy</depend>
   <depend>moveit_servo</depend>
-
   <depend>r5sr_moveit_teleop</depend>
 
   <exec_depend>moveit_ros_planning_interface</exec_depend>
