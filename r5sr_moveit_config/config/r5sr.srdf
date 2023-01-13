@@ -18,6 +18,17 @@
         <joint name="body5_joint"/>
         <joint name="body6_joint"/>
     </group>
+    <group name="r5sr_vision_arm">
+        <joint name="body0_joint_yaw"/>
+        <joint name="body1_joint"/>
+        <joint name="body2_joint"/>
+        <joint name="body3_joint"/>
+        <joint name="body4_joint"/>
+        <joint name="vision_arm_body1_joint"/>
+        <joint name="vision_arm_body2_joint"/>
+        <joint name="vision_arm_body3_joint"/>
+    </group>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="hand" parent_link="body6_link" group="r5sr_arm"/>
+    <end_effector name="vision" parent_link="vision_arm_body3_link" group="r5sr_vision_arm"/>
 </robot>

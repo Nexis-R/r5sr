@@ -66,4 +66,38 @@
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
 </transmission>
+
+<transmission name="vision_arm_body1_arm_trans">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="vision_arm_body1_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="vision_arm_body1_joint_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="vision_arm_body2_arm_trans">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="vision_arm_body2_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="vision_arm_body2_joint_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="vision_arm_body3_arm_trans">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="vision_arm_body3_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="vision_arm_body3_joint_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
 </robot>
