@@ -45,9 +45,9 @@ ros2 launch r5sr_teleop r5sr_teleop.launch.xml
 | --------------------------------------------- | ---------------------------------- |
 | r5sr                                          | メタパッケージ                     |
 | [r5sr_crawler_control](/r5sr_crawler_control) | ロボット実機のクローラ(足回り)制御 |
-| [r5sr_description](/r5sr_description)         |                                    |
-| [r5sr_moveit_config](/r5sr_moveit_config)     |                                    |
-| [r5sr_moveit_teleop](/r5sr_moveit_teleop)     |                                    |
+| [r5sr_description](/r5sr_description)         | urdfやros_contorol・rvizの設定ファイル保管パッケージ |
+| [r5sr_moveit_config](/r5sr_moveit_config)     | moveit2設定ファイル保管＆moveit2起動(アーム制御)パッケージ |
+| [r5sr_moveit_teleop](/r5sr_moveit_teleop)     | moveit2でアームを順・逆運動学で動かす指令値を出すパッケージ |
 | [r5sr_teleop](/r5sr_teleop)                   | オペレーターPC用起動パッケージ     |
 
 TODO: manipulator-control(r5sr_manipulator_control)
