@@ -27,3 +27,7 @@
 
 ### r5sr_crawler_control.launch.xml
 r5sr_craler_controlとeposを起動する。
+
+```bash
+ros2 launch r5sr_crawler_control r5sr_crawler_control.launch.xml
+```
