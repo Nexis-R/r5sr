@@ -35,7 +35,8 @@ void Crawler_Control::handle_joy(const sensor_msgs::msg::Joy::SharedPtr joy) {
   std_msgs::msg::Float32 flipper_speed;
   std_msgs::msg::Float32 speed_zero;
   speed_zero.set__data(0.0);
-  flipper_speed.set__data(joy->axes.at(4) * 1.0);
+  const float gear_ratio = 4500.0;
+  flipper_speed.set__data(joy->axes.at(4) * gear_ratio);
   if (joy->buttons.at(4)) {
     flipper_left_front_pub->publish(flipper_speed);
   } else {
@@ -66,10 +67,12 @@ void Crawler_Control::handle_twist(const geometry_msgs::msg::Twist::SharedPtr tw
   const float vx = twist->linear.x;
   const float va = twist->angular.z;
 
+  const float gear_ratio = 30.0;
+
   std_msgs::msg::Float32 left_speed;
   std_msgs::msg::Float32 right_speed;
-  left_speed.set__data (((vx * 60) / (wheel_diameter * M_PI)) - (((60 * va) / (2 * M_PI)) * ((wheel_base * M_PI) / (wheel_diameter * M_PI))));
-  right_speed.set__data(((vx * 60) / (wheel_diameter * M_PI)) + (((60 * va) / (2 * M_PI)) * ((wheel_base * M_PI) / (wheel_diameter * M_PI))));
+  left_speed.set__data ((((vx * 60) / (wheel_diameter * M_PI)) - (((60 * va) / (2 * M_PI)) * ((wheel_base * M_PI) / (wheel_diameter * M_PI)))) * gear_ratio);
+  right_speed.set__data((((vx * 60) / (wheel_diameter * M_PI)) + (((60 * va) / (2 * M_PI)) * ((wheel_base * M_PI) / (wheel_diameter * M_PI)))) * -gear_ratio);
 
   crawler_left_pub->publish(left_speed);
   crawler_right_pub->publish(right_speed);

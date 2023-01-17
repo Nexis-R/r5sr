@@ -6,12 +6,12 @@
   <node pkg="r5sr_crawler_control" exec="r5sr_crawler_control">
     <param from="$(find-pkg-share r5sr_crawler_control)/config/r5sr_crawler_control.yaml" />
     
-    <remap from="/command_crawler_left" to="/epos/motor1/move_with_velocity" />
-    <remap from="/command_crawler_right" to="/epos/motor2/move_with_velocity" />
+    <remap from="/command_crawler_left" to="/epos/motor5/move_with_velocity" />
+    <remap from="/command_crawler_right" to="/epos/motor4/move_with_velocity" />
 
-    <remap from="/command_flipper_left_front" to="/epos/motor3/move_with_velocity" />
-    <remap from="/command_flipper_right_front" to="/epos/motor4/move_with_velocity" />
-    <remap from="/command_flipper_left_back" to="/epos/motor5/move_with_velocity" />
-    <remap from="/command_flipper_right_back" to="/epos/motor6/move_with_velocity" />
+    <remap from="/command_flipper_left_front" to="/epos/motor2/move_with_velocity" />
+    <remap from="/command_flipper_right_front" to="/epos/motor3/move_with_velocity" />
+    <remap from="/command_flipper_left_back" to="/epos/motor6/move_with_velocity" />
+    <remap from="/command_flipper_right_back" to="/epos/motor7/move_with_velocity" />
   </node>
 </launch>
