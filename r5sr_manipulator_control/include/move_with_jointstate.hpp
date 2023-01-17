@@ -20,18 +20,17 @@ const static std::map<Model, std::tuple<uint16_t, uint16_t, uint16_t>>
                    {H42, {562, 596, 303'750}},
                    {XH430, {64, 116, 4'096}}};
 
-//{model, {torque enable, goal position, pulse per rev}}
-const static std::map<std::string, std::tuple<Model, uint8_t>>
-    jointname_id_model_map{{"body0_joint_yaw", {H54, 2}},
-                           {"body1_joint", {H54, 3}},
-                           {"body2_joint", {H54, 4}},
-                           {"body3_joint", {H42, 5}},
-                           {"body4_joint", {H42, 9}},
-                           {"body5_joint", {H42, 6}},
-                           {"body6_joint", {H42, 7}},
-                           {"vision_arm_body1_joint", {H42, 9}},
-                           {"vision_arm_body2_joint", {XH430, 10}},
-                           {"vision_arm_body3_joint", {XH430, 11}}};
+//{jointname, {model, id, offset, coef}}
+const static std::map<std::string, std::tuple<Model, uint8_t, float, float>>
+    jointname_id_model_map{{"body1_joint", {H54, 2, 0.0, -1.0}},
+                           {"body2_joint", {H54, 3, 163.0, -1.0}},
+                           {"body3_joint", {H54, 4, -150.0, -1.0}},
+                           {"body4_joint", {H42, 5, -45.0, -1.0}},
+                           {"body5_joint", {H42, 6, 0.0, -1.0}},
+                           {"body6_joint", {H42, 7, 0.0, 1.0}},
+                           {"vision_arm_body1_joint", {H42, 9, -50.0, -1.0}},
+                           {"vision_arm_body2_joint", {XH430, 10, 175.0, -1.0}},
+                           {"vision_arm_body3_joint", {XH430, 11, 180.0, -1.0}}};
 
 class MoveWithJointState : public rclcpp::Node {
  public:

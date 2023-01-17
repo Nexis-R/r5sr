@@ -4,7 +4,7 @@ using namespace r5sr_manipulator_control;
 using std::placeholders::_1;
 
 MoveWithJointState::MoveWithJointState() : Node("MoveWithJointState") {
-  this->declare_parameter("portname", "/dev/ttyUSB0");
+  this->declare_parameter("portname", "/dev/ttyUSB-Dynamixel");
   this->declare_parameter("baudrate", 1'000'000);
 
   portHandler.reset(std::move(dynamixel::PortHandler::getPortHandler(
@@ -25,7 +25,7 @@ MoveWithJointState::MoveWithJointState() : Node("MoveWithJointState") {
 
   for (const auto& id_map : jointname_id_model_map) {
     const auto& joint_name = id_map.first;
-    const auto& [model, id] = id_map.second;
+    const auto& [model, id, offset, coef] = id_map.second;
     const auto& addr_torque_enable = std::get<0>(model_addr_map.at(model));
 
     packetHandler->write1ByteTxOnly(portHandler.get(), id, addr_torque_enable,
@@ -47,11 +47,13 @@ void MoveWithJointState::handle_joint_state(
 
   for (size_t i = 0; i < size; i++) {
     const std::string& name = joint_state->name.at(i);
-    const auto& [model, id] = jointname_id_model_map.at(name);
+    if (name == "body0_joint_yaw") continue;
+    const auto& [model, id, offset_degree, coef] = jointname_id_model_map.at(name);
     const auto& [addr_torque_enable, addr_goal_position, pulse_per_rev] =
         model_addr_map.at(model);
 
-    const auto& target_rad = joint_state->position.at(i);
+    const float& offset_rad = offset_degree * (M_PI/180.0);
+    const auto& target_rad = joint_state->position.at(i) * coef + offset_rad;
     const uint32_t target_pulse = (target_rad / 2 * M_PI) * pulse_per_rev;
 
     packetHandler->write4ByteTxRx(portHandler.get(), id, addr_goal_position,

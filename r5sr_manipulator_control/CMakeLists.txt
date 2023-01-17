@@ -24,11 +24,11 @@ find_package(dynamixel_sdk REQUIRED)
 
 ament_auto_find_build_dependencies()
 
-ament_auto_add_library(move_with_jointstate SHARED
+ament_auto_add_library(move_with_jointstate_lib SHARED
   include/move_with_jointstate.hpp
   src/move_with_jointstate.cpp)
 
-ament_auto_add_executable(with_jointstate
+ament_auto_add_executable(move_with_jointstate
   src/move_with_jointstate_node.cpp)
 
 if(BUILD_TESTING)
