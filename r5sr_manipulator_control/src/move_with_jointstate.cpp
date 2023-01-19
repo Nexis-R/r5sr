@@ -52,9 +52,9 @@ void MoveWithJointState::handle_joint_state(
     const auto& [addr_torque_enable, addr_goal_position, pulse_per_rev] =
         model_addr_map.at(model);
 
-    const float& offset_rad = offset_degree * (M_PI/180.0);
-    const auto& target_rad = joint_state->position.at(i) * coef + offset_rad;
-    const uint32_t target_pulse = (target_rad / 2 * M_PI) * pulse_per_rev;
+    const float offset_rad = offset_degree * (M_PI/180.0);
+    const auto target_rad = joint_state->position.at(i) * coef + offset_rad;
+    const int32_t target_pulse = (int32_t)((int32_t)pulse_per_rev / (float)(2 * M_PI) * (float)target_rad);
 
     packetHandler->write4ByteTxRx(portHandler.get(), id, addr_goal_position,
                                   target_pulse);
