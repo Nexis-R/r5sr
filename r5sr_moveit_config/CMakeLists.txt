@@ -14,8 +14,6 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 find_package(moveit_ros_planning_interface REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(rclcpp_components REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(sensor_msgs REQUIRED)
@@ -24,10 +22,6 @@ find_package(moveit_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(trajectory_msgs REQUIRED)
 find_package(moveit_ros_planning REQUIRED)
-
-find_package(rosidl_default_runtime REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system)
-
 
 install(DIRECTORY
   launch
