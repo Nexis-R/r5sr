@@ -1,35 +1,47 @@
 hand_camera:
-    ros__parameters:
-      video_device: "/dev/video0"
-      framerate: 30.0
-      io_method: "mmap"
-      frame_id: "camera"
-      pixel_format: "yuyv"
-      color_format: "yuv422p"
-      image_width: 640
-      image_height: 480
-      camera_name: "hand_camera"
+  ros__parameters:
+    video_device: "/dev/video_hand"
+    framerate: 30.0
+    io_method: "mmap"
+    frame_id: "camera"
+    pixel_format: "yuyv"
+    color_format: "yuv422p"
+    image_width: 640
+    image_height: 480
+    camera_name: "hand_camera"
 
 vision_front_camera:
-    ros__parameters:
-      video_device: "/dev/video1"
-      framerate: 30.0
-      io_method: "mmap"
-      frame_id: "camera"
-      pixel_format: "yuyv"
-      color_format: "yuv422p"
-      image_width: 640
-      image_height: 480
-      camera_name: "vision_front_camera"
+  ros__parameters:
+    video_device: "/dev/video_vision_front"
+    framerate: 30.0
+    io_method: "mmap"
+    frame_id: "camera"
+    pixel_format: "yuyv"
+    color_format: "yuv422p"
+    image_width: 640
+    image_height: 480
+    camera_name: "vision_front_camera"
 
 vision_rear_camera:
-    ros__parameters:
-      video_device: "/dev/video2"
-      framerate: 30.0
-      io_method: "mmap"
-      frame_id: "camera"
-      pixel_format: "yuyv"
-      color_format: "yuv422p"
-      image_width: 640
-      image_height: 480
-      camera_name: "vision_rear_camera"
+  ros__parameters:
+    video_device: "/dev/video_vision_rear"
+    framerate: 30.0
+    io_method: "mmap"
+    frame_id: "camera"
+    pixel_format: "yuyv"
+    color_format: "yuv422p"
+    image_width: 640
+    image_height: 480
+    camera_name: "vision_rear_camera"
+
+fisheye_front_camera:
+  ros__parameters:
+    video_device: "/dev/video_fisheye_front"
+    framerate: 30.0
+    io_method: "mmap"
+    frame_id: "camera"
+    pixel_format: "yuyv"
+    color_format: "yuv422p"
+    image_width: 640
+    image_height: 480
+    camera_name: "fisheye_front_camera"
