@@ -41,6 +41,7 @@ class MoveWithJointState : public rclcpp::Node {
 
  private:
   int32_t hand_pulse;
+  std::tuple<float, float, float> vision_angle;
 
   std::unique_ptr<dynamixel::PortHandler> portHandler;
   std::unique_ptr<dynamixel::PacketHandler> packetHandler;

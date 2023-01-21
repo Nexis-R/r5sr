@@ -1,10 +1,17 @@
 #include "move_with_jointstate.hpp"
 
+#include <array>
+
 using namespace r5sr_manipulator_control;
 using std::placeholders::_1;
 
 MoveWithJointState::MoveWithJointState()
-    : Node("MoveWithJointState"), hand_pulse(-1000) {
+    : Node("MoveWithJointState"),
+      hand_pulse(-1000),
+      vision_angle(
+          {std::get<2>(jointname_id_model_map.at("vision_arm_body1_joint")),
+           std::get<2>(jointname_id_model_map.at("vision_arm_body2_joint")),
+           std::get<2>(jointname_id_model_map.at("vision_arm_body3_joint"))}) {
   this->declare_parameter("portname", "/dev/ttyUSB-Dynamixel");
   this->declare_parameter("baudrate", 1'000'000);
   this->declare_parameter("open_button_index", 1);
@@ -56,7 +63,9 @@ void MoveWithJointState::handle_joint_state(
 
   for (size_t i = 0; i < size; i++) {
     const std::string& name = joint_state->name.at(i);
-    if (name == "body0_joint_yaw") continue;
+    if (name == "body0_joint_yaw" || name == "vision_arm_body1_joint" ||
+        name == "vision_arm_body2_joint" || name == "vision_arm_body3_joint")
+      continue;
     const auto& [model, id, offset_degree, coef] =
         jointname_id_model_map.at(name);
     const auto& [addr_torque_enable, addr_goal_position, pulse_per_rev] =
@@ -75,6 +84,9 @@ void MoveWithJointState::handle_joint_state(
 
 void MoveWithJointState::handle_joy(
     const sensor_msgs::msg::Joy::SharedPtr joy) {
+  const auto& buttons = joy->buttons;
+  const auto& axes = joy->axes;
+  // hand
   const int open_button_index =
       this->get_parameter("open_button_index").as_int();
   const int close_button_index =
@@ -95,9 +107,9 @@ void MoveWithJointState::handle_joy(
   current_pub.data = current;
   hand_current_pub->publish(current_pub);
 
-  if (joy->buttons[open_button_index] && pulse_step > min_limit) {
+  if (buttons[open_button_index] && pulse_step > min_limit) {
     hand_pulse -= pulse_step;
-  } else if (joy->buttons[close_button_index] && pulse_step < max_limit &&
+  } else if (buttons[close_button_index] && pulse_step < max_limit &&
              current < current_limit) {
     hand_pulse += pulse_step;
   }
@@ -105,4 +117,52 @@ void MoveWithJointState::handle_joy(
   packetHandler->write4ByteTxRx(portHandler.get(), hand_id,
                                 std::get<1>(model_addr_map.at(XH430)),
                                 hand_pulse);
+
+  // vision_arm
+  const float vision_servo_step_deg = 10.0;
+
+  const int vision_arm_body1_joint_mode_index = 7;
+  const int vision_arm_body23_joint_mode_index = 6;
+  const int vision_arm_body1_joint_axis_index = 7;
+  const int vision_arm_body2_joint_up_index = 3;
+  const int vision_arm_body2_joint_down_index = 0;
+  const int vision_arm_body3_joint_left_index = 2;
+  const int vision_arm_body3_joint_right_index = 1;
+
+  if (buttons[vision_arm_body1_joint_mode_index]) {
+    const float& body1_axis = axes[vision_arm_body1_joint_axis_index];
+    if (body1_axis > 0.5) {
+      std::get<0>(vision_angle) += vision_servo_step_deg;
+    } else if (body1_axis < -0.5) {
+      std::get<0>(vision_angle) -= vision_servo_step_deg;
+    }
+  } else if (buttons[vision_arm_body23_joint_mode_index]) {
+    if (buttons[vision_arm_body2_joint_up_index]) {
+      std::get<1>(vision_angle) += vision_servo_step_deg;
+    } else if (buttons[vision_arm_body2_joint_down_index]) {
+      std::get<1>(vision_angle) -= vision_servo_step_deg;
+    }
+    if (buttons[vision_arm_body3_joint_left_index]) {
+      std::get<2>(vision_angle) += vision_servo_step_deg;
+    } else if (buttons[vision_arm_body3_joint_right_index]) {
+      std::get<2>(vision_angle) -= vision_servo_step_deg;
+    }
+  }
+
+  std::array<std::tuple<std::string, float>, 3> vision_loop_map = {
+      {{"vision_arm_body1_joint", std::get<0>(vision_angle)},
+       {"vision_arm_body2_joint", std::get<1>(vision_angle)},
+       {"vision_arm_body3_joint", std::get<2>(vision_angle)}}};
+  for (auto& [joint_name, angle_deg] : vision_loop_map) {
+    const auto& [model, id, offset, coef] =
+        jointname_id_model_map.at(joint_name);
+    const auto& [addr_torque_enable, goal_addr, pulse_per_rev] =
+        model_addr_map.at(model);
+    const auto target_rad = angle_deg * (M_PI / 180.0);
+    const int32_t target_pulse =
+        (int32_t)((int32_t)pulse_per_rev / (float)(2 * M_PI) *
+                  (float)target_rad);
+    packetHandler->write4ByteTxRx(portHandler.get(), id, goal_addr,
+                                  target_pulse);
+  }
 }
