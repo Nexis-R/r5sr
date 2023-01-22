@@ -1,0 +1,11 @@
+# hand_cam
+KERNEL=="video*", SUBSYSTEM=="video4linux", ATTRS{idVendor}=="05a3", ATTRS{idProduct}=="9230", ATTR{index}=="0", GROUP="video", SYMLINK+="video_hand", MODE="0666"
+
+# fisheye_front
+KERNEL=="video*",ATTRS{idVendor}=="2588", ATTRS{idProduct}=="f111", ATTRS{serial}=="W03385", ATTR{index}=="0", GROUP="video", SYMLINK+="video_fisheye_front", MODE="0666"
+
+# vision_front
+KERNEL=="video*",ATTRS{idVendor}=="2588", ATTRS{idProduct}=="f111", ATTRS{serial}=="W03384", ATTR{index}=="0", GROUP="video", SYMLINK+="video_vision_front", MODE="0666"
+
+# vision_rear
+KERNEL=="video*",ATTRS{idVendor}=="2588", ATTRS{idProduct}=="f111", ATTRS{serial}=="W03386", ATTR{index}=="0", GROUP="video", SYMLINK+="video_vision_rear", MODE="0666"
