@@ -1,4 +1,4 @@
-hand_camera:
+hand_camera/hand_camera:
   ros__parameters:
     video_device: "/dev/video_hand"
     framerate: 30.0
@@ -10,7 +10,7 @@ hand_camera:
     image_height: 480
     camera_name: "hand_camera"
 
-vision_front_camera:
+vision_front_camera/vision_front_camera:
   ros__parameters:
     video_device: "/dev/video_vision_front"
     framerate: 30.0
@@ -22,7 +22,7 @@ vision_front_camera:
     image_height: 480
     camera_name: "vision_front_camera"
 
-vision_rear_camera:
+vision_rear_camera/vision_rear_camera:
   ros__parameters:
     video_device: "/dev/video_vision_rear"
     framerate: 30.0
@@ -34,7 +34,7 @@ vision_rear_camera:
     image_height: 480
     camera_name: "vision_rear_camera"
 
-fisheye_front_camera:
+fisheye_front_camera/fisheye_front_camera:
   ros__parameters:
     video_device: "/dev/video_fisheye_front"
     framerate: 30.0
