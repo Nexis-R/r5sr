@@ -1,0 +1,28 @@
+<launch>
+    <node pkg="epos" exec="epos">
+        <param from="$(find-pkg-share r5sr_crawler_control)/config/r5sr_crawler_control.yaml" />
+    </node>
+
+    <node pkg="r5sr_manipulator_control" exec="move_with_jointstate"></node>
+
+    <node pkg="usb_cam" exec="usb_cam_node_exe" name="hand_camera" namespace="hand_camera">
+        <param from="$(find-pkg-share r5sr_bringup)/config/r5sr_camera.yaml" />
+        <remap from="ns" to="/hand_camera" />
+    </node>
+
+    <node pkg="usb_cam" exec="usb_cam_node_exe" name="vision_front_camera" namespace="vision_front_camera">
+        <param from="$(find-pkg-share r5sr_bringup)/config/r5sr_camera.yaml" />
+        <remap from="ns" to="/visoin_front_camera" />
+    </node>
+
+    <node pkg="usb_cam" exec="usb_cam_node_exe" name="vision_rear_camera" namespace="vision_rear_camera">
+        <param from="$(find-pkg-share r5sr_bringup)/config/r5sr_camera.yaml" />
+        <remap from="ns" to="/visoin_rear_camera" />
+    </node>
+
+    <node pkg="usb_cam" exec="usb_cam_node_exe" name="fisheye_front_camera" namespace="fisheye_front_camera">
+        <param from="$(find-pkg-share r5sr_bringup)/config/r5sr_camera.yaml" />
+        <remap from="ns" to="/fisheye_front_camera" />
+    </node>
+
+</launch>
