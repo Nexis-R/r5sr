@@ -17,11 +17,11 @@ const std::string BASE_FRAME_ID = "body0_link_yaw";
 // Enums for button names -> axis/button array index
 // For XBOX 1 controller
 enum Axis {
-  LEFT_STICK_X = 0,
-  LEFT_STICK_Y = 1,
+  LEFT_STICK_X = 8,
+  LEFT_STICK_Y = 9,
   LEFT_TRIGGER = 2,
-  RIGHT_STICK_X = 3,
-  RIGHT_STICK_Y = 4,
+  RIGHT_STICK_X = 10,
+  RIGHT_STICK_Y = 11,
   RIGHT_TRIGGER = 5,
   D_PAD_X = 6,
   D_PAD_Y = 7
