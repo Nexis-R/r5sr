@@ -121,32 +121,27 @@ void MoveWithJointState::handle_joy(
   // vision_arm
   const float vision_servo_step_deg = 10.0;
 
-  const int vision_arm_body1_joint_mode_index = 7;
-  const int vision_arm_body23_joint_mode_index = 6;
-  const int vision_arm_body1_joint_axis_index = 7;
-  const int vision_arm_body2_joint_up_index = 3;
-  const int vision_arm_body2_joint_down_index = 0;
-  const int vision_arm_body3_joint_left_index = 2;
-  const int vision_arm_body3_joint_right_index = 1;
+  const int vision_arm_body1_joint_axis_index = 12;
+  const int vision_arm_body2_joint_up_index = 14;
+  const int vision_arm_body2_joint_down_index = 11;
+  const int vision_arm_body3_joint_left_index = 13;
+  const int vision_arm_body3_joint_right_index = 12;
 
-  if (buttons[vision_arm_body1_joint_mode_index]) {
-    const float& body1_axis = axes[vision_arm_body1_joint_axis_index];
-    if (body1_axis > 0.5) {
-      std::get<0>(vision_angle) += vision_servo_step_deg;
-    } else if (body1_axis < -0.5) {
-      std::get<0>(vision_angle) -= vision_servo_step_deg;
-    }
-  } else if (buttons[vision_arm_body23_joint_mode_index]) {
-    if (buttons[vision_arm_body2_joint_up_index]) {
-      std::get<1>(vision_angle) += vision_servo_step_deg;
-    } else if (buttons[vision_arm_body2_joint_down_index]) {
-      std::get<1>(vision_angle) -= vision_servo_step_deg;
-    }
-    if (buttons[vision_arm_body3_joint_left_index]) {
-      std::get<2>(vision_angle) += vision_servo_step_deg;
-    } else if (buttons[vision_arm_body3_joint_right_index]) {
-      std::get<2>(vision_angle) -= vision_servo_step_deg;
-    }
+  const float& body1_axis = axes[vision_arm_body1_joint_axis_index];
+  if (body1_axis > 0.5) {
+    std::get<0>(vision_angle) += vision_servo_step_deg;
+  } else if (body1_axis < -0.5) {
+    std::get<0>(vision_angle) -= vision_servo_step_deg;
+  }
+  if (buttons[vision_arm_body2_joint_up_index]) {
+    std::get<1>(vision_angle) += vision_servo_step_deg;
+  } else if (buttons[vision_arm_body2_joint_down_index]) {
+    std::get<1>(vision_angle) -= vision_servo_step_deg;
+  }
+  if (buttons[vision_arm_body3_joint_left_index]) {
+    std::get<2>(vision_angle) += vision_servo_step_deg;
+  } else if (buttons[vision_arm_body3_joint_right_index]) {
+    std::get<2>(vision_angle) -= vision_servo_step_deg;
   }
 
   std::array<std::tuple<std::string, float>, 3> vision_loop_map = {

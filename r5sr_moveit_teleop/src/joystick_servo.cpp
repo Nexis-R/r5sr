@@ -64,24 +64,18 @@ bool convertJoyToCmd(const std::vector<float>& axes,
   // Give joint jogging priority because it is only buttons
   // If any joint jog command is requested, we are only publishing joint
   // commands
-  if (((buttons[A] || buttons[B] || buttons[X] || buttons[Y]) &&
-       !buttons[CHANGE_VIEW]) ||
-      axes[D_PAD_X] || (!buttons[MENU] && axes[D_PAD_Y])) {
+  if (buttons[A] || buttons[B] || buttons[X] || buttons[Y] || axes[D_PAD_X] ||
+      axes[D_PAD_Y]) {
     // Map the D_PAD to the proximal joints
     joint->joint_names.push_back("body1_joint");
     joint->velocities.push_back(axes[D_PAD_X]);
-    if (!buttons[MENU]) {
-      joint->joint_names.push_back("body2_joint");
-      joint->velocities.push_back(axes[D_PAD_Y]);
-    }
+    joint->joint_names.push_back("body2_joint");
+    joint->velocities.push_back(axes[D_PAD_Y]);
 
-    if (!buttons[CHANGE_VIEW]) {
-      // Map the diamond to the distal joints
-      joint->joint_names.push_back("body7_joint");
-      joint->velocities.push_back(buttons[B] - buttons[X]);
-      joint->joint_names.push_back("body6_joint");
-      joint->velocities.push_back(buttons[Y] - buttons[A]);
-    }
+    joint->joint_names.push_back("body7_joint");
+    joint->velocities.push_back(buttons[B] - buttons[X]);
+    joint->joint_names.push_back("body6_joint");
+    joint->velocities.push_back(buttons[Y] - buttons[A]);
     return false;
   }
 
