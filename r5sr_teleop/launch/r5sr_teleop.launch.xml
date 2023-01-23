@@ -10,8 +10,6 @@
   <node pkg="teleop_twist_joy" exec="teleop_node">
     <param from="$(find-pkg-share r5sr_teleop)/config/r5sr_teleop.yaml" />
   </node>
-  <node pkg="r5sr_teleop" exec="teleop_state_broadcaster" />
-
 
   <node pkg="image_transport" exec="republish" name="repub_hand_camera" args="compressed raw">
     <remap from="in/compressed" to="hand_camera/image_raw/compressed" />
