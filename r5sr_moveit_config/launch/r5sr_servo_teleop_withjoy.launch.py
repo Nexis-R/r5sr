@@ -200,6 +200,12 @@ def generate_launch_description():
                 name="controller_to_servo_node",
                 extra_arguments=[{"use_intra_process_comms": True}],
             ),
+            ComposableNode(
+                package="joy",
+                plugin="joy::Joy",
+                name="joy_node",
+                extra_arguments=[{"use_intra_process_comms": True}],
+            ),
         ],
         output="screen",
     )
