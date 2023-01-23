@@ -2,8 +2,7 @@
 
 using namespace r5sr_teleop;
 
-RemapJoy::RemapJoy()
-    : Node("remap_joy"), teleop_mode("crawler") {
+RemapJoy::RemapJoy() : Node("remap_joy"), teleop_mode("crawler") {
   joy_sub = this->create_subscription<sensor_msgs::msg::Joy>(
       "/joy", 1, std::bind(&RemapJoy::handle_joy, this, std::placeholders::_1));
 
@@ -72,6 +71,39 @@ void RemapJoy::handle_joy(const sensor_msgs::msg::Joy::SharedPtr joy) {
     buttons_repub.push_back(0);
     buttons_repub.push_back(0);
     buttons_repub.push_back(0);
+  }
+
+  if (teleop_mode == "crawler" && buttons[4]) {
+    // L1
+    axes_repub.push_back(axes_repub[4]);
+    axes_repub[3] = 0.0;
+    buttons_repub[4] = 0;
+  } else {
+    axes_repub.push_back(0.0);
+  }
+  if (teleop_mode == "crawler" && buttons[5]) {
+    // R1
+    axes_repub.push_back(axes_repub[4]);
+    axes_repub[3] = 0.0;
+    buttons_repub[5] = 0;
+  } else {
+    axes_repub.push_back(0.0);
+  }
+  if (teleop_mode == "crawler" && axes_repub[2] < 0.9) {
+    // L2
+    axes_repub.push_back(axes_repub[4]);
+    axes_repub[3] = 0.0;
+    axes_repub[2] = 1.0;
+  } else {
+    axes_repub.push_back(0.0);
+  }
+  if (teleop_mode == "crawler" && axes_repub[5] < 0.9) {
+    // R2
+    axes_repub.push_back(axes_repub[4]);
+    axes_repub[3] = 0.0;
+    axes_repub[5] = 1.0;
+  } else {
+    axes_repub.push_back(0.0);
   }
 
   joy_pub->publish(joy_repub);
