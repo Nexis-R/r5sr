@@ -17,11 +17,11 @@ const std::string BASE_FRAME_ID = "body0_link_yaw";
 // Enums for button names -> axis/button array index
 // For XBOX 1 controller
 enum Axis {
-  LEFT_STICK_X = 0,
-  LEFT_STICK_Y = 1,
+  LEFT_STICK_X = 8,
+  LEFT_STICK_Y = 9,
   LEFT_TRIGGER = 2,
-  RIGHT_STICK_X = 3,
-  RIGHT_STICK_Y = 4,
+  RIGHT_STICK_X = 10,
+  RIGHT_STICK_Y = 11,
   RIGHT_TRIGGER = 5,
   D_PAD_X = 6,
   D_PAD_Y = 7
@@ -64,24 +64,18 @@ bool convertJoyToCmd(const std::vector<float>& axes,
   // Give joint jogging priority because it is only buttons
   // If any joint jog command is requested, we are only publishing joint
   // commands
-  if (((buttons[A] || buttons[B] || buttons[X] || buttons[Y]) &&
-       !buttons[CHANGE_VIEW]) ||
-      axes[D_PAD_X] || (!buttons[MENU] && axes[D_PAD_Y])) {
+  if (buttons[A] || buttons[B] || buttons[X] || buttons[Y] || axes[D_PAD_X] ||
+      axes[D_PAD_Y]) {
     // Map the D_PAD to the proximal joints
     joint->joint_names.push_back("body1_joint");
     joint->velocities.push_back(axes[D_PAD_X]);
-    if (!buttons[MENU]) {
-      joint->joint_names.push_back("body2_joint");
-      joint->velocities.push_back(axes[D_PAD_Y]);
-    }
+    joint->joint_names.push_back("body2_joint");
+    joint->velocities.push_back(axes[D_PAD_Y]);
 
-    if (!buttons[CHANGE_VIEW]) {
-      // Map the diamond to the distal joints
-      joint->joint_names.push_back("body7_joint");
-      joint->velocities.push_back(buttons[B] - buttons[X]);
-      joint->joint_names.push_back("body6_joint");
-      joint->velocities.push_back(buttons[Y] - buttons[A]);
-    }
+    joint->joint_names.push_back("body7_joint");
+    joint->velocities.push_back(buttons[B] - buttons[X]);
+    joint->joint_names.push_back("body6_joint");
+    joint->velocities.push_back(buttons[Y] - buttons[A]);
     return false;
   }
 

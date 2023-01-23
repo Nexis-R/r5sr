@@ -39,7 +39,7 @@ def generate_launch_description():
     moveit_config_folder = "r5sr_moveit_config"
     xacro_file = "urdf/r5sr.xacro"
     srdf_file = "config/r5sr.srdf"
-    rviz_file = "rviz/servo_with_camera.rviz"
+    rviz_file = "rviz/r5sr_servo_teleop.rviz"
 
     # planning_context
     robot_description_config = xacro.process_file(
@@ -198,6 +198,12 @@ def generate_launch_description():
                 package="r5sr_moveit_teleop",
                 plugin="r5sr_moveit_teleop::JoyToServo",
                 name="controller_to_servo_node",
+                extra_arguments=[{"use_intra_process_comms": True}],
+            ),
+            ComposableNode(
+                package="joy",
+                plugin="joy::Joy",
+                name="joy_node",
                 extra_arguments=[{"use_intra_process_comms": True}],
             ),
         ],
