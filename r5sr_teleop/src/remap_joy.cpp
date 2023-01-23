@@ -3,7 +3,7 @@
 using namespace r5sr_teleop;
 
 RemapJoy::RemapJoy()
-    : Node("teleop_state_broadcaster"), teleop_mode("crawler") {
+    : Node("remap_joy"), teleop_mode("crawler") {
   joy_sub = this->create_subscription<sensor_msgs::msg::Joy>(
       "/joy", 1, std::bind(&RemapJoy::handle_joy, this, std::placeholders::_1));
 
