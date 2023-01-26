@@ -21,6 +21,8 @@ ModePanel::ModePanel(QWidget *parent) : rviz_common::Panel(parent) {
           [&]() { is_stopped_pub->publish(is_stopped); });
   connect(emergencyButton, &QPushButton::toggled, this,
           [&](bool is_checked) { is_stopped.set__data(is_checked); });
+  connect(emergencyButton, &QPushButton::toggled, emergencyButton,
+          &QPushButton::setDisabled);
 }
 
 void ModePanel::onInitialize() {

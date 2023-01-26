@@ -16,7 +16,7 @@ class RemapJoy : public rclcpp::Node {
   bool is_emergency_stopped;
 
   void handle_joy(const sensor_msgs::msg::Joy::SharedPtr joy);
-  void handle_is_emergenct_stopped(const std_msgs::msg::Bool::SharedPtr joy);
+  void handle_is_emergency_stopped(const std_msgs::msg::Bool::SharedPtr joy);
   rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_sub;
   rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr is_emergency_stopped_sub;
 
