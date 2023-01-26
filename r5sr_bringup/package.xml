@@ -10,6 +10,7 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <exec_depend>usb_cam</exec_depend>
+  <exec_depend>zbar_ros</exec_depend>
   <exec_depend>epos</exec_depend>
   <exec_depend>r5sr_manipulator_control</exec_depend>
   

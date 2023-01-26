@@ -2,4 +2,7 @@
   <class name="r5sr_rviz_plugins/ModePanel" type="r5sr_rviz_plugins::ModePanel" base_class_type="rviz_common::Panel">
     <description>mode select for r5sr</description>
   </class>
+  <class name="r5sr_rviz_plugins/DetectionPanel" type="r5sr_rviz_plugins::DetectionPanel" base_class_type="rviz_common::Panel">
+    <description>show detection</description>
+  </class>
 </library>
