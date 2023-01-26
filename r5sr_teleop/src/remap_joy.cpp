@@ -2,13 +2,19 @@
 
 using namespace r5sr_teleop;
 
-RemapJoy::RemapJoy() : Node("remap_joy"), teleop_mode("crawler") {
+RemapJoy::RemapJoy()
+    : Node("remap_joy"), teleop_mode("crawler"), is_emergency_stopped(false) {
   joy_sub = this->create_subscription<sensor_msgs::msg::Joy>(
       "/joy", 1, std::bind(&RemapJoy::handle_joy, this, std::placeholders::_1));
 
   teleop_mode_pub =
       this->create_publisher<std_msgs::msg::String>("teleop_mode", 1);
   joy_pub = this->create_publisher<sensor_msgs::msg::Joy>("out", 1);
+}
+
+void RemapJoy::handle_is_emergenct_stopped(
+    const std_msgs::msg::Bool::SharedPtr is_stopped) {
+  is_emergency_stopped = is_stopped->data;
 }
 
 void RemapJoy::handle_joy(const sensor_msgs::msg::Joy::SharedPtr joy) {
@@ -104,6 +110,18 @@ void RemapJoy::handle_joy(const sensor_msgs::msg::Joy::SharedPtr joy) {
     axes_repub[5] = 1.0;
   } else {
     axes_repub.push_back(0.0);
+  }
+
+  if (is_emergency_stopped) {
+    for (auto& axis : axes_repub) {
+      axis = 0.0;
+    }
+    axes_repub[2] = 1.0;
+    axes_repub[5] = 1.0;
+    for (auto& button : buttons_repub) {
+      button = 0;
+    }
+    teleop_mode = "EMERGENCY STOP";
   }
 
   joy_pub->publish(joy_repub);
