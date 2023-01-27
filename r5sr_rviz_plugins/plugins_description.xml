@@ -5,4 +5,7 @@
   <class name="r5sr_rviz_plugins/DetectionPanel" type="r5sr_rviz_plugins::DetectionPanel" base_class_type="rviz_common::Panel">
     <description>show detection</description>
   </class>
+  <class name="r5sr_rviz_plugins/PresetposePanel" type="r5sr_rviz_plugins::PresetposePanel" base_class_type="rviz_common::Panel">
+    <description>select preset poses</description>
+  </class>
 </library>

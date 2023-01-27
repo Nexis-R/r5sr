@@ -22,19 +22,28 @@ find_package(rviz_common REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 find_package(std_msgs REQUIRED)
+find_package(moveit_core REQUIRED)
+find_package(moveit_msgs REQUIRED)
+find_package(moveit_ros_planning REQUIRED)
+find_package(moveit_ros_planning_interface REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 
 add_library(${PROJECT_NAME} SHARED
   src/mode_panel.cpp
   src/detection_panel.cpp
+  src/presetpose_panel.cpp
 )
 
 ament_target_dependencies(${PROJECT_NAME}
   rclcpp
   rviz_common
-
+  std_msgs
   geometry_msgs
+  moveit_core
+  moveit_msgs
+  moveit_ros_planning
+  moveit_ros_planning_interface
 )
 
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
