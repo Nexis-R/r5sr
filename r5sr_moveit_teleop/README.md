@@ -17,7 +17,3 @@ moveit2でアームを順・逆運動学で動かす指令値を出すパッケ�
 - **collision_pub_([moveit_msgs/PlanningScene](https://docs.ros.org/en/api/moveit_msgs/html/msg/PlanningScene.html))**  rviz上で衝突認識のある物体を出現させるための指令値(現在使われていない)
 
 - **servo_start_client_([std_srvs/Trigger](http://docs.ros.org/en/api/std_srvs/html/srv/Trigger.html))**  moveit2のreal time servoを起動させるための指令値
-
-## Launch
-
-なし

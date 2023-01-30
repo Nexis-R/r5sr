@@ -2,14 +2,6 @@
 
 urdfやros_contorol・rvizの設定ファイル保管パッケージ
 
-## Node
-設定ファイル保管パッケージなのでノードなし
-
-#### Subscribed Topics
-
-#### Published Topics
-
-
 ## Launch
 
 ### display.launch.py
