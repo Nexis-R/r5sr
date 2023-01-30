@@ -2,4 +2,5 @@
 
 cd "$(dirname "$0")"
 
+sh ./install-apt-tools
 sh ./install-epos-command-library

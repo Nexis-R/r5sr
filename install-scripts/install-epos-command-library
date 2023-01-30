@@ -2,7 +2,6 @@
 
 echo "install epos-command-library"
 
-echo "install tools"
 sudo apt update -qq
 sudo apt install -y -qq wget busybox
 wget https://maxonjapan.com/wp-content/uploads/manual/epos/EPOS_Linux_Library_E.zip -O  - | busybox unzip - -d /tmp
