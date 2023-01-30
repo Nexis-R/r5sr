@@ -3,8 +3,8 @@
 <package format="3">
   <name>r5sr_rviz_plugins</name>
   <version>0.0.0</version>
-  <description>sample rviz plugins</description>
-  <maintainer email="kotakkucu@gmail.com">kotakku</maintainer>
+  <description>r5sr rviz plugins</description>
+  <maintainer email="ktaro125@gmail.com">Keitaro Takeuchi</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
