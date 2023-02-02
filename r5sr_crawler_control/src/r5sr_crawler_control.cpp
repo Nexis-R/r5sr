@@ -55,17 +55,17 @@ void Crawler_Control::handle_twist(
   const float vx = twist->linear.x;
   const float va = twist->angular.z;
 
-  const float gear_ratio = 30.0;
+  const float gear_ratio = 60.0;
 
   std_msgs::msg::Float32 left_speed;
   std_msgs::msg::Float32 right_speed;
-  left_speed.set__data((((vx * 60) / (wheel_diameter * M_PI)) -
+  left_speed.set__data((((vx * 60) / (wheel_diameter * M_PI)) +
                         (((60 * va) / (2 * M_PI)) *
-                         ((wheel_base * M_PI) / (wheel_diameter * M_PI)))) *
+                         ((wheel_base * M_PI) / (wheel_diameter * M_PI))) * 4.0) *
                        gear_ratio);
-  right_speed.set__data((((vx * 60) / (wheel_diameter * M_PI)) +
+  right_speed.set__data((((vx * 60) / (wheel_diameter * M_PI)) -
                          (((60 * va) / (2 * M_PI)) *
-                          ((wheel_base * M_PI) / (wheel_diameter * M_PI)))) *
+                          ((wheel_base * M_PI) / (wheel_diameter * M_PI))) * 4.0) *
                         -gear_ratio);
 
   crawler_left_pub->publish(left_speed);
