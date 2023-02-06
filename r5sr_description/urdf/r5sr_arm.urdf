@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<robot name="r5sr">
+
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+  <link name="base_link">
+    <visual>
+     <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.01" radius="0.02"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="body0_link_yaw">
+    <visual>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_0.stl" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    
+    <collision>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_0.stl" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+  </link>
+  
+  <link name="body1_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_1.stl" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="white"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_1.stl" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+  </link>
+  
+  <link name="body2_link">
+    <visual>
+      <geometry>
+       <mesh filename="package://r5sr_description/meshes/arm_parts_2.stl" />
+      </geometry>
+      <origin xyz="0 0 -0.101" rpy="0 0 0"/>
+      <material name="white"/>
+    </visual>
+
+    <collision>
+      <geometry>
+       <mesh filename="package://r5sr_description/meshes/arm_parts_2.stl" />
+      </geometry>
+      <origin xyz="0 0 -0.101" rpy="0 0 0"/>
+    </collision>
+
+  </link>
+  
+  <link name="body3_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_3.stl" />
+      </geometry>
+      <origin xyz="0.480 0 -0.101" rpy="0 0 0"/>
+      <material name="white"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_3.stl" />
+      </geometry>
+      <origin xyz="0.480 0 -0.101" rpy="0 0 0"/>
+    </collision>
+
+  </link>
+
+  <link name="body4_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_4.stl" />
+      </geometry>
+      <origin xyz="-0.08235 0 -0.1453" rpy="0 0 0"/>
+      <material name="white"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_4.stl" />
+      </geometry>
+      <origin xyz="-0.08235 0 -0.1453" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <link name="body5_link">
+    <visual>
+      <geometry>
+       <mesh filename="package://r5sr_description/meshes/arm_parts_5.stl" />
+      </geometry>
+      <origin xyz="-0.12435 0 -0.19" rpy="0 0 0"/>
+      <material name="white"/>
+    </visual>
+
+    <collision>
+       <mesh filename="package://r5sr_description/meshes/arm_parts_5.stl" />
+      </geometry>
+      <origin xyz="-0.12435 0 -0.19" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <link name="body6_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_6.stl" />
+      </geometry>
+      <origin xyz="-0.175 0 -0.22" rpy="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://r5sr_description/meshes/arm_parts_6.stl" />
+      </geometry>
+      <origin xyz="-0.175 0 -0.22" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <joint name="body0_joint_yaw" type="fixed">
+    <parent link="base_link"/>
+    <child link="body0_link_yaw"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="3.1415"/>
+  </joint>
+  
+  <joint name="body1_joint" type="revolute">
+    <parent link="body0_link_yaw"/>
+    <child  link="body1_link"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <limit lower="-1.575" upper="1.575" effort="0" velocity="3.1415"/>
+  </joint>
+
+  <joint name="body2_joint" type="revolute">
+    <parent link="body1_link"/>
+    <child  link="body2_link"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 0.101" rpy="0 0 0"/>
+    <limit lower="-0" upper="3.15" effort="0" velocity="3.1415"/>
+  </joint>
+
+  <joint name="body3_joint" type="revolute">
+    <parent link="body2_link"/>
+    <child  link="body3_link"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="-0.480 -0. 0" rpy="0 0 0"/>
+    <limit lower="-3.15" upper="0" effort="0" velocity="3.1415"/>
+  </joint>
+
+    <joint name="body4_joint" type="revolute">
+    <parent link="body3_link"/>
+    <child  link="body4_link"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0.56235 0 0.0443" rpy="0 0 0"/>
+    <limit lower="-3.15" upper="3.15" effort="0" velocity="3.1415"/>
+  </joint>
+
+  <joint name="body5_joint" type="revolute">
+    <parent link="body4_link"/>
+    <child  link="body5_link"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0.042 0 0.045" rpy="0 0 0"/>
+    <limit lower="-3.15" upper="3.15" effort="0" velocity="3.1415"/>
+  </joint>
+
+  <joint name="body6_joint" type="revolute">
+    <parent link="body5_link"/>
+    <child  link="body6_link"/>
+    <axis xyz="1 0 0"/>
+    <origin xyz="0.05 0 0.033" rpy="0 0 0"/>
+    <limit lower="-3.14159265" upper="3.14159265" effort="0" velocity="3.1415"/>
+  </joint>
+
+</robot>

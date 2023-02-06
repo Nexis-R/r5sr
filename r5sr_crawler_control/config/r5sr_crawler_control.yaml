@@ -1,0 +1,21 @@
+epos:
+  ros__parameters:
+    device_name: "EPOS4"
+    protocol: "MAXON SERIAL V2"
+    interface: "USB"
+    portname: "USB0"
+
+    use_sub_device: true
+    sub_device_name: "EPOS4"
+    sub_device_protocol: "CANopen"
+
+    auto_enable: true
+    dataout_freq: 10
+
+    motor_id: [2]
+    motor_id_on_sub: [3,4,5,6,7]
+
+r5sr_crawler_control:
+  ros__parameters:
+    wheel_diameter : 0.14
+    wheel_base : 0.25

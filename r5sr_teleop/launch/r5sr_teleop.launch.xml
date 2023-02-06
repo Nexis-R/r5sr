@@ -1,0 +1,47 @@
+<launch>
+  <node pkg="joy" exec="joy_node" name="joy_raw_node">
+    <remap from="joy" to="joy_raw" />
+    <param from="$(find-pkg-share r5sr_teleop)/config/r5sr_teleop.yaml" />
+  </node>
+  <node pkg="r5sr_teleop" exec="remap_joy">
+    <remap from="joy" to="joy_raw" />
+    <remap from="out" to="joy" />
+  </node>
+  <node pkg="teleop_twist_joy" exec="teleop_node">
+    <param from="$(find-pkg-share r5sr_teleop)/config/r5sr_teleop.yaml" />
+  </node>
+
+  <node pkg="r5sr_crawler_control" exec="r5sr_crawler_control">
+    <param from="$(find-pkg-share r5sr_crawler_control)/config/r5sr_crawler_control.yaml" />
+
+    <remap from="/command_crawler_left" to="/epos/motor5/move_with_velocity" />
+    <remap from="/command_crawler_right" to="/epos/motor4/move_with_velocity" />
+
+    <remap from="/command_flipper_left_front" to="/epos/motor2/move_with_velocity" />
+    <remap from="/command_flipper_right_front" to="/epos/motor3/move_with_velocity" />
+    <remap from="/command_flipper_left_back" to="/epos/motor6/move_with_velocity" />
+    <remap from="/command_flipper_right_back" to="/epos/motor7/move_with_velocity" />
+  </node>
+
+  <node pkg="image_transport" exec="republish" name="repub_hand_camera" args="compressed raw">
+    <remap from="in/compressed" to="hand_camera/image_raw/compressed" />
+    <remap from="out" to="hand_camera/image_raw/uncompressed" />
+  </node>
+
+  <node pkg="image_transport" exec="republish" name="repub_vision_front_camera" args="compressed raw">
+    <remap from="in/compressed" to="vision_front_camera/image_raw/compressed" />
+    <remap from="out" to="vision_front_camera/image_raw/uncompressed" />
+  </node>
+
+  <node pkg="image_transport" exec="republish" name="repub_vision_rear_camera" args="compressed raw">
+    <remap from="in/compressed" to="vision_rear_camera/image_raw/compressed" />
+    <remap from="out" to="vision_rear_camera/image_raw/uncompressed" />
+  </node>
+
+  <node pkg="image_transport" exec="republish" name="repub_fisheye_front_camera" args="compressed raw">
+    <remap from="in/compressed" to="fisheye_front_camera/image_raw/compressed" />
+    <remap from="out" to="fisheye_front_camera/image_raw/uncompressed" />
+  </node>
+
+  <include file="$(find-pkg-share r5sr_moveit_config)/launch/r5sr_servo_teleop.launch.py" />
+</launch>
