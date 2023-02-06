@@ -66,12 +66,18 @@ void RemapJoy::handle_joy(const sensor_msgs::msg::Joy::SharedPtr joy) {
     buttons_repub.push_back(buttons_repub[1]);
     buttons_repub.push_back(buttons_repub[2]);
     buttons_repub.push_back(buttons_repub[3]);
+    buttons_repub.push_back(buttons_repub[4]);
+    buttons_repub.push_back(buttons_repub[5]);
 
     buttons_repub[0] = 0;
     buttons_repub[1] = 0;
     buttons_repub[2] = 0;
     buttons_repub[3] = 0;
+    buttons_repub[4] = 0;
+    buttons_repub[5] = 0;
   } else {
+    buttons_repub.push_back(0);
+    buttons_repub.push_back(0);
     buttons_repub.push_back(0);
     buttons_repub.push_back(0);
     buttons_repub.push_back(0);
