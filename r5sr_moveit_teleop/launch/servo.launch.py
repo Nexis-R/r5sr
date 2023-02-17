@@ -43,6 +43,8 @@ def generate_launch_description():
     # Get parameters for the Servo node
     servo_yaml = load_yaml("r5sr_moveit_teleop", "config/r5sr_simulated_config.yaml")
     servo_params = {"moveit_servo": servo_yaml}
+    servo_yaml_sub = load_yaml("r5sr_moveit_teleop", "config/r5sr_simulated_config_sub.yaml")
+    servo_params_sub = {"moveit_servo": servo_yaml_sub}
 
     # RViz
     rviz_config_file = (
@@ -86,15 +88,21 @@ def generate_launch_description():
         ],
     )
 
-    arm_controller_spawner = Node(
+    main_arm_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["main_arm_controller", "-c", "/controller_manager"],
     )
 
+    sub_arm_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["sub_arm_controller", "-c", "/controller_manager"],
+    )
+
     # Launch as much as possible in components
     container = ComposableNodeContainer(
-        name="moveit_servo_demo_container",
+        name="moveit_servo_container",
         namespace="/",
         package="rclcpp_components",
         executable="component_container_mt",
@@ -128,11 +136,11 @@ def generate_launch_description():
                 plugin="r5sr_moveit_teleop::JoyToServo",
                 name="controller_to_servo_node",
             ),
-            # ComposableNode(
-            #     package="joy",
-            #     plugin="joy::Joy",
-            #     name="joy_node",
-            # ),
+            ComposableNode(
+                package="r5sr_moveit_teleop",
+                plugin="r5sr_moveit_teleop::SubManipulatorControl",
+                name="sub_manipulator_control_node",
+            ),
         ],
         output="screen",
     )
@@ -147,15 +155,30 @@ def generate_launch_description():
             moveit_config.robot_description_semantic,
             moveit_config.robot_description_kinematics,
         ],
+        name="servo_node",
         output="screen",
     )
+
+    # servo_node_sub = Node(
+    #     package="moveit_servo",
+    #     executable="servo_node_main",
+    #     parameters=[
+    #         servo_params_sub,
+    #         moveit_config.robot_description,
+    #         moveit_config.robot_description_semantic,
+    #         moveit_config.robot_description_kinematics,
+    #     ],
+    #     name="servo_node_sub",
+    #     output="screen",
+    # )
 
     return LaunchDescription(
         [
             rviz_node,
             ros2_control_node,
             joint_state_broadcaster_spawner,
-            arm_controller_spawner,
+            main_arm_controller_spawner,
+            sub_arm_controller_spawner,
             servo_node,
             container,
         ]
