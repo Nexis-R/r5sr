@@ -17,13 +17,13 @@
     <node pkg="usb_cam" exec="usb_cam_node_exe" name="vision_front_camera"
         namespace="vision_front_camera">
         <param from="$(find-pkg-share r5sr_bringup)/config/r5sr_camera.yaml" />
-        <remap from="ns" to="/visoin_front_camera" />
+        <remap from="ns" to="/vision_front_camera" />
     </node>
 
     <node pkg="usb_cam" exec="usb_cam_node_exe" name="vision_rear_camera"
         namespace="vision_rear_camera">
         <param from="$(find-pkg-share r5sr_bringup)/config/r5sr_camera.yaml" />
-        <remap from="ns" to="/visoin_rear_camera" />
+        <remap from="ns" to="/vision_rear_camera" />
     </node>
 
     <node pkg="usb_cam" exec="usb_cam_node_exe" name="fisheye_front_camera"

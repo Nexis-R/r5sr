@@ -23,8 +23,13 @@ find_package(control_msgs REQUIRED)
 find_package(control_toolbox REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(trajectory_msgs REQUIRED)
 find_package(moveit_msgs REQUIRED)
 find_package(rclcpp_components REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+find_package(tf2_eigen REQUIRED)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
   rclcpp
@@ -34,13 +39,22 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   sensor_msgs
   control_msgs
   control_toolbox
+  trajectory_msgs
   moveit_msgs
   geometry_msgs
+  tf2
+  tf2_ros
+  tf2_geometry_msgs
+  tf2_eigen
 )
 
 add_library(joystick_servo SHARED src/joystick_servo.cpp)
 ament_target_dependencies(joystick_servo ${THIS_PACKAGE_INCLUDE_DEPENDS})
 rclcpp_components_register_nodes(joystick_servo "r5sr_moveit_teleop::JoyToServo")
+
+add_library(sub_manipulator_control SHARED src/sub_manipulator_control.cpp)
+ament_target_dependencies(sub_manipulator_control ${THIS_PACKAGE_INCLUDE_DEPENDS})
+rclcpp_components_register_nodes(sub_manipulator_control "r5sr_moveit_teleop::SubManipulatorControl")
 
 install(
   TARGETS
@@ -51,6 +65,24 @@ install(
   RUNTIME DESTINATION bin
   INCLUDES DESTINATION include
 )
+
+install(
+  TARGETS
+  sub_manipulator_control
+  EXPORT export_${PROJECT_NAME}
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME})
+
+install(DIRECTORY
+  config
+  DESTINATION share/${PROJECT_NAME})
 
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})

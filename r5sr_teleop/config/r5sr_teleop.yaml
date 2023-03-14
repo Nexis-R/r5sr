@@ -1,6 +1,7 @@
-joy:
+joy_raw_node:
   ros__parameters:
-    coalesce_interval_ms: 0.01
+    coalesce_interval: 0.01
+    deadzone: 0.1
     
 teleop_twist_joy_node:
   ros__parameters:

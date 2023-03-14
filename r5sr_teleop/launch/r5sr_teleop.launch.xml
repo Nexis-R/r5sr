@@ -43,5 +43,5 @@
     <remap from="out" to="fisheye_front_camera/image_raw/uncompressed" />
   </node>
 
-  <include file="$(find-pkg-share r5sr_moveit_config)/launch/r5sr_servo_teleop.launch.py" />
+  <include file="$(find-pkg-share r5sr_moveit_teleop)/launch/servo.launch.py" />
 </launch>

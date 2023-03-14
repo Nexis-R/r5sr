@@ -19,7 +19,11 @@
   <depend>control_toolbox</depend>
   <depend>sensor_msgs</depend>
   <depend>geometry_msgs</depend>
+  <depend>trajectory_msgs</depend>
   <depend>rclcpp_components</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>r5sr_moveit_config</depend>
 
   <export>
     <build_type>ament_cmake</build_type>

@@ -10,46 +10,46 @@ default_acceleration_scaling_factor: 0.1
 joint_limits:
   body1_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415
+    max_velocity: 3.1415000000000002
     has_acceleration_limits: false
     max_acceleration: 0
   body2_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415
+    max_velocity: 3.1415000000000002
     has_acceleration_limits: false
     max_acceleration: 0
   body3_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415
+    max_velocity: 3.1415000000000002
     has_acceleration_limits: false
     max_acceleration: 0
   body4_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415
+    max_velocity: 3.1415000000000002
     has_acceleration_limits: false
     max_acceleration: 0
   body5_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415
+    max_velocity: 3.1415000000000002
     has_acceleration_limits: false
     max_acceleration: 0
   body6_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415
+    max_velocity: 3.1415000000000002
     has_acceleration_limits: false
     max_acceleration: 0
   vision_arm_body1_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415
+    max_velocity: 3.1415000000000002
     has_acceleration_limits: false
     max_acceleration: 0
   vision_arm_body2_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415
+    max_velocity: 3.1415000000000002
     has_acceleration_limits: false
     max_acceleration: 0
   vision_arm_body3_joint:
     has_velocity_limits: true
-    max_velocity: 3.1415
+    max_velocity: 3.1415000000000002
     has_acceleration_limits: false
     max_acceleration: 0

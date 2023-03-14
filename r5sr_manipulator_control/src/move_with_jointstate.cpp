@@ -63,9 +63,7 @@ void MoveWithJointState::handle_joint_state(
 
   for (size_t i = 0; i < size; i++) {
     const std::string& name = joint_state->name.at(i);
-    if (name == "body0_joint_yaw" || name == "vision_arm_body1_joint" ||
-        name == "vision_arm_body2_joint" || name == "vision_arm_body3_joint")
-      continue;
+    if (name == "body0_joint_yaw") continue;
     const auto& [model, id, offset_degree, coef] =
         jointname_id_model_map.at(name);
     const auto& [addr_torque_enable, addr_goal_position, pulse_per_rev] =
@@ -117,47 +115,4 @@ void MoveWithJointState::handle_joy(
   packetHandler->write4ByteTxRx(portHandler.get(), hand_id,
                                 std::get<1>(model_addr_map.at(XH430)),
                                 hand_pulse);
-
-  // vision_arm
-  const float vision_servo_step_deg = 10.0;
-
-  const int vision_arm_body1_joint_axis_index = 12;
-  const int vision_arm_body2_joint_up_index = 14;
-  const int vision_arm_body2_joint_down_index = 11;
-  const int vision_arm_body3_joint_left_index = 13;
-  const int vision_arm_body3_joint_right_index = 12;
-
-  const float& body1_axis = axes[vision_arm_body1_joint_axis_index];
-  if (body1_axis > 0.5) {
-    std::get<0>(vision_angle) += vision_servo_step_deg;
-  } else if (body1_axis < -0.5) {
-    std::get<0>(vision_angle) -= vision_servo_step_deg;
-  }
-  if (buttons[vision_arm_body2_joint_up_index]) {
-    std::get<1>(vision_angle) += vision_servo_step_deg;
-  } else if (buttons[vision_arm_body2_joint_down_index]) {
-    std::get<1>(vision_angle) -= vision_servo_step_deg;
-  }
-  if (buttons[vision_arm_body3_joint_left_index]) {
-    std::get<2>(vision_angle) += vision_servo_step_deg;
-  } else if (buttons[vision_arm_body3_joint_right_index]) {
-    std::get<2>(vision_angle) -= vision_servo_step_deg;
-  }
-
-  std::array<std::tuple<std::string, float>, 3> vision_loop_map = {
-      {{"vision_arm_body1_joint", std::get<0>(vision_angle)},
-       {"vision_arm_body2_joint", std::get<1>(vision_angle)},
-       {"vision_arm_body3_joint", std::get<2>(vision_angle)}}};
-  for (auto& [joint_name, angle_deg] : vision_loop_map) {
-    const auto& [model, id, offset, coef] =
-        jointname_id_model_map.at(joint_name);
-    const auto& [addr_torque_enable, goal_addr, pulse_per_rev] =
-        model_addr_map.at(model);
-    const auto target_rad = angle_deg * (M_PI / 180.0);
-    const int32_t target_pulse =
-        (int32_t)((int32_t)pulse_per_rev / (float)(2 * M_PI) *
-                  (float)target_rad);
-    packetHandler->write4ByteTxRx(portHandler.get(), id, goal_addr,
-                                  target_pulse);
-  }
 }

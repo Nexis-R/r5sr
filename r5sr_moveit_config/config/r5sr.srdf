@@ -9,7 +9,7 @@
     <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
-    <group name="r5sr_arm">
+    <group name="main_arm">
         <joint name="body0_joint_yaw"/>
         <joint name="body1_joint"/>
         <joint name="body2_joint"/>
@@ -17,18 +17,12 @@
         <joint name="body4_joint"/>
         <joint name="body5_joint"/>
         <joint name="body6_joint"/>
+        <chain base_link="base_link" tip_link="body6_link"/>
     </group>
-    <group name="r5sr_vision_arm">
-        <joint name="body0_joint_yaw"/>
-        <joint name="body1_joint"/>
-        <joint name="body2_joint"/>
-        <joint name="body3_joint"/>
-        <joint name="body4_joint"/>
+    <group name="sub_arm">
         <joint name="vision_arm_body1_joint"/>
         <joint name="vision_arm_body2_joint"/>
         <joint name="vision_arm_body3_joint"/>
+        <chain base_link="body4_link" tip_link="vision_arm_body3_link"/>
     </group>
-    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="hand" parent_link="body6_link" group="r5sr_arm"/>
-    <end_effector name="vision" parent_link="vision_arm_body3_link" group="r5sr_vision_arm"/>
 </robot>
