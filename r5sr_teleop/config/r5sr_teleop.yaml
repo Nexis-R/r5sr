@@ -23,3 +23,10 @@ teleop_twist_joy_node:
       yaw: -1.0
     scale_angular_turbo:
       yaw: -1.0
+
+flir_ax8_rtsp:
+  ros__parameters:
+    ip_addr: "192.168.1.22"
+    encoding: "mpeg4"
+    text_overlay: "off"
+    rate_hz: 5

@@ -23,12 +23,17 @@
     <remap from="/command_flipper_right_back" to="/epos/motor7/move_with_velocity" />
   </node>
 
+  <node pkg="r5sr_teleop" exec="flir_ax8_rtsp">
+    <param from="$(find-pkg-share r5sr_teleop)/config/r5sr_teleop.yaml" />
+  </node>
+
   <node pkg="image_transport" exec="republish" name="repub_hand_camera" args="compressed raw">
     <remap from="in/compressed" to="hand_camera/image_raw/compressed" />
     <remap from="out" to="hand_camera/image_raw/uncompressed" />
   </node>
 
-  <node pkg="image_transport" exec="republish" name="repub_vision_front_camera" args="compressed raw">
+  <node pkg="image_transport" exec="republish" name="repub_vision_front_camera"
+    args="compressed raw">
     <remap from="in/compressed" to="vision_front_camera/image_raw/compressed" />
     <remap from="out" to="vision_front_camera/image_raw/uncompressed" />
   </node>
@@ -38,7 +43,8 @@
     <remap from="out" to="vision_rear_camera/image_raw/uncompressed" />
   </node>
 
-  <node pkg="image_transport" exec="republish" name="repub_fisheye_front_camera" args="compressed raw">
+  <node pkg="image_transport" exec="republish" name="repub_fisheye_front_camera"
+    args="compressed raw">
     <remap from="in/compressed" to="fisheye_front_camera/image_raw/compressed" />
     <remap from="out" to="fisheye_front_camera/image_raw/uncompressed" />
   </node>
