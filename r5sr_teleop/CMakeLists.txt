@@ -17,6 +17,7 @@ find_package(ament_cmake_auto REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(OpenCV REQUIRED)
 
 ament_auto_find_build_dependencies()
 
@@ -26,6 +27,10 @@ ament_auto_add_library(remap_joy_lib SHARED
 
 ament_auto_add_executable(remap_joy
   src/remap_joy_node.cpp)
+
+ament_auto_add_executable(flir_ax8_rtsp
+  include/r5sr_teleop/flir_ax8_rtsp.hpp
+  src/flir_ax8_rtsp.cpp)
 
 install(DIRECTORY
   launch
