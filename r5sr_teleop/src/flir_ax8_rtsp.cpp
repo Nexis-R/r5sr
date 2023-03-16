@@ -2,10 +2,10 @@
 
 namespace r5sr_teleop {
 FlirAx8Rtsp::FlirAx8Rtsp() : Node("flir_ax8_rtsp") {
-  this->declare_parameter("ip_addr", "192.168.1.22");
+  this->declare_parameter("ip_addr", "192.168.1.3");
   this->declare_parameter("encoding", "mpeg4");
   this->declare_parameter("text_overlay", "off");
-  this->declare_parameter("rate_hz", 5);
+  this->declare_parameter("rate_hz", 10);
 
   image_pub =
       this->create_publisher<sensor_msgs::msg::Image>("filr_ax8_raw", 1);
@@ -21,7 +21,7 @@ FlirAx8Rtsp::FlirAx8Rtsp() : Node("flir_ax8_rtsp") {
 
     timer = this->create_wall_timer(
         std::chrono::milliseconds(1000 /
-                                  this->get_parameter("rate_hz").as_int()),
+                                  (this->get_parameter("rate_hz").as_int() * 2)),
         std::bind(&FlirAx8Rtsp::handle_image, this));
   }
 }
