@@ -30,8 +30,8 @@ const static std::map<std::string, std::tuple<Model, uint8_t, float, float>>
                            {"body4_joint", {H42, 5, -45.0, (24.0/20.0)}},
                            {"body5_joint", {H42, 6, 0.0, 1.0}},
                            {"body6_joint", {H42, 7, 0.0, -1.0}},
-                           {"vision_arm_body1_joint", {H42, 9, 80.0, -1.0}},
-                           {"vision_arm_body2_joint", {XH430, 10, 175.0, -1.0}},
+                           {"vision_arm_body1_joint", {H42, 9, 80.0, 1.0}},
+                           {"vision_arm_body2_joint", {XH430, 10, 175.0, 1.0}},
                            {"vision_arm_body3_joint", {XH430, 11, 180.0, -1.0}},
                            {"hand", {XH430, 8, 0.0, 0.0}}};
 
