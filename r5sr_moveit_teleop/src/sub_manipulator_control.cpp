@@ -15,6 +15,7 @@ class SubManipulatorControl : public rclcpp::Node {
  public:
   SubManipulatorControl(const rclcpp::NodeOptions& options)
       : Node("sub_manipulator_control", options) {
+    pitch_correct = 0.0;
     pitch_root_command = 0.0;
     pitch_tip_command = 0.0;
     yaw_tip_command = 0.0;
@@ -62,18 +63,24 @@ class SubManipulatorControl : public rclcpp::Node {
   }
 
   void timer_callback() {
-    geometry_msgs::msg::TransformStamped body3_to_body4_tf;
+    geometry_msgs::msg::TransformStamped body3_to_bodyv1_tf;
     try {
-      body3_to_body4_tf = tf_buffer->lookupTransform("body4_link", "body3_link",
+      body3_to_bodyv1_tf = tf_buffer->lookupTransform("vision_arm_body1_link", "body3_link",
                                                      tf2::TimePointZero);
     } catch (const tf2::TransformException& ex) {
       RCLCPP_INFO(this->get_logger(), "Could not transform");
       return;
     }
 
-    double roll_34, pitch_34, yaw_34;
-    tf2::getEulerYPR(body3_to_body4_tf.transform.rotation, yaw_34, pitch_34,
-                     roll_34);
+    double roll_31, pitch_31, yaw_31;
+    tf2::getEulerYPR(body3_to_bodyv1_tf.transform.rotation, yaw_31, pitch_31,
+                     roll_31);
+    if (yaw_31 < -3.0) {
+      pitch_31 = M_PI_2 + (M_PI_2 - pitch_31);
+    }
+    if (yaw_31 > 3.0) {
+      pitch_31 = -M_PI_2 + (-M_PI_2 - pitch_31);
+    }
 
     geometry_msgs::msg::TransformStamped base_to_vision1_tf;
     try {
@@ -87,11 +94,21 @@ class SubManipulatorControl : public rclcpp::Node {
     double yaw_v1, pitch_v1, roll_v1;
     tf2::getEulerYPR(base_to_vision1_tf.transform.rotation, yaw_v1, pitch_v1,
                      roll_v1);
+    if (yaw_v1 < -3.0) {
+      pitch_v1 = M_PI_2 + (M_PI_2 - pitch_v1);
+    }
+    if (yaw_v1 > 3.0) {
+      pitch_v1 = -M_PI_2 + (-M_PI_2 - pitch_v1);
+    }
 
     const float speed_coef = 0.03;
     pitch_root_position += pitch_root_command * speed_coef;
     pitch_tip_position += pitch_tip_command * speed_coef;
     yaw_tip_position += yaw_tip_command * speed_coef;
+
+    if( pitch_31 > 1.5 ) {
+      pitch_correct += pitch_31 - 1.5;
+    }
 
     trajectory_msgs::msg::JointTrajectory joint_trajectory;
     joint_trajectory.header.stamp.sec = 0;
@@ -103,7 +120,7 @@ class SubManipulatorControl : public rclcpp::Node {
     joint_trajectory.joint_names.push_back("vision_arm_body3_joint");
 
     trajectory_msgs::msg::JointTrajectoryPoint joint_trajectory_point;
-    joint_trajectory_point.positions.push_back(pitch_34 + pitch_root_position);
+    joint_trajectory_point.positions.push_back(pitch_root_position + pitch_correct);
     joint_trajectory_point.positions.push_back(pitch_v1 + pitch_tip_position);
     joint_trajectory_point.positions.push_back(yaw_tip_position);
     joint_trajectory_point.time_from_start.sec = 0;
@@ -112,6 +129,8 @@ class SubManipulatorControl : public rclcpp::Node {
     joint_trajectory.points.push_back(joint_trajectory_point);
 
     trajecory_pub->publish(joint_trajectory);
+
+    RCLCPP_INFO(this->get_logger(), "yaw_v1 = %f, roll_v1 = %f,  pitch_v1 = %f",yaw_v1, roll_v1, pitch_v1);
   }
 
   rclcpp::Publisher<trajectory_msgs::msg::JointTrajectory>::SharedPtr
@@ -120,6 +139,7 @@ class SubManipulatorControl : public rclcpp::Node {
   rclcpp::TimerBase::SharedPtr timer;
   std::shared_ptr<tf2_ros::TransformListener> tf_listener{nullptr};
   std::unique_ptr<tf2_ros::Buffer> tf_buffer;
+  float pitch_correct;
   float pitch_root_command;
   float pitch_tip_command;
   float yaw_tip_command;

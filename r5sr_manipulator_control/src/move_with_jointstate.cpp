@@ -7,7 +7,7 @@ using std::placeholders::_1;
 
 MoveWithJointState::MoveWithJointState()
     : Node("MoveWithJointState"),
-      hand_pulse(-1000),
+      hand_pulse(1000),
       vision_angle(
           {std::get<2>(jointname_id_model_map.at("vision_arm_body1_joint")),
            std::get<2>(jointname_id_model_map.at("vision_arm_body2_joint")),
@@ -92,7 +92,7 @@ void MoveWithJointState::handle_joy(
 
   const int hand_id = 8;
 
-  const int pulse_step = 200;
+  const int pulse_step = 400;
   const int min_limit = -3000;
   const int max_limit = 3000;
   const float current_limit = 300.0;  // mA
