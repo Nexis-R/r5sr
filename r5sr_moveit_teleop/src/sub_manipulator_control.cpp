@@ -65,8 +65,8 @@ class SubManipulatorControl : public rclcpp::Node {
   void timer_callback() {
     geometry_msgs::msg::TransformStamped body3_to_bodyv1_tf;
     try {
-      body3_to_bodyv1_tf = tf_buffer->lookupTransform("vision_arm_body1_link", "body3_link",
-                                                     tf2::TimePointZero);
+      body3_to_bodyv1_tf = tf_buffer->lookupTransform(
+          "vision_arm_body1_link", "body3_link", tf2::TimePointZero);
     } catch (const tf2::TransformException& ex) {
       RCLCPP_INFO(this->get_logger(), "Could not transform");
       return;
@@ -106,7 +106,7 @@ class SubManipulatorControl : public rclcpp::Node {
     pitch_tip_position += pitch_tip_command * speed_coef;
     yaw_tip_position += yaw_tip_command * speed_coef;
 
-    if( pitch_31 > 1.5 ) {
+    if (pitch_31 > 1.5) {
       pitch_correct += pitch_31 - 1.5;
     }
 
@@ -120,7 +120,8 @@ class SubManipulatorControl : public rclcpp::Node {
     joint_trajectory.joint_names.push_back("vision_arm_body3_joint");
 
     trajectory_msgs::msg::JointTrajectoryPoint joint_trajectory_point;
-    joint_trajectory_point.positions.push_back(pitch_root_position + pitch_correct);
+    joint_trajectory_point.positions.push_back(pitch_root_position +
+                                               pitch_correct);
     joint_trajectory_point.positions.push_back(pitch_v1 + pitch_tip_position);
     joint_trajectory_point.positions.push_back(yaw_tip_position);
     joint_trajectory_point.time_from_start.sec = 0;
@@ -129,8 +130,6 @@ class SubManipulatorControl : public rclcpp::Node {
     joint_trajectory.points.push_back(joint_trajectory_point);
 
     trajecory_pub->publish(joint_trajectory);
-
-    RCLCPP_INFO(this->get_logger(), "yaw_v1 = %f, roll_v1 = %f,  pitch_v1 = %f",yaw_v1, roll_v1, pitch_v1);
   }
 
   rclcpp::Publisher<trajectory_msgs::msg::JointTrajectory>::SharedPtr

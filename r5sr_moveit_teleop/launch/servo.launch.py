@@ -41,14 +41,14 @@ def generate_launch_description():
     )
 
     # Get parameters for the Servo node
-    servo_yaml = load_yaml("r5sr_moveit_teleop", "config/r5sr_simulated_config.yaml")
+    servo_yaml = load_yaml("r5sr_moveit_teleop",
+                           "config/r5sr_simulated_config.yaml")
     servo_params = {"moveit_servo": servo_yaml}
-    servo_yaml_sub = load_yaml("r5sr_moveit_teleop", "config/r5sr_simulated_config_sub.yaml")
-    servo_params_sub = {"moveit_servo": servo_yaml_sub}
 
     # RViz
     rviz_config_file = (
-        get_package_share_directory("r5sr_description") + "/rviz/r5sr_servo_teleop.rviz"
+        get_package_share_directory(
+            "r5sr_teleop") + "/rviz/r5sr_teleop.rviz"
     )
     rviz_node = Node(
         package="rviz2",
@@ -107,18 +107,17 @@ def generate_launch_description():
         package="rclcpp_components",
         executable="component_container_mt",
         composable_node_descriptions=[
-            # Example of launching Servo as a node component
-            # Assuming ROS2 intraprocess communications works well, this is a more efficient way.
-            # ComposableNode(
-            #     package="moveit_servo",
-            #     plugin="moveit_servo::ServoServer",
-            #     name="servo_server",
-            #     parameters=[
-            #         servo_params,
-            #         moveit_config.robot_description,
-            #         moveit_config.robot_description_semantic,
-            #     ],
-            # ),
+            ComposableNode(
+                package="moveit_servo",
+                plugin="moveit_servo::ServoNode",
+                name="servo_node",
+                parameters=[
+                    servo_params,
+                    moveit_config.robot_description,
+                    moveit_config.robot_description_semantic,
+                    moveit_config.robot_description_kinematics,
+                ],
+            ),
             ComposableNode(
                 package="robot_state_publisher",
                 plugin="robot_state_publisher::RobotStatePublisher",
@@ -129,7 +128,8 @@ def generate_launch_description():
                 package="tf2_ros",
                 plugin="tf2_ros::StaticTransformBroadcasterNode",
                 name="static_tf2_broadcaster",
-                parameters=[{"child_frame_id": "/base_link", "frame_id": "/world"}],
+                parameters=[
+                    {"child_frame_id": "/base_link", "frame_id": "/world"}],
             ),
             ComposableNode(
                 package="r5sr_moveit_teleop",
@@ -141,36 +141,14 @@ def generate_launch_description():
                 plugin="r5sr_moveit_teleop::SubManipulatorControl",
                 name="sub_manipulator_control_node",
             ),
+            ComposableNode(
+                package="r5sr_moveit_teleop",
+                plugin="r5sr_moveit_teleop::PresetPose",
+                name="preset_pose_node",
+            ),
         ],
         output="screen",
     )
-    # Launch a standalone Servo node.
-    # As opposed to a node component, this may be necessary (for example) if Servo is running on a different PC
-    servo_node = Node(
-        package="moveit_servo",
-        executable="servo_node_main",
-        parameters=[
-            servo_params,
-            moveit_config.robot_description,
-            moveit_config.robot_description_semantic,
-            moveit_config.robot_description_kinematics,
-        ],
-        name="servo_node",
-        output="screen",
-    )
-
-    # servo_node_sub = Node(
-    #     package="moveit_servo",
-    #     executable="servo_node_main",
-    #     parameters=[
-    #         servo_params_sub,
-    #         moveit_config.robot_description,
-    #         moveit_config.robot_description_semantic,
-    #         moveit_config.robot_description_kinematics,
-    #     ],
-    #     name="servo_node_sub",
-    #     output="screen",
-    # )
 
     return LaunchDescription(
         [
@@ -179,7 +157,6 @@ def generate_launch_description():
             joint_state_broadcaster_spawner,
             main_arm_controller_spawner,
             sub_arm_controller_spawner,
-            servo_node,
             container,
         ]
     )

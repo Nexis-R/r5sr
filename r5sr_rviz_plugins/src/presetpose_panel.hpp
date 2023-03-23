@@ -7,12 +7,9 @@
 #include <rclcpp/rclcpp.hpp>
 #include <rviz_common/panel.hpp>
 
-#include "std_msgs/msg/bool.hpp"
 #endif
 
-#include <moveit/move_group_interface/move_group_interface.h>
-
-#include <geometry_msgs/msg/pose.hpp>
+#include <std_srvs/srv/empty.hpp>
 
 namespace r5sr_rviz_plugins {
 class PresetposePanel : public rviz_common::Panel {
@@ -25,9 +22,10 @@ class PresetposePanel : public rviz_common::Panel {
   virtual void save(rviz_common::Config config) const;
 
  protected:
-  void move_to(const geometry_msgs::msg::Pose &pose);
   rclcpp::Node::SharedPtr node;
-  moveit::planning_interface::MoveGroupInterfaceUniquePtr move_group_interface;
+  rclcpp::Client<std_srvs::srv::Empty>::SharedPtr move_to_default_pose_client;
+  rclcpp::Client<std_srvs::srv::Empty>::SharedPtr move_to_floor_pose_client;
+  rclcpp::Client<std_srvs::srv::Empty>::SharedPtr move_to_high_pose_client;
 };
 }  // namespace r5sr_rviz_plugins
 

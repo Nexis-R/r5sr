@@ -8,62 +8,40 @@ PresetposePanel::PresetposePanel(QWidget* parent) : rviz_common::Panel(parent) {
   auto* layout = new QVBoxLayout;
 
   auto initial_pose_button = new QPushButton("initial", this);
+  auto floor_pose_button = new QPushButton("floor", this);
   auto high_pose_button = new QPushButton("high", this);
 
   layout->addWidget(initial_pose_button);
+  layout->addWidget(floor_pose_button);
   layout->addWidget(high_pose_button);
+
   this->setLayout(layout);
 
   connect(initial_pose_button, &QPushButton::clicked, this, [&]() {
-    auto const target_pose = [] {
-      geometry_msgs::msg::Pose msg;
-      msg.orientation.w = 1.000;
-      msg.position.x = 0.174;
-      msg.position.y = 0.000;
-      msg.position.z = 0.223;
-      return msg;
-    }();
+    move_to_default_pose_client->async_send_request(
+        std::make_shared<std_srvs::srv::Empty::Request>());
+  });
 
-    this->move_to(target_pose);
+  connect(floor_pose_button, &QPushButton::clicked, this, [&]() {
+    move_to_floor_pose_client->async_send_request(
+        std::make_shared<std_srvs::srv::Empty::Request>());
   });
 
   connect(high_pose_button, &QPushButton::clicked, this, [&]() {
-    auto const target_pose = [] {
-      geometry_msgs::msg::Pose msg;
-      msg.orientation.w = 1.000;
-      msg.position.x = 0.174;
-      msg.position.y = 0.000;
-      msg.position.z = 0.423;
-      return msg;
-    }();
-
-    this->move_to(target_pose);
+    move_to_high_pose_client->async_send_request(
+        std::make_shared<std_srvs::srv::Empty::Request>());
   });
 }
 
 void PresetposePanel::onInitialize() {
   node =
       this->getDisplayContext()->getRosNodeAbstraction().lock()->get_raw_node();
-  move_group_interface =
-      std::make_unique<moveit::planning_interface::MoveGroupInterface>(
-          moveit::planning_interface::MoveGroupInterface(node, "r5sr_arm"));
-}
-
-void PresetposePanel::move_to(const geometry_msgs::msg::Pose& pose) {
-  move_group_interface->setPoseTarget(pose);
-
-  // Create a plan to that target pose
-  auto const [success, plan] = [&] {
-    moveit::planning_interface::MoveGroupInterface::Plan msg;
-    auto const ok = static_cast<bool>(move_group_interface->plan(msg));
-    return std::make_pair(ok, msg);
-  }();
-
-  // Execute the plan
-  if (success) {
-    move_group_interface->execute(plan);
-  } else {
-  }
+  move_to_default_pose_client = node->create_client<std_srvs::srv::Empty>(
+      "preset_pose_node/move_to_default_pose");
+  move_to_floor_pose_client = node->create_client<std_srvs::srv::Empty>(
+      "preset_pose_node/move_to_floor_pose");
+  move_to_high_pose_client = node->create_client<std_srvs::srv::Empty>(
+      "preset_pose_node/move_to_high_pose");
 }
 
 void PresetposePanel::save(rviz_common::Config config) const {

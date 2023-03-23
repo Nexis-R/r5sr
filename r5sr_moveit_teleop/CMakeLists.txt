@@ -56,6 +56,10 @@ add_library(sub_manipulator_control SHARED src/sub_manipulator_control.cpp)
 ament_target_dependencies(sub_manipulator_control ${THIS_PACKAGE_INCLUDE_DEPENDS})
 rclcpp_components_register_nodes(sub_manipulator_control "r5sr_moveit_teleop::SubManipulatorControl")
 
+add_library(preset_pose SHARED src/preset_pose.cpp)
+ament_target_dependencies(preset_pose ${THIS_PACKAGE_INCLUDE_DEPENDS})
+rclcpp_components_register_nodes(preset_pose "r5sr_moveit_teleop::PresetPose")
+
 install(
   TARGETS
   joystick_servo
@@ -69,6 +73,16 @@ install(
 install(
   TARGETS
   sub_manipulator_control
+  EXPORT export_${PROJECT_NAME}
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+
+install(
+  TARGETS
+  preset_pose
   EXPORT export_${PROJECT_NAME}
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
