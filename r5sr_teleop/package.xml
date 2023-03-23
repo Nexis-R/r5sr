@@ -18,6 +18,10 @@
   <depend>OpenCV</depend>
   <exec_depend>joy</exec_depend>
   <exec_depend>teleop_twist_joy</exec_depend>
+  <exec_depend>rqt_gui</exec_depend>
+  <exec_depend>realsense2_camera</exec_depend>
+  <exec_depend>r5sr_crawler_control</exec_depend>
+  <exec_depend>r5sr_moveit_teleop</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

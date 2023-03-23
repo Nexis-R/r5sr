@@ -44,4 +44,8 @@ install(DIRECTORY
   rviz
   DESTINATION share/${PROJECT_NAME})
 
+install(DIRECTORY
+  rqt
+  DESTINATION share/${PROJECT_NAME})
+
 ament_auto_package()
