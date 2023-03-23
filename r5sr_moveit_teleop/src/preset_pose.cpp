@@ -32,6 +32,10 @@ class PresetPose : public rclcpp::Node {
         "~/move_to_floor_pose",
         std::bind(&PresetPose::moveToFloorPoseCallback, this,
                   std::placeholders::_1, std::placeholders::_2));
+    move_to_high_pose_service = this->create_service<std_srvs::srv::Empty>(
+        "~/move_to_high_pose",
+        std::bind(&PresetPose::moveToHighPoseCallback, this,
+                  std::placeholders::_1, std::placeholders::_2));
   }
 
  private:
@@ -85,9 +89,17 @@ class PresetPose : public rclcpp::Node {
                      -0.6195460128516843, 1.4261574842731133,
                      -0.0003898799515165366, -0.005937718504569254});
   }
+  void moveToHighPoseCallback(
+      const std_srvs::srv::Empty::Request::SharedPtr request,
+      const std_srvs::srv::Empty::Response::SharedPtr response) {
+    moveToPositions({-2.972387139899503e-05, 0.38043264539814864,
+                     -0.6489122199681415, 0.27611256317117366,
+                     -1.96441695861549e-06, -2.9917298595345435e-05});
+  }
 
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr move_to_default_pose_service;
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr move_to_floor_pose_service;
+  rclcpp::Service<std_srvs::srv::Empty>::SharedPtr move_to_high_pose_service;
   rclcpp::Publisher<trajectory_msgs::msg::JointTrajectory>::SharedPtr
       joint_trajectory_pub;
   rclcpp::Client<std_srvs::srv::Trigger>::SharedPtr stop_servo_client;

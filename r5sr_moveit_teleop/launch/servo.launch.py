@@ -48,7 +48,7 @@ def generate_launch_description():
     # RViz
     rviz_config_file = (
         get_package_share_directory(
-            "r5sr_description") + "/rviz/r5sr_servo_teleop.rviz"
+            "r5sr_teleop") + "/rviz/r5sr_teleop.rviz"
     )
     rviz_node = Node(
         package="rviz2",

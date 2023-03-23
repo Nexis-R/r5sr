@@ -25,6 +25,7 @@ class PresetposePanel : public rviz_common::Panel {
   rclcpp::Node::SharedPtr node;
   rclcpp::Client<std_srvs::srv::Empty>::SharedPtr move_to_default_pose_client;
   rclcpp::Client<std_srvs::srv::Empty>::SharedPtr move_to_floor_pose_client;
+  rclcpp::Client<std_srvs::srv::Empty>::SharedPtr move_to_high_pose_client;
 };
 }  // namespace r5sr_rviz_plugins
 

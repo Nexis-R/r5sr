@@ -9,9 +9,12 @@ PresetposePanel::PresetposePanel(QWidget* parent) : rviz_common::Panel(parent) {
 
   auto initial_pose_button = new QPushButton("initial", this);
   auto floor_pose_button = new QPushButton("floor", this);
+  auto high_pose_button = new QPushButton("high", this);
 
   layout->addWidget(initial_pose_button);
   layout->addWidget(floor_pose_button);
+  layout->addWidget(high_pose_button);
+
   this->setLayout(layout);
 
   connect(initial_pose_button, &QPushButton::clicked, this, [&]() {
@@ -23,6 +26,11 @@ PresetposePanel::PresetposePanel(QWidget* parent) : rviz_common::Panel(parent) {
     move_to_floor_pose_client->async_send_request(
         std::make_shared<std_srvs::srv::Empty::Request>());
   });
+
+  connect(high_pose_button, &QPushButton::clicked, this, [&]() {
+    move_to_high_pose_client->async_send_request(
+        std::make_shared<std_srvs::srv::Empty::Request>());
+  });
 }
 
 void PresetposePanel::onInitialize() {
@@ -32,6 +40,8 @@ void PresetposePanel::onInitialize() {
       "preset_pose_node/move_to_default_pose");
   move_to_floor_pose_client = node->create_client<std_srvs::srv::Empty>(
       "preset_pose_node/move_to_floor_pose");
+  move_to_high_pose_client = node->create_client<std_srvs::srv::Empty>(
+      "preset_pose_node/move_to_high_pose");
 }
 
 void PresetposePanel::save(rviz_common::Config config) const {
