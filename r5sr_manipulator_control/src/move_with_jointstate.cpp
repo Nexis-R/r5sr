@@ -46,8 +46,9 @@ MoveWithJointState::MoveWithJointState()
                               << ",  ping result: " << result);
   }
 
+  voltage_pub = this->create_publisher<std_msgs::msg::Float32>("~/voltage", 1);
   hand_current_pub =
-      this->create_publisher<std_msgs::msg::Float32>("hand_current", 1);
+      this->create_publisher<std_msgs::msg::Float32>("~/hand_current", 1);
 
   joint_state_sub = this->create_subscription<sensor_msgs::msg::JointState>(
       "/joint_states", 1,
@@ -83,7 +84,6 @@ void MoveWithJointState::handle_joint_state(
 void MoveWithJointState::handle_joy(
     const sensor_msgs::msg::Joy::SharedPtr joy) {
   const auto& buttons = joy->buttons;
-  const auto& axes = joy->axes;
   // hand
   const int open_button_index =
       this->get_parameter("open_button_index").as_int();
@@ -96,6 +96,14 @@ void MoveWithJointState::handle_joy(
   const int min_limit = -3000;
   const int max_limit = 3000;
   const float current_limit = 300.0;  // mA
+
+  uint16_t voltage_raw;
+  packetHandler->read2ByteTxRx(portHandler.get(), hand_id, 144, &voltage_raw);
+  const float voltage = voltage_raw * 0.1;  // V
+
+  std_msgs::msg::Float32 voltage_msg;
+  voltage_msg.data = voltage;
+  voltage_pub->publish(voltage_msg);
 
   uint16_t current_raw;
   packetHandler->read2ByteTxRx(portHandler.get(), hand_id, 126, &current_raw);
