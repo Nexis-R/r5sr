@@ -31,5 +31,4 @@
   </node>
 
   <include file="$(find-pkg-share r5sr_moveit_teleop)/launch/servo.launch.py" />
-  <include file="$(find-pkg-share realsense2_camera)/launch/rs_launch.py" />
 </launch>
