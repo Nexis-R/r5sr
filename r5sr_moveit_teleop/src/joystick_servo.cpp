@@ -53,9 +53,9 @@ bool convertJoyToCmd(const std::vector<float>& axes,
     joint->velocities.push_back(axes[D_PAD_Y]);
 
     joint->joint_names.push_back("body6_joint");
-    joint->velocities.push_back((buttons[Y] - buttons[A]) * 1.5);
+    joint->velocities.push_back((buttons[Y] - buttons[B]) * 1.5);
     joint->joint_names.push_back("body5_joint");
-    joint->velocities.push_back(buttons[15] - buttons[16]);
+    joint->velocities.push_back(buttons[17] - buttons[18]);
     return false;
   }
 
@@ -71,8 +71,8 @@ bool convertJoyToCmd(const std::vector<float>& axes,
   twist->twist.angular.y = axes[LEFT_STICK_Y];
   twist->twist.angular.x = axes[LEFT_STICK_X];
 
-  double roll_positive = buttons[RIGHT_BUMPER];
-  double roll_negative = -1 * (buttons[LEFT_BUMPER]);
+  double roll_positive = 1.5 * buttons[LEFT_BUMPER];
+  double roll_negative = -1.5 * (buttons[RIGHT_BUMPER]);
   twist->twist.angular.z = roll_positive + roll_negative;
 
   return true;
