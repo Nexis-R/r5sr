@@ -49,6 +49,7 @@ class MoveWithJointState : public rclcpp::Node {
   rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr joint_state_sub;
   rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_sub;
 
+  rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr voltage_pub;
   rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr hand_current_pub;
 
   void handle_joint_state(
