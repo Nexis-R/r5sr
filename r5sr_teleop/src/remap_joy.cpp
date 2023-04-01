@@ -13,6 +13,9 @@ RemapJoy::RemapJoy()
 
   teleop_mode_pub =
       this->create_publisher<std_msgs::msg::String>("teleop_mode", 1);
+  mode_overlay_pub =
+      this->create_publisher<rviz_2d_overlay_msgs::msg::OverlayText>(
+          "mode_overlay", 1);
   joy_pub = this->create_publisher<sensor_msgs::msg::Joy>("out", 1);
 }
 
@@ -136,4 +139,13 @@ void RemapJoy::handle_joy(const sensor_msgs::msg::Joy::SharedPtr joy) {
   std_msgs::msg::String mode_msg;
   mode_msg.data = teleop_mode;
   teleop_mode_pub->publish(mode_msg);
+
+  rviz_2d_overlay_msgs::msg::OverlayText overlay_text;
+  overlay_text.text = teleop_mode;
+  overlay_text.width = 300;
+  overlay_text.height = 100;
+  overlay_text.text_size = 30;
+  overlay_text.horizontal_alignment =
+      rviz_2d_overlay_msgs::msg::OverlayText::RIGHT;
+  mode_overlay_pub->publish(overlay_text);
 }
