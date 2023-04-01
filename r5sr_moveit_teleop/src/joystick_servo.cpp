@@ -45,15 +45,15 @@ bool convertJoyToCmd(const std::vector<float>& axes,
                      const std::vector<int>& buttons,
                      std::unique_ptr<geometry_msgs::msg::TwistStamped>& twist,
                      std::unique_ptr<control_msgs::msg::JointJog>& joint) {
-  if (buttons[A] || buttons[B] || buttons[X] || buttons[Y] || buttons[15] ||
-      buttons[16] || axes[D_PAD_X] || axes[D_PAD_Y]) {
+  if (buttons[A] || buttons[B] || buttons[X] || buttons[Y] || buttons[17] ||
+      buttons[18] || axes[D_PAD_X] || axes[D_PAD_Y]) {
     joint->joint_names.push_back("body1_joint");
     joint->velocities.push_back(axes[D_PAD_X]);
     joint->joint_names.push_back("body2_joint");
     joint->velocities.push_back(axes[D_PAD_Y]);
 
     joint->joint_names.push_back("body6_joint");
-    joint->velocities.push_back((buttons[Y] - buttons[B]) * 1.5);
+    joint->velocities.push_back((buttons[Y] - buttons[B]) * 2.0);
     joint->joint_names.push_back("body5_joint");
     joint->velocities.push_back(buttons[17] - buttons[18]);
     return false;
@@ -71,8 +71,8 @@ bool convertJoyToCmd(const std::vector<float>& axes,
   twist->twist.angular.y = axes[LEFT_STICK_Y];
   twist->twist.angular.x = axes[LEFT_STICK_X];
 
-  double roll_positive = 1.5 * buttons[LEFT_BUMPER];
-  double roll_negative = -1.5 * (buttons[RIGHT_BUMPER]);
+  double roll_positive = buttons[LEFT_BUMPER];
+  double roll_negative = -1 * (buttons[RIGHT_BUMPER]);
   twist->twist.angular.z = roll_positive + roll_negative;
 
   return true;
@@ -81,8 +81,7 @@ namespace r5sr_moveit_teleop {
 class JoyToServo : public rclcpp::Node {
  public:
   JoyToServo(const rclcpp::NodeOptions& options)
-      : Node("joy_to_twist_publisher", options),
-        frame_to_publish_(FRAME_ID) {
+      : Node("joy_to_twist_publisher", options), frame_to_publish_(FRAME_ID) {
     joy_sub_ = this->create_subscription<sensor_msgs::msg::Joy>(
         JOY_TOPIC, ROS_QUEUE_SIZE,
         std::bind(&JoyToServo::joyCB, this, std::placeholders::_1));
@@ -94,8 +93,8 @@ class JoyToServo : public rclcpp::Node {
     collision_pub_ = this->create_publisher<moveit_msgs::msg::PlanningScene>(
         "/planning_scene", 10);
 
-    servo_start_client_ = this->create_client<std_srvs::srv::Trigger>(
-        "/servo_node/start_servo");
+    servo_start_client_ =
+        this->create_client<std_srvs::srv::Trigger>("/servo_node/start_servo");
     servo_start_client_->wait_for_service(std::chrono::seconds(1));
     servo_start_client_->async_send_request(
         std::make_shared<std_srvs::srv::Trigger::Request>());
