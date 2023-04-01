@@ -14,7 +14,7 @@ MoveWithJointState::MoveWithJointState()
            std::get<2>(jointname_id_model_map.at("vision_arm_body3_joint"))}) {
   this->declare_parameter("portname", "/dev/ttyUSB-Dynamixel");
   this->declare_parameter("baudrate", 1'000'000);
-  this->declare_parameter("open_button_index", 1);
+  this->declare_parameter("open_button_index", 0);
   this->declare_parameter("close_button_index", 2);
 
   portHandler.reset(std::move(dynamixel::PortHandler::getPortHandler(

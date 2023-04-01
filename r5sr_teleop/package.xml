@@ -16,6 +16,7 @@
   <depend>std_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>OpenCV</depend>
+  <depend>rviz_2d_overlay_msgs</depend>
   <exec_depend>joy</exec_depend>
   <exec_depend>teleop_twist_joy</exec_depend>
   <exec_depend>rqt_gui</exec_depend>
