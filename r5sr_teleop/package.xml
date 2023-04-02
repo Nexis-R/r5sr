@@ -23,6 +23,8 @@
   <exec_depend>r5sr_crawler_control</exec_depend>
   <exec_depend>r5sr_moveit_teleop</exec_depend>
   <exec_depend>rviz_2d_overlay_plugins</exec_depend>
+  <exec_depend>audio_capture</exec_depend>
+  <exec_depend>audio_play</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
