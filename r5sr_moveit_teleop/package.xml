@@ -23,6 +23,9 @@
   <depend>rclcpp_components</depend>
   <depend>tf2</depend>
   <depend>tf2_ros</depend>
+  <depend>ros2_control</depend>
+  <depend>ros2_controllers</depend>
+  <depend>moveit_servo</depend>
   <depend>r5sr_moveit_config</depend>
 
   <export>
