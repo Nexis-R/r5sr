@@ -13,6 +13,8 @@
   <exec_depend>zbar_ros</exec_depend>
   <exec_depend>epos</exec_depend>
   <exec_depend>r5sr_manipulator_control</exec_depend>
+  <exec_depend>audio_capture</exec_depend>
+  <exec_depend>audio_play</exec_depend>
   
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

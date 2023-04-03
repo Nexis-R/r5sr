@@ -32,4 +32,11 @@
         <remap from="ns" to="/fisheye_front_camera" />
     </node>
 
+    <include file="$(find-pkg-share audio_capture)/launch/capture.launch.xml">
+        <arg name="ns" value="audio_robot_to_ope" />
+    </include>
+    <include file="$(find-pkg-share audio_play)/launch/play.launch.xml">
+        <arg name="ns" value="audio_ope_to_robot" />
+    </include>
+
 </launch>
