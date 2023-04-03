@@ -32,7 +32,7 @@ const static std::map<std::string, std::tuple<Model, uint8_t, float, float>>
                            {"body6_joint", {H42, 7, 0.0, -1.0}},
                            {"vision_arm_body1_joint", {H42, 9, 35.0, 1.0}},
                            {"vision_arm_body2_joint", {XH430, 10, 130.0, -1.0}},
-                           {"vision_arm_body3_joint", {XH430, 11, 180.0, -1.0}},
+                           {"vision_arm_body3_joint", {XH430, 11, 180.0, 1.0}},
                            {"hand", {XH430, 8, 0.0, 0.0}}};
 
 class MoveWithJointState : public rclcpp::Node {
