@@ -32,6 +32,10 @@
         <remap from="ns" to="/fisheye_front_camera" />
     </node>
 
+    <node pkg="realsense2_camera" exec="realsense2_camera_node" name="realsense" >
+        <remap from="ns" to="realsense" />
+    </node>
+
     <include file="$(find-pkg-share audio_capture)/launch/capture.launch.xml">
         <arg name="ns" value="audio_robot_to_ope" />
     </include>
