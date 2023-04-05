@@ -8,16 +8,6 @@
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-
-  <exec_depend>r5sr_bringup</exec_depend>
-  <exec_depend>r5sr_crawler_control</exec_depend>
-  <exec_depend>r5sr_description</exec_depend>
-  <exec_depend>r5sr_manipulator_control</exec_depend>
-  <exec_depend>r5sr_moveit_config</exec_depend>
-  <exec_depend>r5sr_moveit_teleop</exec_depend>
-  <exec_depend>r5sr_rviz_plugins</exec_depend>
-  <exec_depend>r5sr_teleop</exec_depend>
-
   <export>
     <build_type>ament_cmake</build_type>
   </export>

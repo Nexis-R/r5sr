@@ -1,0 +1,4 @@
+  - git: {local-name: r5sr_control_teleop, uri: git@gitlab.com:nexis2/r5sr/r5sr_control_teleop.git, version: develop}
+  - git: {local-name: audio_common, uri: git@gitlab.com:nexis2/r5sr/audio_common.git, version: humble_without_sound_play}
+  - git: {local-name: rviz_2d_overlay_plugins, uri: https://github.com/teamspatzenhirn/rviz_2d_overlay_plugins.git, version: main}
+  - git: {local-name: yolo_darknet_ros, uri: git@github.com:Ar-Ray-code/darknet_ros.git, version: foxy}
