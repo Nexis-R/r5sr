@@ -1,2 +1,0 @@
-  - git: {local-name: epos, uri: git@gitlab.com:kimuralab_opensource/ros2/epos.git, version: master}
-  - git: {local-name: zbar_ros, uri: https://github.com/ros-drivers/zbar_ros.git, version: foxy}
