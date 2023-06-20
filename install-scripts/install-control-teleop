@@ -4,3 +4,48 @@ cd "$(dirname "$0")"
 
 sh ./install-apt-tools
 sh ./install-epos-command-library
+
+#add aliases to ~/.bash_aliases
+#copy ~/.bash_aliases to here
+cp ~/.bash_aliases bash_aliases
+
+file="bash_aliases"
+replacement="install-aliases"
+
+#set marker
+start_marker="# Start Nexis-R ros shell setting"
+end_marker="# End Nexis-R ros shell setting"
+
+# load replacement text
+replacement_text=$(<"$replacement")
+
+temp_file="modified_$file"
+modded=false 
+
+# if the alias of Nexis has already exist, replace newer one for older. 
+modify=false
+rm -f "$temp_file"
+while IFS= read -r line; do
+  if [[ $line == *"$start_marker"* ]]; then
+    modify=true
+    echo "$line" >> "$temp_file"
+  elif [[ $line == *"$end_marker"* ]]; then
+    modify=false
+    modded=true
+    # repalce
+    echo "$replacement_text" >> "$temp_file"
+    echo "$line" >> "$temp_file"
+  elif [[ $modify == false ]]; then
+    echo "$line" >> "$temp_file"
+  fi
+done < "$file"
+
+#if alias of Nexis doesn't exist, add marker and the alias of Nexis
+if [[ $modded == false ]]; then
+    echo -e "\n" >> "$temp_file"
+    echo "# Start Nexis-R ros shell setting" >> "$temp_file"
+    echo "$replacement_text" >> "$temp_file"
+    echo "# End Nexis-R ros shell setting" >> "$temp_file"
+fi
+# move temporary file to original file
+mv "$temp_file" "$file"

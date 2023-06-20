@@ -1,0 +1,21 @@
+alias rt-imu-conf='ros2 lifecycle set /rt_usb_9axisimu_driver configure'
+alias rt-imu-act='ros2 lifecycle set /rt_usb_9axisimu_driver activate'
+
+
+cd /home/nexisr/r5srws
+source install/setup.bash
+alias teleop='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop.launch.xml'
+alias teleop-vsting='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop_vsting.launch.xml'
+alias teleop-exp='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop_exp.launch.xml'
+alias teleop-subsimple='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop_subsimple.launch.xml'
+alias readiness='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop_vsting_readiness.launch.xml'
+
+
+echo -e "\033[0;32m<ssh robot -X>  to connect nuc for robot\033[0m"
+echo -e "\033[0;32m<teleop>        to run <ros2 launch r5sr_teleop r5sr_teleop.launch.xml>\033[0m"
+echo -e "\033[0;32m<teleop-vsting> to run <ros2 launch r5sr_teleop r5sr_teleop_vsting.launch.xml>\033[0m"
+echo -e "\033[0;32m<teleop-exp>    to run <ros2 launch r5sr_teleop r5sr_teleop_exp.launch.xml>\033[0m"
+echo -e "\033[0;32m<teleop-subsimple>     to run <ros2 launch r5sr_teleop r5sr_teleop_subsimple.launch.xml>\033[0m"
+echo -e "\033[0;32m<readiness>     to run <ros2 launch r5sr_teleop r5sr_teleop_vsting_readiness.launch.xml>\033[0m"
+echo -e "\033[0;32m<teleop-subsimple>     to run <ros2 launch r5sr_teleop r5sr_teleop_subsimple.launch.xml>\033[0m"
+echo -e "\033[0;32m<ping nexisrnuc2.local> to check connecting nuc\033[0m"
