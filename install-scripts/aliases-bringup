@@ -1,0 +1,6 @@
+  #alias check-usb='/home/nexisr/scripts/check_usb.sh'
+
+
+  alias bringup='ros2 launch r5sr_bringup r5sr_bringup.launch.xml'
+  alias bringup-vsting='ros2 launch r5sr_bringup r5sr_bringup_vsting.launch.xml'
+  alias bringup-exp='ros2 launch r5sr_bringup r5sr_bringup_exp.launch.xml'
