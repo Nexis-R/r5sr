@@ -7,3 +7,11 @@ alias teleop-vsting='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleo
 alias teleop-exp='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop_exp.launch.xml'
 alias teleop-subsimple='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop_subsimple.launch.xml'
 alias readiness='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop_vsting_readiness.launch.xml'
+
+alias bringup='ros2 launch r5sr_bringup r5sr_bringup.launch.xml'
+alias bringup-vsting='ros2 launch r5sr_bringup r5sr_bringup_vsting.launch.xml'
+alias bringup-exp='ros2 launch r5sr_bringup r5sr_bringup_exp.launch.xml'
+
+alias ssh-bringup='ssh robot -X bringup'
+alias ssh-bringup-vsting='ssh robot -X bringup-vsting'
+alias ssh-bringup-exp='ssh robot -X bringup-exp'
