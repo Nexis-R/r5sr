@@ -1,0 +1,13 @@
+alias rt-imu-conf='ros2 lifecycle set /rt_usb_9axisimu_driver configure'
+alias rt-imu-act='ros2 lifecycle set /rt_usb_9axisimu_driver activate'
+
+
+alias teleop='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop.launch.xml'
+alias teleop-vsting='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop_vsting.launch.xml'
+alias teleop-exp='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop_exp.launch.xml'
+alias teleop-subsimple='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop_subsimple.launch.xml'
+alias readiness='rt-imu-conf; rt-imu-act; ros2 launch r5sr_teleop r5sr_teleop_vsting_readiness.launch.xml'
+
+alias bringup='ssh robot -X bringup'
+alias bringup-vsting='ssh robot -X bringup-vsting'
+alias bringup-exp='ssh robot -X bringup-exp'
