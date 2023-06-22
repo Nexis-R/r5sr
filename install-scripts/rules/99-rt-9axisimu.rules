@@ -1,0 +1,1 @@
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2b72", ATTRS{idProduct}=="0003", ATTRS{serial}=="9AXIS-00", SYMLINK+="ttyACM-RT-9axisimu", MODE="0666"
