@@ -7,6 +7,8 @@
   <maintainer email="robohase01@gmail.com">hasegawa</maintainer>
   <license>TODO: License declaration</license>
 
+  <depend>r5sr_interface</depend>
+
   <buildtool_depend>ament_cmake</buildtool_depend>
   <export>
     <build_type>ament_cmake</build_type>

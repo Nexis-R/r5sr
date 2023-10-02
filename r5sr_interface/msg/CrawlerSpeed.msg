@@ -1,0 +1,5 @@
+int32 NORMAL = 0
+int32 FAST = 1
+int32 SLOW = 2
+int32 SUPER_SLOW = 3
+
