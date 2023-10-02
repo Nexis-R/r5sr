@@ -1,0 +1,3 @@
+int32 CRAWLER = 0
+int32 MANIPULATOR = 1
+int32 STOP = 2
