@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: r5sr_description
+    relative_path: urdf/r5sr.urdf.xacro
+  srdf:
+    relative_path: config/r5sr.srdf
+  package_settings:
+    author_name: NexisR
+    author_email: nexis2016@gmail.com
+    generated_timestamp: 1698772170
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
