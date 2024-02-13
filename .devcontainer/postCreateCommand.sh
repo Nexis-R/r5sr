@@ -8,6 +8,5 @@ colcon mixin add default https://raw.githubusercontent.com/colcon/colcon-mixin-r
 colcon mixin update default
 
 sudo rosdep init
-just dep
 
 just
