@@ -14,7 +14,6 @@
   <depend>tf2_ros</depend>
   <depend>tf2_geometry_msgs</depend>
   <depend>cv_bridge</depend>
-  <depend>python-pyzbar-pip</depend>
   <depend>python3-numpy</depend>
   <depend>python3-opencv</depend>
   <test_depend>ament_copyright</test_depend>

@@ -1,1 +1,9 @@
 .vscode
+.cache
+
+src/*
+!src/r5sr*/
+
+build
+install
+log
