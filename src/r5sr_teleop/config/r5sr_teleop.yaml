@@ -3,20 +3,13 @@ joy:
     coalesce_interval_ms: 10
     autorepeat_rate: 100.0
     deadzone: 0.1
-    
+
 flir_ax8_rtsp:
   ros__parameters:
     ip_addr: "192.168.1.3"
     encoding: "mpeg4"
     text_overlay: "off"
     rate_hz: 10
-
-crawler_control:
-  ros__parameters:
-    wheel_diameter : 0.14
-    wheel_base : 0.25
-    flipper_gear_ratio : 4500.0
-    crawler_gear_ratio : 60.0
 
 darknet_ros:
   ros__parameters:

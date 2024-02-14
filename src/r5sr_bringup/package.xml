@@ -13,7 +13,10 @@
   <exec_depend>usb_cam</exec_depend>
   <exec_depend>zbar_ros</exec_depend>
   <exec_depend>epos</exec_depend>
+  <exec_depend>r5sr_description</exec_depend>
   <exec_depend>r5sr_manipulator_control</exec_depend>
+  <exec_depend>r5sr_moveit_teleop</exec_depend>
+  <exec_depend>r5sr_crawler_control</exec_depend>
   <exec_depend>r5sr_detection_3d</exec_depend>
   <exec_depend>audio_capture</exec_depend>
   <exec_depend>audio_play</exec_depend>

@@ -120,25 +120,6 @@ def generate_launch_description():
                         ('flippers', 'flippers_rpm'),
                     ],
                     ),
-            ComposableNode(
-                    package='r5sr_crawler_control',
-                    plugin='crawler_control::Crawler_Control',
-                    name='crawler_control',
-                    parameters=[teleop_yaml_file],
-                    remappings=[
-                        ('/command_crawler_left', '/epos/motor4/move_with_velocity'),
-                        ('/command_crawler_right',
-                         '/epos/motor5/move_with_velocity'),
-                        ('/command_flipper_left_front',
-                         '/epos/motor7/move_to_position'),
-                        ('/command_flipper_right_front',
-                         '/epos/motor6/move_to_position'),
-                        ('/command_flipper_left_back',
-                         '/epos/motor3/move_to_position'),
-                        ('/command_flipper_right_back',
-                         '/epos/motor2/move_to_position'),
-                    ],
-                    ),
         ],
     )
 
@@ -202,11 +183,6 @@ def generate_launch_description():
         ],
     )
 
-    servo_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [get_file_path('r5sr_teleop', 'launch/servo.launch.py')]),
-    )
-
     return LaunchDescription(
         [
             use_darknet_arg,
@@ -215,12 +191,13 @@ def generate_launch_description():
             vsting_arg,
 
             base_control_container,
+
             battery_alert_node,
             flir_node,
+
             darknet_group,
             audio_group,
 
-            servo_launch,
 
             OpaqueFunction(function=rqt_opaque_function),
             OpaqueFunction(function=rviz_opaque_function),
