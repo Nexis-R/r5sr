@@ -21,8 +21,7 @@ def generate_launch_description():
         'wait_imu_to_init': True,
         'map_always_update': True,
         'subscribe_scan': False,
-        }]
-        
+    }]
 
     remappings = [
         ('imu', '/imu/data'),

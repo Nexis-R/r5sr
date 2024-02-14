@@ -45,4 +45,3 @@ fisheye_front_camera/fisheye_front_camera:
     image_height: 480
     camera_name: "fisheye_front_camera"
     .image_raw.jpeg_quality: 40
-

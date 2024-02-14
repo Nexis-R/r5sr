@@ -15,7 +15,7 @@
       "distro": "humble"
     },
     "ghcr.io/devcontainers-contrib/features/apt-packages:1": {
-      "packages": "ros-humble-rmw-cyclonedds-cpp,python3-colcon-mixin,mold,ccache,ninja-build,clangd,clang-format,cmake-format",
+      "packages": "ros-humble-rmw-cyclonedds-cpp,python3-colcon-mixin,mold,ccache,ninja-build,clangd,clang-format,cmake-format,python3-pep8",
       "installsAfter": [
         "ghcr.io/adamlm/devcontainer-features/ros2"
       ]
@@ -30,7 +30,8 @@
         "skellock.just",
         "cheshirekow.cmake-format",
         "redhat.vscode-xml",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "ms-python.autopep8"
       ]
     }
   }

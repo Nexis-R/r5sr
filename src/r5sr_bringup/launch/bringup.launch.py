@@ -29,7 +29,8 @@ def camera_opaque_function(context):
             "r5sr_bringup", "config/r5sr_camera_vsting.yaml"
         )
     else:
-        camera_yaml_file = get_file_path("r5sr_bringup", "config/r5sr_camera.yaml")
+        camera_yaml_file = get_file_path(
+            "r5sr_bringup", "config/r5sr_camera.yaml")
 
     camera_group = GroupAction(
         condition=IfCondition(LaunchConfiguration("use_camera")),
@@ -95,7 +96,8 @@ def generate_launch_description():
         "vsting", default_value="false", description="vsting mode"
     )
 
-    bringup_yaml_file = get_file_path("r5sr_bringup", "config/r5sr_bringup.yaml")
+    bringup_yaml_file = get_file_path(
+        "r5sr_bringup", "config/r5sr_bringup.yaml")
 
     # Nodes
     epos_node = Node(
@@ -122,13 +124,13 @@ def generate_launch_description():
                 PythonLaunchDescriptionSource(
                     get_file_path("audio_capture", "launch/capture.launch.py")
                 ),
-                launch_arguments={"ns": "audio_robot_to_ope"},
+                launch_arguments=[("ns", "audio_robot_to_ope")],
             ),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     get_file_path("audio_play", "launch/play.launch.py")
                 ),
-                launch_arguments={"ns": "audio_ope_to_robot"},
+                launch_arguments=[("ns", "audio_ope_to_robot")],
             ),
         ],
     )
@@ -149,7 +151,8 @@ def generate_launch_description():
             ),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
-                    get_file_path("r5sr_bringup", "launch/rtabmap_realsense.launch.py")
+                    get_file_path("r5sr_bringup",
+                                  "launch/rtabmap_realsense.launch.py")
                 ),
             ),
             # The IMU frame is mising in TF tree, add it:

@@ -28,14 +28,13 @@ find_package(OpenCV REQUIRED)
 
 ament_auto_find_build_dependencies()
 
-add_library(joy2command_lib SHARED
-  src/joy2command.cpp)
-target_include_directories(joy2command_lib
-  PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+add_library(joy2command_lib SHARED src/joy2command.cpp)
+target_include_directories(
+  joy2command_lib PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                         $<INSTALL_INTERFACE:include>)
 rclcpp_components_register_nodes(joy2command_lib "r5sr_teleop::Joy2Command")
-ament_target_dependencies(joy2command_lib
+ament_target_dependencies(
+  joy2command_lib
   rclcpp
   rclcpp_components
   r5sr_interface
@@ -48,43 +47,29 @@ add_executable(joy2command_node src/joy2command_node.cpp)
 ament_target_dependencies(joy2command_node rclcpp)
 target_link_libraries(joy2command_node joy2command_lib)
 
-ament_auto_add_executable(flir_ax8_rtsp
-  include/r5sr_teleop/flir_ax8_rtsp.hpp
-  src/flir_ax8_rtsp.cpp)
+ament_auto_add_executable(flir_ax8_rtsp include/r5sr_teleop/flir_ax8_rtsp.hpp
+                          src/flir_ax8_rtsp.cpp)
 
 target_link_libraries(flir_ax8_rtsp ${OpenCV_LIBRARIES})
-  
+
 add_executable(alert_battery src/alert_battery.cpp)
 ament_target_dependencies(alert_battery rclcpp std_msgs rviz_2d_overlay_msgs)
 
-install(TARGETS
-  joy2command_lib
+install(
+  TARGETS joy2command_lib
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
-install(TARGETS
-  joy2command_node
-  DESTINATION lib/${PROJECT_NAME})
+install(TARGETS joy2command_node DESTINATION lib/${PROJECT_NAME})
 
-install(TARGETS
-  alert_battery
-  DESTINATION lib/${PROJECT_NAME}
-)
+install(TARGETS alert_battery DESTINATION lib/${PROJECT_NAME})
 
-install(DIRECTORY
-  launch
-  DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 
-install(DIRECTORY
-  config
-  DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY config DESTINATION share/${PROJECT_NAME})
 
-install(DIRECTORY
-  rviz
-  DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME})
 
-install(DIRECTORY
-  rqt
-  DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY rqt DESTINATION share/${PROJECT_NAME})
 
 ament_auto_package()

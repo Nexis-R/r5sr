@@ -13,12 +13,12 @@ epos:
     dataout_freq: 30
 
     motor_id: [6]
-    motor_id_on_sub: [2,3,4,5,7]
+    motor_id_on_sub: [2, 3, 4, 5, 7]
 
 r5sr_crawler_control:
   ros__parameters:
-    wheel_diameter : 0.14
-    wheel_base : 0.25
+    wheel_diameter: 0.14
+    wheel_base: 0.25
 
 rplidar:
   ros__parameters:
