@@ -196,7 +196,7 @@ def generate_launch_description():
 
     servo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            [get_file_path('r5sr_teleop', 'launch/servo.launch.py')]),
+            [get_file_path('r5sr_bringup', 'launch/servo.launch.py')]),
     )
 
     return LaunchDescription(

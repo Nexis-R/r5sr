@@ -3,6 +3,8 @@
 initial_positions:
   body_joint: 0
   elbow_joint: 0
+  crawler_left_joint: 0
+  crawler_right_joint: 0
   flipper_left_front_joint: 0
   flipper_left_rear_joint: 0
   flipper_right_front_joint: 0

@@ -32,6 +32,14 @@ build executor='sequential' mixin='ninja ccache mold clang release compile-comma
   source /opt/ros/{{ros_distro}}/setup.bash
   colcon build --symlink-install --executor {{executor}} --mixin {{mixin}} --event-handlers console_direct+
 
+teleop args='use_darknet:=false use_audio:=false': _cd
+  source install/setup.bash
+  ros2 launch r5sr_teleop teleop.launch.py {{args}}
+
+bringup args='use_camera:=true use_audio:=false use_slam:=false use_rplidar:=false': _cd
+  source install/setup.bash
+  ros2 launch r5sr_bringup bringup.launch.py {{args}}
+
 [confirm]
 clean: _cd
   -rm -rf build install log
