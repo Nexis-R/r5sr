@@ -5,12 +5,12 @@ SCRIPT_DIR=$(dirname "$0")
 if [ "$1" = "robot" ]; then
   # Install epos command library
   # Check existance
-  FILE_PATTERN="/opt/EposCmdLib_*/lib/v8/libEposCmd.so.*"
+  FILE_PATTERN="/opt/EposCmdLib_*/lib"
   if [ -e $FILE_PATTERN ]; then
     echo "Epos command library is already installed."
   else
     echo "Epos command library is not installed. Installing..."
-    SCRIPT_DIR/dependencies/epos_command_library.sh
+    ${SCRIPT_DIR}/dependencies/epos_command_library.sh
   fi
 
   # Install udev rules
@@ -35,12 +35,12 @@ colcon mixin update default
 echo "Adding settings to .bashrc..."
 # スクリプトファイルのあるディレクトリの絶対パスを取得
 ABS_DIR=$(
-  cd ${SCRIPT_DIR} &
+  cd ${SCRIPT_DIR}/.. &
   >/dev/null && pwd
 )
 
 # 'install/setup.bash'のフルパスを生成
-FULL_PATH="$SCRIPT_DIR/install/setup.bash"
+FULL_PATH="$ABS_DIR/install/setup.bash"
 
 # ~/.bashrc に追加する設定
 SETTINGS=(

@@ -31,7 +31,8 @@
         "cheshirekow.cmake-format",
         "redhat.vscode-xml",
         "redhat.vscode-yaml",
-        "ms-python.autopep8"
+        "ms-python.autopep8",
+        "foxundermoon.shell-format"
       ]
     }
   }
