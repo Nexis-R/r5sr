@@ -25,6 +25,7 @@
   <depend>cv_bridge</depend>
   <depend>python3-opencv</depend>
   <depend>rviz_2d_overlay_msgs</depend>
+  <exec_depend>foxglove_bridge</exec_depend>
   <exec_depend>ros2launch</exec_depend>
   <exec_depend>joy</exec_depend>
   <exec_depend>image_transport</exec_depend>
