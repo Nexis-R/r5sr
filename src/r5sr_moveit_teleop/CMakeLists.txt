@@ -32,68 +32,67 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(tf2_eigen REQUIRED)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
-  rclcpp
-  rclcpp_components
-  std_msgs
-  std_srvs
-  sensor_msgs
-  control_msgs
-  control_toolbox
-  trajectory_msgs
-  moveit_msgs
-  geometry_msgs
-  tf2
-  tf2_ros
-  tf2_geometry_msgs
-  tf2_eigen
-)
+    rclcpp
+    rclcpp_components
+    std_msgs
+    std_srvs
+    sensor_msgs
+    control_msgs
+    control_toolbox
+    trajectory_msgs
+    moveit_msgs
+    geometry_msgs
+    tf2
+    tf2_ros
+    tf2_geometry_msgs
+    tf2_eigen)
 
 add_library(sub_manipulator_control SHARED src/sub_manipulator_control.cpp)
-ament_target_dependencies(sub_manipulator_control ${THIS_PACKAGE_INCLUDE_DEPENDS})
-rclcpp_components_register_nodes(sub_manipulator_control "r5sr_moveit_teleop::SubManipulatorControl")
+ament_target_dependencies(sub_manipulator_control
+                          ${THIS_PACKAGE_INCLUDE_DEPENDS})
+rclcpp_components_register_nodes(sub_manipulator_control
+                                 "r5sr_moveit_teleop::SubManipulatorControl")
 
-add_library(sub_manipulator_simple_control SHARED src/sub_manipulator_control_simple.cpp)
-ament_target_dependencies(sub_manipulator_simple_control ${THIS_PACKAGE_INCLUDE_DEPENDS})
-rclcpp_components_register_nodes(sub_manipulator_simple_control "r5sr_moveit_teleop::SubManipulatorSimpleControl")
+add_library(sub_manipulator_simple_control SHARED
+            src/sub_manipulator_control_simple.cpp)
+ament_target_dependencies(sub_manipulator_simple_control
+                          ${THIS_PACKAGE_INCLUDE_DEPENDS})
+rclcpp_components_register_nodes(
+  sub_manipulator_simple_control
+  "r5sr_moveit_teleop::SubManipulatorSimpleControl")
 
 add_library(preset_pose SHARED src/preset_pose.cpp)
 ament_target_dependencies(preset_pose ${THIS_PACKAGE_INCLUDE_DEPENDS})
 rclcpp_components_register_nodes(preset_pose "r5sr_moveit_teleop::PresetPose")
 
 install(
-  TARGETS
-  sub_manipulator_control
+  TARGETS sub_manipulator_control
   EXPORT export_${PROJECT_NAME}
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
   RUNTIME DESTINATION bin
-  INCLUDES DESTINATION include
-)
+  INCLUDES
+  DESTINATION include)
 
 install(
-  TARGETS
-  sub_manipulator_simple_control
+  TARGETS sub_manipulator_simple_control
   EXPORT export_${PROJECT_NAME}
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
   RUNTIME DESTINATION bin
-  INCLUDES DESTINATION include
-)
-
+  INCLUDES
+  DESTINATION include)
 
 install(
-  TARGETS
-  preset_pose
+  TARGETS preset_pose
   EXPORT export_${PROJECT_NAME}
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
   RUNTIME DESTINATION bin
-  INCLUDES DESTINATION include
-)
+  INCLUDES
+  DESTINATION include)
 
-install(DIRECTORY
-  config
-  DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY config DESTINATION share/${PROJECT_NAME})
 
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})

@@ -20,57 +20,35 @@ find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rclcpp_components REQUIRED)
 
-add_library(r5sr_crawler_control SHARED
-  src/r5sr_crawler_control.cpp
-)
-target_include_directories(r5sr_crawler_control
-  PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-)
-
-rclcpp_components_register_nodes(r5sr_crawler_control "crawler_control::Crawler_Control")
-
-ament_target_dependencies(r5sr_crawler_control
-  rclcpp
-  std_msgs
-  sensor_msgs
-  geometry_msgs
-  rclcpp_components
-)
-
-target_link_libraries(r5sr_crawler_control
-)
-
-add_executable(r5sr_crawler_control_node
-  src/r5sr_crawler_control_node.cpp
-)
-ament_target_dependencies(r5sr_crawler_control_node
-  rclcpp
-)
-target_link_libraries(r5sr_crawler_control_node
+add_library(r5sr_crawler_control SHARED src/r5sr_crawler_control.cpp)
+target_include_directories(
   r5sr_crawler_control
-)
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+         $<INSTALL_INTERFACE:include>)
 
-install(TARGETS
-  r5sr_crawler_control
+rclcpp_components_register_nodes(r5sr_crawler_control
+                                 "crawler_control::Crawler_Control")
+
+ament_target_dependencies(r5sr_crawler_control rclcpp std_msgs sensor_msgs
+                          geometry_msgs rclcpp_components)
+
+target_link_libraries(r5sr_crawler_control)
+
+add_executable(r5sr_crawler_control_node src/r5sr_crawler_control_node.cpp)
+ament_target_dependencies(r5sr_crawler_control_node rclcpp)
+target_link_libraries(r5sr_crawler_control_node r5sr_crawler_control)
+
+install(
+  TARGETS r5sr_crawler_control
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
+  RUNTIME DESTINATION bin)
 
-install(DIRECTORY
-  launch
-  DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 
-install(DIRECTORY
-  config
-  DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY config DESTINATION share/${PROJECT_NAME})
 
-install(TARGETS
-  r5sr_crawler_control_node
-  DESTINATION lib/${PROJECT_NAME}
-) 
+install(TARGETS r5sr_crawler_control_node DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

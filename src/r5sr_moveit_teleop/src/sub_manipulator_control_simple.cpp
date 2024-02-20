@@ -1,6 +1,7 @@
 #include <tf2/utils.h>
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
+
 #include <chrono>
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/joy.hpp>
@@ -9,11 +10,14 @@
 
 using namespace std::chrono_literals;
 
-namespace r5sr_moveit_teleop {
-class SubManipulatorSimpleControl : public rclcpp::Node {
- public:
-  SubManipulatorSimpleControl(const rclcpp::NodeOptions& options)
-      : Node("sub_manipulator_control", options) {
+namespace r5sr_moveit_teleop
+{
+class SubManipulatorSimpleControl : public rclcpp::Node
+{
+public:
+  SubManipulatorSimpleControl(const rclcpp::NodeOptions & options)
+  : Node("sub_manipulator_control", options)
+  {
     pitch_correct = 0.0;
     pitch_root_command = 0.0;
     pitch_tip_command = 0.0;
@@ -23,24 +27,22 @@ class SubManipulatorSimpleControl : public rclcpp::Node {
     yaw_tip_position = 0.0;
 
     joy_sub = this->create_subscription<sensor_msgs::msg::Joy>(
-        "/joy", 1,
-        std::bind(&SubManipulatorSimpleControl::handle_joy, this,
-                  std::placeholders::_1));
+      "/joy", 1, std::bind(&SubManipulatorSimpleControl::handle_joy, this, std::placeholders::_1));
 
-    trajecory_pub =
-        this->create_publisher<trajectory_msgs::msg::JointTrajectory>(
-            "/overhead_arm_controller/joint_trajectory", 10);
-    timer = this->create_wall_timer(
-        50ms, std::bind(&SubManipulatorSimpleControl::timer_callback, this));
+    trajecory_pub = this->create_publisher<trajectory_msgs::msg::JointTrajectory>(
+      "/overhead_arm_controller/joint_trajectory", 10);
+    timer =
+      this->create_wall_timer(50ms, std::bind(&SubManipulatorSimpleControl::timer_callback, this));
   }
 
   ~SubManipulatorSimpleControl() override {}
 
- private:
-  void handle_joy(const sensor_msgs::msg::Joy::SharedPtr joy) {
+private:
+  void handle_joy(const sensor_msgs::msg::Joy::SharedPtr joy)
+  {
     pitch_root_command = joy->axes[12];
 
-    const auto& buttons = joy->buttons;
+    const auto & buttons = joy->buttons;
     if (buttons[13]) {
       pitch_tip_command = 1.0;
     } else if (buttons[15]) {
@@ -58,7 +60,8 @@ class SubManipulatorSimpleControl : public rclcpp::Node {
     }
   }
 
-  void timer_callback() {
+  void timer_callback()
+  {
     const float speed_coef = 0.03;
     pitch_root_position += pitch_root_command * speed_coef;
     pitch_tip_position += pitch_tip_command * speed_coef;
@@ -85,8 +88,7 @@ class SubManipulatorSimpleControl : public rclcpp::Node {
     trajecory_pub->publish(joint_trajectory);
   }
 
-  rclcpp::Publisher<trajectory_msgs::msg::JointTrajectory>::SharedPtr
-      trajecory_pub;
+  rclcpp::Publisher<trajectory_msgs::msg::JointTrajectory>::SharedPtr trajecory_pub;
   rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_sub;
   rclcpp::TimerBase::SharedPtr timer;
   float pitch_correct;

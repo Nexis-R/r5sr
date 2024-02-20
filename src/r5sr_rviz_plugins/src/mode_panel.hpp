@@ -9,19 +9,21 @@
 #include "std_msgs/msg/bool.hpp"
 #endif
 
-namespace r5sr_rviz_plugins {
+namespace r5sr_rviz_plugins
+{
 
-class ModePanel : public rviz_common::Panel {
+class ModePanel : public rviz_common::Panel
+{
   Q_OBJECT
- public:
-  ModePanel(QWidget *parent = nullptr);
+public:
+  ModePanel(QWidget * parent = nullptr);
 
   virtual void onInitialize();
-  virtual void load(const rviz_common::Config &config);
+  virtual void load(const rviz_common::Config & config);
   virtual void save(rviz_common::Config config) const;
 
- protected:
-  QTimer *timer;
+protected:
+  QTimer * timer;
   std_msgs::msg::Bool is_stopped;
   rclcpp::Node::SharedPtr node;
   rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr is_stopped_pub;

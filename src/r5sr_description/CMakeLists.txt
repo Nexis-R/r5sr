@@ -13,11 +13,6 @@ find_package(urdf REQUIRED)
 find_package(rviz2 REQUIRED)
 find_package(realsense2_description REQUIRED)
 
-install(DIRECTORY
-  meshes
-  urdf
-  launch
-  DESTINATION share/${PROJECT_NAME}
-)
+install(DIRECTORY meshes urdf launch DESTINATION share/${PROJECT_NAME})
 
 ament_package()

@@ -4,7 +4,8 @@ using namespace crawler_control;
 
 using std::placeholders::_1;
 
-Crawler_Control::Crawler_Control(const rclcpp::NodeOptions& options) : Node("r5sr_crawler_control", options)
+Crawler_Control::Crawler_Control(const rclcpp::NodeOptions & options)
+: Node("r5sr_crawler_control", options)
 {
   this->declare_parameter("wheel_diameter", 1.0);
   this->declare_parameter("wheel_base", 1.0);
@@ -16,24 +17,28 @@ Crawler_Control::Crawler_Control(const rclcpp::NodeOptions& options) : Node("r5s
   flipper_gear_ratio = this->get_parameter("flipper_gear_ratio").as_double();
   crawler_gear_ratio = this->get_parameter("crawler_gear_ratio").as_double();
 
-  twist_sub = this->create_subscription<geometry_msgs::msg::Twist>("/cmd_vel", 1,
-                                                                   std::bind(&Crawler_Control::handle_twist, this, _1));
+  twist_sub = this->create_subscription<geometry_msgs::msg::Twist>(
+    "/cmd_vel", 1, std::bind(&Crawler_Control::handle_twist, this, _1));
   jointstate_sub = this->create_subscription<sensor_msgs::msg::JointState>(
-      "/joint_states", 1, std::bind(&Crawler_Control::handle_jointstate, this, _1));
+    "/joint_states", 1, std::bind(&Crawler_Control::handle_jointstate, this, _1));
 
   crawler_left_pub = this->create_publisher<std_msgs::msg::Float32>("command_crawler_left", 1);
   crawler_right_pub = this->create_publisher<std_msgs::msg::Float32>("command_crawler_right", 1);
 
-  flipper_left_front_pub = this->create_publisher<std_msgs::msg::Int32>("command_flipper_left_front", 1);
-  flipper_right_front_pub = this->create_publisher<std_msgs::msg::Int32>("command_flipper_right_front", 1);
-  flipper_left_back_pub = this->create_publisher<std_msgs::msg::Int32>("command_flipper_left_back", 1);
-  flipper_right_back_pub = this->create_publisher<std_msgs::msg::Int32>("command_flipper_right_back", 1);
+  flipper_left_front_pub =
+    this->create_publisher<std_msgs::msg::Int32>("command_flipper_left_front", 1);
+  flipper_right_front_pub =
+    this->create_publisher<std_msgs::msg::Int32>("command_flipper_right_front", 1);
+  flipper_left_back_pub =
+    this->create_publisher<std_msgs::msg::Int32>("command_flipper_left_back", 1);
+  flipper_right_back_pub =
+    this->create_publisher<std_msgs::msg::Int32>("command_flipper_right_back", 1);
 }
 
 void Crawler_Control::handle_jointstate(const sensor_msgs::msg::JointState::SharedPtr msg)
 {
   const auto counts_per_revolution = 500;
-  const auto gear_ratio = 23.0*270;
+  const auto gear_ratio = 23.0 * 270;
 
   const auto rad_to_position = [counts_per_revolution, gear_ratio](const auto radians) {
     return radians * (counts_per_revolution * gear_ratio) / (2 * M_PI);
@@ -41,8 +46,7 @@ void Crawler_Control::handle_jointstate(const sensor_msgs::msg::JointState::Shar
 
   const auto find_position = [msg](const std::string joint_name) {
     auto it = std::find(msg->name.begin(), msg->name.end(), joint_name);
-    if (it != msg->name.end())
-    {
+    if (it != msg->name.end()) {
       int index = std::distance(msg->name.begin(), it);
       return msg->position[index];
     }
@@ -50,10 +54,10 @@ void Crawler_Control::handle_jointstate(const sensor_msgs::msg::JointState::Shar
   };
 
   std_msgs::msg::Int32 position;
-  position.set__data(-1*rad_to_position(find_position("flipper_left_front_joint")));
+  position.set__data(-1 * rad_to_position(find_position("flipper_left_front_joint")));
   flipper_left_front_pub->publish(position);
 
-  position.set__data(-1*rad_to_position(find_position("flipper_right_front_joint")));
+  position.set__data(-1 * rad_to_position(find_position("flipper_right_front_joint")));
   flipper_right_front_pub->publish(position);
 
   position.set__data(rad_to_position(find_position("flipper_left_rear_joint")));
@@ -76,10 +80,13 @@ void Crawler_Control::handle_twist(const geometry_msgs::msg::Twist::SharedPtr tw
 
   // Calculate the common term for how the angular velocity affects the wheels
   float angular_effect_on_wheels =
-      (((60 * angular_velocity) / (2 * M_PI)) * ((wheel_base * M_PI) / (wheel_diameter * M_PI))) * 4.0;
+    (((60 * angular_velocity) / (2 * M_PI)) * ((wheel_base * M_PI) / (wheel_diameter * M_PI))) *
+    4.0;
 
-  float left_wheel_speed_data = (linear_velocity_to_rpm + angular_effect_on_wheels) * crawler_gear_ratio;
-  float right_wheel_speed_data = (linear_velocity_to_rpm - angular_effect_on_wheels) * -crawler_gear_ratio;
+  float left_wheel_speed_data =
+    (linear_velocity_to_rpm + angular_effect_on_wheels) * crawler_gear_ratio;
+  float right_wheel_speed_data =
+    (linear_velocity_to_rpm - angular_effect_on_wheels) * -crawler_gear_ratio;
 
   left_wheel_speed.set__data(left_wheel_speed_data);
   right_wheel_speed.set__data(right_wheel_speed_data);

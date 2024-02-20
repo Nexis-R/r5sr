@@ -9,25 +9,27 @@
 #include "std_msgs/msg/string.hpp"
 #endif
 
-namespace r5sr_rviz_plugins {
+namespace r5sr_rviz_plugins
+{
 
-class DetectionPanel : public rviz_common::Panel {
+class DetectionPanel : public rviz_common::Panel
+{
   Q_OBJECT
- public:
-  DetectionPanel(QWidget *parent = nullptr);
+public:
+  DetectionPanel(QWidget * parent = nullptr);
 
   virtual void onInitialize();
-  virtual void load(const rviz_common::Config &config);
+  virtual void load(const rviz_common::Config & config);
   virtual void save(rviz_common::Config config) const;
 
- protected:
+protected:
   rclcpp::Node::SharedPtr node;
 
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr barcode_sub;
 
   void handle_barcode(const std_msgs::msg::String::SharedPtr msg);
 
-  QLabel *barcode_label;
+  QLabel * barcode_label;
 };
 
 }  // namespace r5sr_rviz_plugins

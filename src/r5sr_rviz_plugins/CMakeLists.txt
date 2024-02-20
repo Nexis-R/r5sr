@@ -23,39 +23,38 @@ find_package(pluginlib REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 find_package(std_msgs REQUIRED)
 find_package(std_srvs)
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(
+  Qt5
+  COMPONENTS Widgets
+  REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-add_library(${PROJECT_NAME} SHARED
-  src/mode_panel.cpp
-  src/detection_panel.cpp
-  src/presetpose_panel.cpp
-  src/timer_panel.cpp
-)
+add_library(${PROJECT_NAME} SHARED src/mode_panel.cpp src/detection_panel.cpp
+                                   src/presetpose_panel.cpp src/timer_panel.cpp)
 
-ament_target_dependencies(${PROJECT_NAME}
+ament_target_dependencies(
+  ${PROJECT_NAME}
   rclcpp
   rviz_common
   std_msgs
   std_srvs
   geometry_msgs
-  pluginlib
-)
+  pluginlib)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
 
 pluginlib_export_plugin_description_file(rviz_common plugins_description.xml)
 
-install(TARGETS
-  ${PROJECT_NAME}
+install(
+  TARGETS ${PROJECT_NAME}
   EXPORT ${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
-  INCLUDES DESTINATION include
-)
+  INCLUDES
+  DESTINATION include)
 
 ament_package()

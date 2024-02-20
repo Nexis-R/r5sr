@@ -10,11 +10,14 @@
 
 using namespace std::chrono_literals;
 
-namespace r5sr_moveit_teleop {
-class SubManipulatorControl : public rclcpp::Node {
- public:
-  SubManipulatorControl(const rclcpp::NodeOptions& options)
-      : Node("sub_manipulator_control", options) {
+namespace r5sr_moveit_teleop
+{
+class SubManipulatorControl : public rclcpp::Node
+{
+public:
+  SubManipulatorControl(const rclcpp::NodeOptions & options)
+  : Node("sub_manipulator_control", options)
+  {
     pitch_correct = 0.0;
     pitch_root_command = 0.0;
     pitch_tip_command = 0.0;
@@ -27,24 +30,21 @@ class SubManipulatorControl : public rclcpp::Node {
     tf_listener = std::make_shared<tf2_ros::TransformListener>(*tf_buffer);
 
     joy_sub = this->create_subscription<sensor_msgs::msg::Joy>(
-        "/joy", 1,
-        std::bind(&SubManipulatorControl::handle_joy, this,
-                  std::placeholders::_1));
+      "/joy", 1, std::bind(&SubManipulatorControl::handle_joy, this, std::placeholders::_1));
 
-    trajecory_pub =
-        this->create_publisher<trajectory_msgs::msg::JointTrajectory>(
-            "/sub_arm_controller/joint_trajectory", 10);
-    timer = this->create_wall_timer(
-        50ms, std::bind(&SubManipulatorControl::timer_callback, this));
+    trajecory_pub = this->create_publisher<trajectory_msgs::msg::JointTrajectory>(
+      "/sub_arm_controller/joint_trajectory", 10);
+    timer = this->create_wall_timer(50ms, std::bind(&SubManipulatorControl::timer_callback, this));
   }
 
   ~SubManipulatorControl() override {}
 
- private:
-  void handle_joy(const sensor_msgs::msg::Joy::SharedPtr joy) {
+private:
+  void handle_joy(const sensor_msgs::msg::Joy::SharedPtr joy)
+  {
     pitch_root_command = joy->axes[12];
 
-    const auto& buttons = joy->buttons;
+    const auto & buttons = joy->buttons;
     if (buttons[13]) {
       pitch_tip_command = 1.0;
     } else if (buttons[15]) {
@@ -62,19 +62,19 @@ class SubManipulatorControl : public rclcpp::Node {
     }
   }
 
-  void timer_callback() {
+  void timer_callback()
+  {
     geometry_msgs::msg::TransformStamped body3_to_bodyv1_tf;
     try {
-      body3_to_bodyv1_tf = tf_buffer->lookupTransform(
-          "vision_arm_body1_link", "body3_link", tf2::TimePointZero);
-    } catch (const tf2::TransformException& ex) {
+      body3_to_bodyv1_tf =
+        tf_buffer->lookupTransform("vision_arm_body1_link", "body3_link", tf2::TimePointZero);
+    } catch (const tf2::TransformException & ex) {
       RCLCPP_INFO(this->get_logger(), "Could not transform");
       return;
     }
 
     double roll_31, pitch_31, yaw_31;
-    tf2::getEulerYPR(body3_to_bodyv1_tf.transform.rotation, yaw_31, pitch_31,
-                     roll_31);
+    tf2::getEulerYPR(body3_to_bodyv1_tf.transform.rotation, yaw_31, pitch_31, roll_31);
     if (yaw_31 < -3.0) {
       pitch_31 = M_PI_2 + (M_PI_2 - pitch_31);
     }
@@ -84,16 +84,15 @@ class SubManipulatorControl : public rclcpp::Node {
 
     geometry_msgs::msg::TransformStamped base_to_vision1_tf;
     try {
-      base_to_vision1_tf = tf_buffer->lookupTransform(
-          "vision_arm_body1_link", "body0_link_yaw", tf2::TimePointZero);
-    } catch (const tf2::TransformException& ex) {
+      base_to_vision1_tf =
+        tf_buffer->lookupTransform("vision_arm_body1_link", "body0_link_yaw", tf2::TimePointZero);
+    } catch (const tf2::TransformException & ex) {
       RCLCPP_INFO(this->get_logger(), "Could not transform");
       return;
     }
 
     double yaw_v1, pitch_v1, roll_v1;
-    tf2::getEulerYPR(base_to_vision1_tf.transform.rotation, yaw_v1, pitch_v1,
-                     roll_v1);
+    tf2::getEulerYPR(base_to_vision1_tf.transform.rotation, yaw_v1, pitch_v1, roll_v1);
     if (yaw_v1 < -3.0) {
       pitch_v1 = M_PI_2 + (M_PI_2 - pitch_v1);
     }
@@ -120,8 +119,7 @@ class SubManipulatorControl : public rclcpp::Node {
     joint_trajectory.joint_names.push_back("vision_arm_body3_joint");
 
     trajectory_msgs::msg::JointTrajectoryPoint joint_trajectory_point;
-    joint_trajectory_point.positions.push_back(pitch_root_position +
-                                               pitch_correct);
+    joint_trajectory_point.positions.push_back(pitch_root_position + pitch_correct);
     joint_trajectory_point.positions.push_back(pitch_v1 + pitch_tip_position);
     joint_trajectory_point.positions.push_back(yaw_tip_position);
     joint_trajectory_point.time_from_start.sec = 0;
@@ -132,8 +130,7 @@ class SubManipulatorControl : public rclcpp::Node {
     trajecory_pub->publish(joint_trajectory);
   }
 
-  rclcpp::Publisher<trajectory_msgs::msg::JointTrajectory>::SharedPtr
-      trajecory_pub;
+  rclcpp::Publisher<trajectory_msgs::msg::JointTrajectory>::SharedPtr trajecory_pub;
   rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_sub;
   rclcpp::TimerBase::SharedPtr timer;
   std::shared_ptr<tf2_ros::TransformListener> tf_listener{nullptr};
