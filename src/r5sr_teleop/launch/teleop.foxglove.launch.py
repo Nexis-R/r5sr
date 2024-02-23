@@ -42,6 +42,12 @@ def generate_launch_description():
     teleop_yaml_file = get_file_path('r5sr_teleop', 'config/r5sr_teleop.yaml')
 
     # Nodes
+    joy_node = Node(
+        package='joy',
+        executable='joy_node',
+        name='joy',
+        parameters=[teleop_yaml_file],
+    )
     joy2command_node = Node(
         package='r5sr_teleop',
         executable='joy2command_node',
@@ -123,6 +129,7 @@ def generate_launch_description():
             exp_arg,
             vsting_arg,
 
+            joy_node,
             joy2command_node,
             foxglove_node,
             flir_node,

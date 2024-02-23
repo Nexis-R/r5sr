@@ -167,7 +167,6 @@ void Joy2Command::handle_joy(const sensor_msgs::msg::Joy::SharedPtr msg)
 
         mode_change_publisher->publish(operation_mode_msg);
       }
-      RCLCPP_INFO_STREAM(get_logger(), "this is manipulator mode");
 
       // overhead_arm
       if (buttons[Button::OPTIONS] || buttons[Button::SHARE]) {
@@ -194,7 +193,6 @@ void Joy2Command::handle_joy(const sensor_msgs::msg::Joy::SharedPtr msg)
         joint_msg.header.frame_id = "wrist_1_link";
         joint_overhead_arm_publisher->publish(joint_msg);
       } else {
-        RCLCPP_INFO_STREAM(get_logger(), "this is MAIN manipulator ");
         if (axes[DPAD_X] || axes[DPAD_Y] || buttons[Button::CIRCLE] || buttons[Button::SQUARE]) {
           // joint jog
           control_msgs::msg::JointJog joint_msg;

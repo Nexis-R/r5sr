@@ -7,6 +7,8 @@ sudo apt install -y -qq ros-humble-rmw-cyclonedds-cpp \
   mold \
   ccache \
   ninja-build \
+  clang \
+  libstdc++-12-dev \
   clangd \
   clang-format \
   cmake-format \
