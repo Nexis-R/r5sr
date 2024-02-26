@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot name="r5sr" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:include filename="$(find r5sr_description)/urdf/r5sr.xacro" />
+    <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+
+
+    <xacro:r5sr />
+
+    <xacro:sensor_d435 parent="wrist_2_link" use_nominal_extrinsics="true" add_plug="false">
+        <origin xyz="0 0 0.16" rpy="0 0 0" />
+    </xacro:sensor_d435>
+</robot>

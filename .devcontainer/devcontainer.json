@@ -1,0 +1,39 @@
+{
+  "name": "ros 2",
+  "image": "mcr.microsoft.com/devcontainers/cpp:jammy",
+  "mounts": [
+    "source=./.devcontainer/postCreateCommand.sh,target=/tmp/postCreateCommand.sh,type=bind,consistency=cached,ro"
+  ],
+  "postCreateCommand": "bash /tmp/postCreateCommand.sh",
+  "remoteEnv": {
+    "ROS_DISTRO": "humble",
+    "RMW_IMPLEMENTATION": "rmw_cyclonedds_cpp"
+  },
+  "features": {
+    "ghcr.io/guiyomh/features/just:0": {},
+    "ghcr.io/adamlm/devcontainer-features/ros2:0": {
+      "distro": "humble"
+    },
+    "ghcr.io/devcontainers-contrib/features/apt-packages:1": {
+      "packages": "ros-humble-rmw-cyclonedds-cpp,python3-colcon-mixin,mold,ccache,ninja-build,clangd,clang-format,cmake-format,python3-pep8",
+      "installsAfter": [
+        "ghcr.io/adamlm/devcontainer-features/ros2"
+      ]
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "llvm-vs-code-extensions.vscode-clangd",
+        "ms-vscode.cmake-tools",
+        "ms-python.python",
+        "skellock.just",
+        "cheshirekow.cmake-format",
+        "redhat.vscode-xml",
+        "redhat.vscode-yaml",
+        "ms-python.autopep8",
+        "foxundermoon.shell-format"
+      ]
+    }
+  }
+}

@@ -1,5 +1,0 @@
-  - git: {local-name: epos, uri: git@gitlab.com:kimuralab_opensource/ros2/epos.git, version: master}
-  - git: {local-name: r5sr_robot, uri: git@gitlab.com:nexis2/r5sr/r5sr_robot.git, version: develop}
-  - git: {local-name: audio_common, uri: git@gitlab.com:nexis2/r5sr/audio_common.git, version: humble_without_sound_play}
-  - git: {local-name: usb_cam, uri: https://github.com/ros-drivers/usb_cam.git, version: ros2}
-  - git: {local-name: rplidar_ros2, uri: https://github.com/lopenguin/rplidar_ros2.git, version: ros2}

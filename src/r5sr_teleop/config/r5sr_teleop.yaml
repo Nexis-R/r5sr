@@ -1,0 +1,38 @@
+joy:
+  ros__parameters:
+    coalesce_interval_ms: 10
+    autorepeat_rate: 100.0
+    deadzone: 0.1
+
+flir_ax8_rtsp:
+  ros__parameters:
+    ip_addr: "192.168.1.3"
+    encoding: "mpeg4"
+    text_overlay: "off"
+    rate_hz: 10
+
+darknet_ros:
+  ros__parameters:
+    subscribers:
+      camera_reading:
+        topic: /vision_front_camera/image_raw/uncompressed
+        queue_size: 1
+    actions:
+      camera_reading:
+        topic: /darknet_ros/check_for_objects
+    publishers:
+      object_detector:
+        topic: /darknet_ros/found_object
+        queue_size: 1
+        latch: false
+      bounding_boxes:
+        topic: /darknet_ros/bounding_boxes
+        queue_size: 1
+        latch: false
+      detection_image:
+        topic: /darknet_ros/detection_image
+        queue_size: 1
+        latch: true
+    image_view:
+      enable_opencv: false
+      enable_console_output: false

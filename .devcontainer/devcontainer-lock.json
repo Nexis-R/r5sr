@@ -1,0 +1,19 @@
+{
+  "features": {
+    "ghcr.io/adamlm/devcontainer-features/ros2:0": {
+      "version": "0.1.0",
+      "resolved": "ghcr.io/adamlm/devcontainer-features/ros2@sha256:e8bbfed704509d9ab6a5a3edd91cf8b224beb8ef594600400ec193d4a29cf281",
+      "integrity": "sha256:e8bbfed704509d9ab6a5a3edd91cf8b224beb8ef594600400ec193d4a29cf281"
+    },
+    "ghcr.io/devcontainers-contrib/features/apt-packages:1": {
+      "version": "1.0.4",
+      "resolved": "ghcr.io/devcontainers-contrib/features/apt-packages@sha256:16ac21b831b47c105b21e41a7504dfa04e64b8e4a83ba50c2001b45eca6c967d",
+      "integrity": "sha256:16ac21b831b47c105b21e41a7504dfa04e64b8e4a83ba50c2001b45eca6c967d"
+    },
+    "ghcr.io/guiyomh/features/just:0": {
+      "version": "0.1.0",
+      "resolved": "ghcr.io/guiyomh/features/just@sha256:8311dff976bd153a54a879021353a7e149963e580022b25af49c45cfc5f13bec",
+      "integrity": "sha256:8311dff976bd153a54a879021353a7e149963e580022b25af49c45cfc5f13bec"
+    }
+  }
+}

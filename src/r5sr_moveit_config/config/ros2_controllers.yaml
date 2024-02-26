@@ -1,0 +1,57 @@
+# This config file is used by ros2_control
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+
+    overhead_arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+
+    flipper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+arm_controller:
+  ros__parameters:
+    joints:
+      - body_joint
+      - shoulder_joint
+      - elbow_joint
+      - forearm_joint
+      - wrist_yaw_joint
+      - wrist_roll_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+overhead_arm_controller:
+  ros__parameters:
+    joints:
+      - overhead_elbow_joint
+      - overhead_wrist_yaw_joint
+      - overhead_wrist_pitch_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+flipper_controller:
+  ros__parameters:
+    joints:
+      - flipper_left_front_joint
+      - flipper_left_rear_joint
+      - flipper_right_front_joint
+      - flipper_right_rear_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity

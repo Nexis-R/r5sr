@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- Import Rviz colors -->
+    <xacro:include filename="$(find r5sr_description)/urdf/r5sr.material.xacro" />
+
+    <xacro:macro name="r5sr">
+        <!-- Links -->
+        <link name="body_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://r5sr_description/meshes/body.stl"
+                        scale="0.001 0.001 0.001" />
+                </geometry>
+                <origin xyz="0 0 0.0" rpy="0 0 3.1415" />
+                <material name="white" />
+            </visual>
+        </link>
+
+        <link name="shoulder_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://r5sr_description/meshes/shoulder.stl" />
+                </geometry>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <material name="grey" />
+            </visual>
+        </link>
+
+        <link name="upper_arm_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://r5sr_description/meshes/upper_arm.stl" />
+                </geometry>
+                <origin xyz="0 0 -0.101" rpy="0 0 0" />
+                <material name="grey" />
+            </visual>
+        </link>
+
+        <link name="forearm_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://r5sr_description/meshes/forearm.stl" />
+                </geometry>
+                <origin xyz="0.480 0 -0.101" rpy="0 0 0" />
+                <material name="grey" />
+            </visual>
+        </link>
+
+        <link name="wrist_1_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://r5sr_description/meshes/wrist_1.stl" />
+                </geometry>
+                <origin xyz="-0.08235 0 -0.1453" rpy="0 0 0" />
+                <material name="grey" />
+            </visual>
+        </link>
+
+        <link name="wrist_2_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://r5sr_description/meshes/wrist_2.stl" />
+                </geometry>
+                <origin xyz="-0.12435 0 -0.19" rpy="0 0 0" />
+                <material name="grey" />
+            </visual>
+        </link>
+
+        <link name="end_effector_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://r5sr_description/meshes/end_effector.stl" />
+                </geometry>
+                <origin xyz="-0.175 0 -0.22" rpy="0 0 0" />
+                <material name="green" />
+            </visual>
+        </link>
+
+        <link name="overhead_forearm_link">
+            <visual>
+                <geometry>
+                    <cylinder length="0.6" radius="0.01" />
+                </geometry>
+                <origin xyz="0 0 0.3" rpy="0 0 0" />
+                <material name="white" />
+            </visual>
+        </link>
+
+        <link name="overhead_wrist_1_link">
+            <visual>
+                <geometry>
+                    <box size="0.04 0.04 0.02" />
+                </geometry>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <material name="white" />
+            </visual>
+        </link>
+
+        <link name="overhead_wrist_2_link">
+            <visual>
+                <geometry>
+                    <box size="0.05 0.02 0.02" />
+                </geometry>
+                <origin xyz="0.02 0 0" rpy="0 0 0" />
+                <material name="white" />
+            </visual>
+        </link>
+
+        <link name="flipper_left_front">
+            <visual>
+                <geometry>
+                    <mesh filename="package://r5sr_description/meshes/flipper.stl"
+                        scale="0.001 0.001 0.001" />
+                </geometry>
+                <origin xyz="0 0 0.0" rpy="1.5708 0 3.1415" />
+                <material name="grey" />
+            </visual>
+        </link>
+
+        <link name="flipper_right_front">
+            <visual>
+                <geometry>
+                    <mesh filename="package://r5sr_description/meshes/flipper.stl"
+                        scale="0.001 0.001 0.001" />
+                </geometry>
+                <origin xyz="0 0 0.0" rpy="1.5708 0 3.1415" />
+                <material name="grey" />
+            </visual>
+        </link>
+
+        <link name="flipper_left_rear">
+            <visual>
+                <geometry>
+                    <mesh filename="package://r5sr_description/meshes/flipper.stl"
+                        scale="0.001 0.001 0.001" />
+                </geometry>
+                <origin xyz="0 0 0.0" rpy="1.5708 0 0" />
+                <material name="grey" />
+            </visual>
+        </link>
+
+        <link name="flipper_right_rear">
+            <visual>
+                <geometry>
+                    <mesh filename="package://r5sr_description/meshes/flipper.stl"
+                        scale="0.001 0.001 0.001" />
+                </geometry>
+                <origin xyz="0 0 0.0" rpy="1.5708 0 0" />
+                <material name="grey" />
+            </visual>
+        </link>
+
+        <link name="crawler_left" />
+        <link name="crawler_right" />
+
+        <!-- Joints -->
+
+        <joint name="body_joint" type="revolute">
+            <parent link="body_link" />
+            <child link="shoulder_link" />
+            <axis xyz="0 0 1" />
+            <origin xyz="0 0 0.080" rpy="0 0 0" />
+            <limit lower="-2.3561" upper="2.3561" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="shoulder_joint" type="revolute">
+            <parent link="shoulder_link" />
+            <child link="upper_arm_link" />
+            <axis xyz="0 1 0" />
+            <origin xyz="0 0 0.101" rpy="0 0 0" />
+            <limit lower="-0.2617" upper="3.1415" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="elbow_joint" type="revolute">
+            <parent link="upper_arm_link" />
+            <child link="forearm_link" />
+            <axis xyz="0 1 0" />
+            <origin xyz="-0.480 -0. 0" rpy="0 0 0" />
+            <limit lower="-4.7996" upper="0.0" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="forearm_joint" type="revolute">
+            <parent link="forearm_link" />
+            <child link="wrist_1_link" />
+            <axis xyz="0 1 0" />
+            <origin xyz="0.56235 0 0.0443" rpy="0 0 0" />
+            <limit lower="-3.1415" upper="3.1415" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="wrist_yaw_joint" type="revolute">
+            <parent link="wrist_1_link" />
+            <child link="wrist_2_link" />
+            <axis xyz="0 0 1" />
+            <origin xyz="0.042 0 0.045" rpy="0 0 0" />
+            <limit lower="-3.1415" upper="3.1415" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="wrist_roll_joint" type="revolute">
+            <parent link="wrist_2_link" />
+            <child link="end_effector_link" />
+            <axis xyz="1 0 0" />
+            <origin xyz="0.05 0 0.033" rpy="0 0 0" />
+            <limit lower="-3.1415" upper="3.1415" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="overhead_elbow_joint" type="revolute">
+            <parent link="wrist_1_link" />
+            <child link="overhead_forearm_link" />
+            <axis xyz="0 1 0" />
+            <origin xyz="0 0.08 0" rpy="0 -1.57075 0" />
+            <limit lower="-3.1415" upper="3.1415" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="overhead_wrist_yaw_joint" type="revolute">
+            <parent link="overhead_forearm_link" />
+            <child link="overhead_wrist_1_link" />
+            <axis xyz="0 1 0" />
+            <origin xyz="0 -0.03 0.6" rpy="1.57075 1.57075 1.57075" />
+            <limit lower="-3.1415" upper="3.1415" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="overhead_wrist_pitch_joint" type="revolute">
+            <parent link="overhead_wrist_1_link" />
+            <child link="overhead_wrist_2_link" />
+            <axis xyz="0 0 1" />
+            <origin xyz="0 0 0.02" rpy="0 0 0" />
+            <limit lower="-3.1415" upper="3.1415" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="flipper_left_front_joint" type="revolute">
+            <parent link="body_link" />
+            <child link="flipper_left_front" />
+            <axis xyz="0 1 0" />
+            <origin xyz="-0.025 0.2105 0" rpy="0 0 0" />
+            <limit lower="-3.1415" upper="3.1415" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="flipper_right_front_joint" type="revolute">
+            <parent link="body_link" />
+            <child link="flipper_right_front" />
+            <axis xyz="0 1 0" />
+            <origin xyz="-0.025 -0.2105 0" rpy="0 0 0" />
+            <limit lower="-3.1415" upper="3.1415" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="flipper_left_rear_joint" type="revolute">
+            <parent link="body_link" />
+            <child link="flipper_left_rear" />
+            <axis xyz="0 1 0" />
+            <origin xyz="-0.455 0.2105 0" rpy="0 0 0" />
+            <limit lower="-3.1415" upper="3.1415" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="flipper_right_rear_joint" type="revolute">
+            <parent link="body_link" />
+            <child link="flipper_right_rear" />
+            <axis xyz="0 1 0" />
+            <origin xyz="-0.455 -0.2105 0" rpy="0 0 0" />
+            <limit lower="-3.1415" upper="3.1415" effort="0" velocity="3.1415" />
+        </joint>
+
+        <joint name="crawler_left_joint" type="continuous">
+            <parent link="body_link" />
+            <child link="crawler_left" />
+            <axis xyz="0 1 0" />
+            <origin xyz="-0.24 0.2105 0" rpy="0 0 0" />
+        </joint>
+
+        <joint name="crawler_right_joint" type="continuous">
+            <parent link="body_link" />
+            <child link="crawler_right" />
+            <axis xyz="0 1 0" />
+            <origin xyz="-0.24 -0.2105 0" rpy="0 0 0" />
+        </joint>
+
+        <!-- Sensors -->
+        <joint name="rplidar_joint" type="fixed">
+            <parent link="shoulder_link" />
+            <child link="rplidar_link" />
+            <origin xyz="0.001 -0.108 0.170" rpy="0 0 3.14159265358979" />
+        </joint>
+        <link name="rplidar_link" />
+
+        <joint name="hand_camera_joint" type="fixed">
+            <parent link="end_effector_link" />
+            <child link="hand_camera_link" />
+            <origin xyz="0.05 0 0" rpy="0 0 0" />
+        </joint>
+        <link name="hand_camera_link" />
+
+        <joint name="flirjoint" type="fixed">
+            <parent link="wrist_2_link" />
+            <child link="flir_link" />
+            <origin xyz="0 0 0.10" rpy="0 0 0" />
+        </joint>
+        <link name="flir_link" />
+
+        <joint name="vision_front_joint" type="fixed">
+            <parent link="overhead_wrist_2_link" />
+            <child link="vision_front_link" />
+            <origin xyz="0.03 0 0.001" rpy="0 0.1 0" />
+        </joint>
+        <link name="vision_front_link" />
+
+        <joint name="vision_rear_joint" type="fixed">
+            <parent link="overhead_wrist_2_link" />
+            <child link="vision_rear_link" />
+            <origin xyz="-0.01 0 -0.001" rpy="3.1415 -0.5 0" />
+        </joint>
+        <link name="vision_rear_link" />
+
+        <joint name="fisheye_front_joint" type="fixed">
+            <parent link="shoulder_link" />
+            <child link="fisheye_front_link" />
+            <origin xyz="0 0 0.05" rpy="0 0 0" />
+        </joint>
+        <link name="fisheye_front_link" />
+
+        <!-- others -->
+
+        <joint name="base_footprint_joint" type="fixed">
+            <parent link="base_footprint" />
+            <child link="body_link" />
+            <origin xyz="0 0 0.10" rpy="0 0 0" />
+        </joint>
+        <link name="base_footprint" />
+    </xacro:macro>
+
+</robot>

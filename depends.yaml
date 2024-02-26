@@ -1,0 +1,15 @@
+repositories:
+  epos:
+    type: git
+    url:  https://gitlab.com/kimuralab_opensource/ros2/epos.git
+    version:  master
+
+  rplidar_ros2:
+    type: git
+    url:  https://github.com/lopenguin/rplidar_ros2.git
+    version:  ros2
+
+  audio_common:
+    type: git
+    url:  https://gitlab.com/nexis2/r5sr/audio_common.git
+    version:  humble_without_sound_play

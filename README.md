@@ -1,46 +1,77 @@
 # R5SR
-災害対応ロボット**R5S**のROS2パッケージ \
+Nexis-Rの遠隔操縦型移動作業ロボット**R5S**のROS 2システム\
 ![r5s](images/r5s.JPG)
 
-## 環境構築
-### 要件
-- Ubuntu22.04
-- ros 2 humble
+# 環境構築
 
-### 依存関係
+## ネイティブ環境
+
+- OS: Ubuntu 22.04
+- ROS: ROS 2 Humble Hawksbill
+
+### 開発ツールのインストール
+
+- ビルドツールとコーディングツール
 ```bash
-source /opt/ros/humble/setup.bash
-rosdep update
-
-cd ws/src
-git clone git@gitlab.com:nexis2/r5sr/r5sr.git
-
-# NUC側の時は下記のスクリプトを実行
-./r5sr/install-scripts/install-robot
-vcs import < r5sr/r5sr_robot.rosinstall
-
-# 操縦卓側の時は下記のスクリプトを実行
-./r5sr/install-scripts/install-control_teleop
-vcs import --recursive < r5sr/r5sr_control_teleop.rosinstall 
-
-rosdep install -r -y -i --from-paths .
+sudo apt install python3-colcon-mixin mold ccache ninja-build clang clangd clang-format cmake-format python3-pep8
 ```
 
-### ビルド
+- タスクランナ
 ```bash
-cd ws
-colcon build --symlink-install
-source install/setup.bash
+wget -qO - 'https://proget.makedeb.org/debian-feeds/prebuilt-mpr.pub' | gpg --dearmor | sudo tee /usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg 1> /dev/null
+echo "deb [arch=all,$(dpkg --print-architecture) signed-by=/usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg] https://proget.makedeb.org prebuilt-mpr $(lsb_release -cs)" | sudo tee /etc/apt/sources.list.d/prebuilt-mpr.list
+sudo apt update
+sudo apt install just
 ```
 
-## 使用方法
+## コンテナ環境
 
-### ロボット側NUC PC
+- Docker
+- VSCode Remote Container
+
+## ワークスペースの設定
+
+### r5srのクローン
+
 ```bash
-ros2 launch r5sr_bringup r5sr_bringup.launch.xml
+git clone https://gitlab.com/nexis2/r5sr/r5sr.git
+cd r5sr
 ```
 
-### オペレーターPC
+コンテナ環境の場合は、VSCodeのRemote Containerを使用してコンテナを起動する。
+
+### 依存関係のインストール
+
+vcs import, rosdep install, その他の依存関係をインストールする。
+
+#### ロボット
+
 ```bash
-ros2 launch r5sr_teleop r5sr_teleop.launch.xml
+just setup robot
+```
+
+#### テレオペ
+
+```bash
+just setup teleop
+```
+
+## ビルド
+```bash
+just build
+# or just b
+```
+
+# 起動方法
+
+## ロボット
+```bash
+just bringup
+# of just bu
+```
+
+## テレオペ
+```bash
+just teleop
+# or just t
 ```

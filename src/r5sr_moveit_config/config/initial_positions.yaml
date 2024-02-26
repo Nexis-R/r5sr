@@ -1,0 +1,18 @@
+# Default initial positions for r5sr's ros2_control fake system
+
+initial_positions:
+  body_joint: 0
+  elbow_joint: 0
+  crawler_left_joint: 0
+  crawler_right_joint: 0
+  flipper_left_front_joint: 0
+  flipper_left_rear_joint: 0
+  flipper_right_front_joint: 0
+  flipper_right_rear_joint: 0
+  forearm_joint: 0
+  overhead_elbow_joint: 0
+  overhead_wrist_pitch_joint: 0
+  overhead_wrist_yaw_joint: 0
+  shoulder_joint: 0
+  wrist_roll_joint: 0
+  wrist_yaw_joint: 0
