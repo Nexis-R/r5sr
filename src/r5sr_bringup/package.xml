@@ -21,7 +21,6 @@
   <exec_depend>audio_capture</exec_depend>
   <exec_depend>audio_play</exec_depend>
   <exec_depend>realsense2_camera</exec_depend>
-  <exec_depend>rtabmap</exec_depend>
   <exec_depend>imu_filter_madgwick</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
