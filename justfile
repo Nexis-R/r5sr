@@ -32,9 +32,9 @@ setup target='teleop' : _cd
   just dep
 
 # colcon build
-build executor='sequential' mixin='ninja ccache mold clang release compile-commands': _cd
-  source /opt/ros/{{ros_distro}}/setup.bash
-  colcon build --symlink-install --executor {{executor}} --mixin {{mixin}} --event-handlers console_direct+
+build parallel='1' : _cd
+  source /opt/ros/{{ros_distro}}/setup.bash && \
+  colcon build --parallel-workers {{parallel}} --symlink-install --mixin ninja ccache clang release compile-commands --event-handlers console_direct+
 
 # launch teleop
 teleop args='use_darknet:=false use_audio:=false': _cd
@@ -47,7 +47,7 @@ teleop-foxglove args='use_darknet:=false use_audio:=false': _cd
   ros2 launch r5sr_teleop teleop.foxglove.launch.py {{args}}
 
 # launch bringup (robot)
-bringup args='use_camera:=true use_audio:=false use_slam:=false use_rplidar:=false': _cd
+bringup args='use_camera:=true use_audio:=true use_slam:=true use_rplidar:=false': _cd
   source install/setup.bash
   ros2 launch r5sr_bringup bringup.launch.py {{args}}
 

@@ -6,3 +6,6 @@ src/*
 build
 install
 log
+appsink
+map.pcd
+pose_graph.g2o
