@@ -1,7 +1,33 @@
+/**:
+  ros__parameters:
+    xfer_format: 0 # not custom
+    multi_topic: 0
+    data_src: 0
+    publish_freq: 10.0 # Hz
+    output_data_type: 0
+    frame_id: "mid360"
+
+    feature_extract_enable: false
+    point_filter_num: 3
+    max_iteration: 3
+    filter_size_surf: 0.5
+    filter_size_map: 0.5
+    cube_side_length: 1000.0
+    runtime_pos_log_enable: false
+    map_file_path: "./map.pcd"
+
+    common:
+      lid_topic: "/livox/lidar"
+      imu_topic: "/livox/imu"
+      time_sync_en: false # ONLY turn on when external time synchronization is really not possible
+      time_offset_lidar_to_imu:
+        0.0 # Time offset between lidar and IMU calibrated by other algorithms, e.g. LI-Init (can be found in README).
+        # This param will take effect no matter what time_sync_en is. So if the time offset is not known exactly, please set as 0.0
+
 scan_matcher:
   ros__parameters:
     global_frame_id: "map"
-    robot_frame_id: "base_link"
+    robot_frame_id: "base_footprint"
     registration_method: "NDT"
     ndt_resolution: 0.5
     ndt_num_threads: 4

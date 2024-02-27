@@ -13,11 +13,6 @@ repositories:
     type: git
     url: https://github.com/Ericsii/livox_ros_driver2.git
     version: feature/use-standard-unit
-
-  fast_lio:
-    type: git
-    url: https://github.com/Ericsii/FAST_LIO_ROS2.git
-    version: ros2
   
   lidarslam:
     type: git

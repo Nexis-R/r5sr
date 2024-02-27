@@ -47,7 +47,7 @@ teleop-foxglove args='use_darknet:=false use_audio:=false': _cd
   ros2 launch r5sr_teleop teleop.foxglove.launch.py {{args}}
 
 # launch bringup (robot)
-bringup args='use_camera:=true use_audio:=false use_slam:=false use_rplidar:=false': _cd
+bringup args='use_camera:=true use_audio:=true use_slam:=true use_rplidar:=false': _cd
   source install/setup.bash
   ros2 launch r5sr_bringup bringup.launch.py {{args}}
 

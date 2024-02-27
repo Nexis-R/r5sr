@@ -160,22 +160,22 @@ def generate_launch_description():
         actions=[
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
+                    get_file_path("r5sr_bringup", "launch/slam.launch.py")
+                ),
+            ),
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(
                     get_file_path("realsense2_camera", "launch/rs_launch.py")
                 ),
                 launch_arguments=[
+                    ('pointcloud.enable', 'true'),
+                    ('align_depth.enable', 'true'),
                     ('enable_gyro', 'true'),
                     ('enable_accel', 'true'),
                     ('unite_imu_method', '1'),
                     ('enable_sync', 'true'),
                 ],
             ),
-            IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    get_file_path("r5sr_bringup",
-                                  "launch/rtabmap_realsense.launch.py")
-                ),
-            ),
-            # The IMU frame is mising in TF tree, add it:
             Node(
                 package="tf2_ros",
                 executable="static_transform_publisher",
