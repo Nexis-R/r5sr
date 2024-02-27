@@ -1,15 +1,30 @@
 repositories:
   epos:
     type: git
-    url:  https://gitlab.com/kimuralab_opensource/ros2/epos.git
-    version:  master
+    url: https://gitlab.com/kimuralab_opensource/ros2/epos.git
+    version: master
 
   rplidar_ros2:
     type: git
-    url:  https://github.com/lopenguin/rplidar_ros2.git
-    version:  ros2
+    url: https://github.com/lopenguin/rplidar_ros2.git
+    version: ros2
+
+  livox_ros_driver2:
+    type: git
+    url: https://github.com/Ericsii/livox_ros_driver2.git
+    version: feature/use-standard-unit
+
+  fast_lio:
+    type: git
+    url: https://github.com/Ericsii/FAST_LIO_ROS2.git
+    version: ros2
+  
+  lidarslam:
+    type: git
+    url: https://github.com/rsasaki0109/lidarslam_ros2.git
+    version: develop
 
   audio_common:
     type: git
-    url:  https://gitlab.com/nexis2/r5sr/audio_common.git
-    version:  humble_without_sound_play
+    url: https://gitlab.com/nexis2/r5sr/audio_common.git
+    version: humble_without_sound_play
