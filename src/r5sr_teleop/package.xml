@@ -4,7 +4,7 @@
   <name>r5sr_teleop</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="robohase01@gmail.com">hasegawa</maintainer>
+  <maintainer email="nexisr2016@gmail.com">Nexis-R</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -35,6 +35,7 @@
   <exec_depend>audio_capture</exec_depend>
   <exec_depend>audio_play</exec_depend>
   <exec_depend>r5sr_description</exec_depend>
+  <exec_depend>r5sr_cloud</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

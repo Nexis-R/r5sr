@@ -34,7 +34,7 @@ setup target='teleop' : _cd
 # colcon build
 build parallel='1' : _cd
   source /opt/ros/{{ros_distro}}/setup.bash && \
-  colcon build --parallel-workers {{parallel}} --symlink-install --mixin ninja ccache clang release compile-commands --event-handlers console_direct+
+  colcon build --parallel-workers {{parallel}} --symlink-install --mixin ccache clang release compile-commands
 
 # launch teleop
 teleop args='use_darknet:=false use_audio:=false': _cd
