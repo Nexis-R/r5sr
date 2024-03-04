@@ -1,4 +1,3 @@
-from select import poll
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import CompressedImage
@@ -26,11 +25,17 @@ class RMSRobot(Node):
         self.server_uri = 'http://%s' % self.get_parameter('server_ip').value
         self.pos_changed = True
         self.last_req_id = 0
-        self.img_msg = None
+        self.img1_msg = None
+        self.img2_msg = None
+        self.img3_msg = None
         self.session = requests.Session()
 
-        self.image_sub = self.create_subscription(
-            CompressedImage, '/camera1', self.image_callback, 10)
+        self.image1_sub = self.create_subscription(
+            CompressedImage, '/camera1', self.image1_callback, 10)
+        self.image2_sub = self.create_subscription(
+            CompressedImage, '/camera2', self.image2_callback, 10)
+        self.image3_sub = self.create_subscription(
+            CompressedImage, '/camera3', self.image3_callback, 10)
 
         polling_interval_ms = self.get_parameter(
             'polling_interval_ms').value
@@ -39,8 +44,12 @@ class RMSRobot(Node):
             self.timer = self.create_timer(
                 polling_interval_ms, self.timer_callback)
 
-    def image_callback(self, msg):
-        self.img_msg = msg
+    def image1_callback(self, msg):
+        self.img1_msg = msg
+    def image2_callback(self, msg):
+        self.img2_msg = msg
+    def image3_callback(self, msg):
+        self.img3_msg = msg
 
     def timer_callback(self):
         if self.pos_changed:
@@ -86,17 +95,31 @@ class RMSRobot(Node):
                         pass
                     case 'send_camera_image':
                         self.get_logger().info('send_camera_image')
-                        if self.img_msg is not None:
-                            img_bytes = io.BytesIO(self.img_msg.data)
+                        cam_id = req_jsn['cam_id']
+                        self.get_logger().info(cam_id)
+                        if cam_id == 'cam1' and self.img1_msg is not None:
+                            img_bytes = io.BytesIO(self.img1_msg.data)
                             files = {
-                                'file': ('image.' + self.img_msg.format, img_bytes, 'image/' + self.img_msg.format)}
+                                'file': ('image.' + self.img1_msg.format, img_bytes, 'image/' + self.img1_msg.format)}
+                        elif cam_id == 'cam2' and self.img2_msg is not None:
+                            img_bytes = io.BytesIO(self.img2_msg.data)
+                            files = {
+                                'file': ('image.' + self.img2_msg.format, img_bytes, 'image/' + self.img2_msg.format)}
+                        elif cam_id == 'cam3' and self.img3_msg is not None:
+                            img_bytes = io.BytesIO(self.img3_msg.data)
+                            files = {
+                                'file': ('image.' + self.img3_msg.format, img_bytes, 'image/' + self.img3_msg.format)}
+                        else :
+                            img_bytes = None
+
+                        if img_bytes is not None:
                             r_val = {
                                 'rob_id': self.robot_id,
                                 'req_id': ret_json['req_id'],
                                 'erq_id': ret_json['erq_id'],
                                 'from_ent_type': ret_json['from_ent_type'],
                                 'from_ent_id': ret_json['from_ent_id'],
-                                'res_jsn': json.dumps({'exe': 1, 'cam': req_jsn['cam_id']}),
+                                'res_jsn': json.dumps({'exe': 1, 'cam': cam_id}),
                             }
                             res = self.session.post(
                                 '%s/rms_v2/api/res_rob_image.php' % self.server_uri, files=files, data=r_val)

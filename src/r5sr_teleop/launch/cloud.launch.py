@@ -26,7 +26,8 @@ def generate_launch_description():
         executable='rms_robot_node',
         name='rms_robot',
         parameters=[config_dir],
-        remappings=[('/camera1', '/vision_front/image_raw/compressed')],
+        remappings=[('/camera1', '/vision_front_camera/image_raw/compressed'),
+                    ('/camera2', '/vision_rear_camera/image_raw/compressed')],
         output='screen'
     )
 
