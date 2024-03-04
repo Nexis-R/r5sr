@@ -3,18 +3,14 @@
 <package format="3">
   <name>r5sr_cloud</name>
   <version>0.0.0</version>
-  <description>Cloud Package for Digital Twin System</description>
+  <description>TODO: Package description</description>
   <maintainer email="nexisr2016@gmail.com">Nexis-R</maintainer>
   <license>TODO: License declaration</license>
 
-  <buildtool_depend>ament_cmake</buildtool_depend>
-
-  <depend>libcpprest-dev</depend>
-
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_lint_common</test_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>python3-requests</exec_depend>
 
   <export>
-    <build_type>ament_cmake</build_type>
+    <build_type>ament_python</build_type>
   </export>
 </package>

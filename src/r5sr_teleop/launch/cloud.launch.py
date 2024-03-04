@@ -21,9 +21,21 @@ def generate_launch_description():
         output='screen'
     )
 
+    rms_robot = launch_ros.actions.Node(
+        package='r5sr_cloud',
+        executable='rms_robot_node',
+        name='rms_robot',
+        parameters=[config_dir],
+        remappings=[('/camera1', '/vision_front/image_raw/compressed')],
+        output='screen'
+    )
+
     return launch.LaunchDescription([
         launch.actions.DeclareLaunchArgument(
             'config_dir',
             default_value=config_dir,
             description='Full path to config file to load'),
-        rms_plant])
+
+        rms_plant,
+        rms_robot
+    ])
