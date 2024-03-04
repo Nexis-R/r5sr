@@ -3,7 +3,7 @@
     xfer_format: 0 # not custom
     multi_topic: 0
     data_src: 0
-    publish_freq: 10.0 # Hz
+    publish_freq: 5.0 # Hz
     output_data_type: 0
     frame_id: "mid360"
 
@@ -29,18 +29,18 @@ scan_matcher:
     global_frame_id: "map"
     robot_frame_id: "base_footprint"
     registration_method: "NDT"
-    ndt_resolution: 0.5
-    ndt_num_threads: 4
+    ndt_resolution: 2.0 
+    ndt_num_threads: 0
     gicp_corr_dist_threshold: 5.0
-    trans_for_mapupdate: 1.0
-    vg_size_for_input: 0.1
+    trans_for_mapupdate: 0.3
+    vg_size_for_input: 1.0
     vg_size_for_map: 0.1
     use_min_max_filter: true
     scan_min_range: 0.3
-    scan_max_range: 10.0
-    scan_period: 0.1
-    map_publish_period: 15.0
-    num_targeted_cloud: 20
+    scan_max_range: 100.0
+    scan_period: 0.2
+    map_publish_period: 5.0
+    num_targeted_cloud: 30
     set_initial_pose: true
     initial_pose_x: 0.0
     initial_pose_y: 0.0
@@ -56,14 +56,14 @@ scan_matcher:
 graph_based_slam:
   ros__parameters:
     registration_method: "NDT"
-    ndt_resolution: 0.2
-    ndt_num_threads: 4
-    voxel_leaf_size: 0.01
-    loop_detection_period: 1000
-    threshold_loop_closure_score: 0.7
-    distance_loop_closure: 10.0
-    range_of_searching_loop_closure: 2.0
-    search_submap_num: 2
+    ndt_resolution: 5.0
+    ndt_num_threads: 0
+    voxel_leaf_size: 0.2
+    loop_detection_period: 5000
+    threshold_loop_closure_score: 2.5
+    distance_loop_closure: 100.0
+    range_of_searching_loop_closure: 20.0
+    search_submap_num: 4
     num_adjacent_pose_cnstraints: 5
     use_save_map_in_loop: true
     debug_flag: true
