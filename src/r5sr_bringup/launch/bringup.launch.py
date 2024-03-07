@@ -199,6 +199,14 @@ def generate_launch_description():
             [get_file_path('r5sr_bringup', 'launch/servo.launch.py')]),
     )
 
+    remap_record_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+                [get_file_path(
+                    'r5sr_bringup', 'launch/remap_record.launch.py')]
+            )
+        )
+
+
     return LaunchDescription(
         [
             use_camera_arg,
@@ -217,6 +225,8 @@ def generate_launch_description():
             slam_group,
 
             servo_launch,
+
+            # remap_record_launch,
 
             OpaqueFunction(function=camera_opaque_function),
         ]
