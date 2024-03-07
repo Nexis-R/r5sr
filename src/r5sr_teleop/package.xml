@@ -23,12 +23,13 @@
   <depend>libopencv-dev</depend>
   <depend>libopencv-imgproc-dev</depend>
   <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  <depend>image_transport_plugins</depend>
   <depend>python3-opencv</depend>
   <depend>rviz_2d_overlay_msgs</depend>
   <exec_depend>foxglove_bridge</exec_depend>
   <exec_depend>ros2launch</exec_depend>
   <exec_depend>joy</exec_depend>
-  <exec_depend>image_transport</exec_depend>
   <exec_depend>rqt_gui</exec_depend>
   <exec_depend>rviz2</exec_depend>
   <exec_depend>rviz_2d_overlay_plugins</exec_depend>

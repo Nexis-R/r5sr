@@ -1,5 +1,8 @@
 #include "r5sr_teleop/flir_ax8_rtsp.hpp"
 
+#include <opencv2/imgcodecs.hpp>
+#include <sensor_msgs/msg/detail/compressed_image__struct.hpp>
+
 namespace r5sr_teleop
 {
 FlirAx8Rtsp::FlirAx8Rtsp() : Node("flir_ax8_rtsp")
@@ -7,9 +10,11 @@ FlirAx8Rtsp::FlirAx8Rtsp() : Node("flir_ax8_rtsp")
   this->declare_parameter("ip_addr", "192.168.1.3");
   this->declare_parameter("encoding", "mpeg4");
   this->declare_parameter("text_overlay", "off");
-  this->declare_parameter("rate_hz", 10);
+  this->declare_parameter("rate_hz", 30);
 
-  image_pub = this->create_publisher<sensor_msgs::msg::Image>("filr_ax8_raw", 1);
+  image_pub = this->create_publisher<sensor_msgs::msg::Image>("image_raw", 10);
+  compresed_image_pub =
+    this->create_publisher<sensor_msgs::msg::CompressedImage>("image_raw/compressed", 10);
   cap.open(
     "rtsp://" + this->get_parameter("ip_addr").as_string() + "/" +
     this->get_parameter("encoding").as_string() +
@@ -29,6 +34,7 @@ FlirAx8Rtsp::FlirAx8Rtsp() : Node("flir_ax8_rtsp")
 
 void FlirAx8Rtsp::handle_image()
 {
+  cv::Mat frame;
   cap >> frame;
   if (frame.empty()) {
     RCLCPP_ERROR(this->get_logger(), "Failed to capture frame");
@@ -45,7 +51,15 @@ void FlirAx8Rtsp::handle_image()
   image_msg.data.resize(image_msg.step * image_msg.height);
   memcpy(image_msg.data.data(), frame.data, image_msg.data.size());
 
+  auto compressed_image_msg = sensor_msgs::msg::CompressedImage();
+  std::vector<uchar> buffer;
+  cv::imencode(".jpg", frame, buffer);
+  compressed_image_msg.header = image_msg.header;
+  compressed_image_msg.format = "jpeg";
+  compressed_image_msg.data = std::move(buffer);
+
   image_pub->publish(image_msg);
+  compresed_image_pub->publish(compressed_image_msg);
 }
 }  // namespace r5sr_teleop
 

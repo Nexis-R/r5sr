@@ -9,7 +9,8 @@ alias dep := rosdep-install
 alias b := build
 alias c := clean
 alias bu := bringup
-alias t := teleop
+alias t := teleop-foxglove
+alias teleop := teleop-foxglove
 alias tf := teleop-foxglove
 
 _cd:
@@ -36,11 +37,6 @@ build parallel='1' : _cd
   source /opt/ros/{{ros_distro}}/setup.bash && \
   colcon build --parallel-workers {{parallel}} --symlink-install --mixin ccache clang release compile-commands
 
-# launch teleop
-teleop args='use_darknet:=false use_audio:=false': _cd
-  source install/setup.bash
-  ros2 launch r5sr_teleop teleop.launch.py {{args}}
-
 # launch teleop with foxglove
 teleop-foxglove args='use_darknet:=false use_audio:=false': _cd
   source install/setup.bash
@@ -52,6 +48,5 @@ bringup args='use_camera:=true use_audio:=true use_slam:=true use_rplidar:=false
   ros2 launch r5sr_bringup bringup.launch.py {{args}}
 
 # clean build, install, log
-[confirm]
 clean: _cd
   -rm -rf build install log
