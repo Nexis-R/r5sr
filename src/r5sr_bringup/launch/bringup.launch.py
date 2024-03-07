@@ -226,7 +226,7 @@ def generate_launch_description():
 
             servo_launch,
 
-            # remap_record_launch,
+            remap_record_launch,
 
             OpaqueFunction(function=camera_opaque_function),
         ]
