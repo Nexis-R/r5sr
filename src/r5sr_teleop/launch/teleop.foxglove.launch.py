@@ -1,5 +1,5 @@
 import os
-from launch import LaunchDescription
+from launch import Condition, LaunchDescription
 from launch.conditions import IfCondition
 from launch.actions import DeclareLaunchArgument, GroupAction, IncludeLaunchDescription, OpaqueFunction
 from ament_index_python.packages import get_package_share_directory
@@ -70,6 +70,7 @@ def generate_launch_description():
     flir_node = Node(
         package='r5sr_teleop',
         executable='flir_ax8_rtsp',
+        namespace='thermo',
         parameters=[teleop_yaml_file],
     )
 
@@ -122,6 +123,12 @@ def generate_launch_description():
         ],
     )
 
+    cloud_launch = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(
+                    [get_file_path('r5sr_teleop', 'launch/cloud.launch.py')]
+                )
+    )
+
     return LaunchDescription(
         [
             use_darknet_arg,
@@ -136,5 +143,7 @@ def generate_launch_description():
 
             darknet_group,
             audio_group,
+
+            cloud_launch,
         ]
     )

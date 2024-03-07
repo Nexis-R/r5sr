@@ -131,6 +131,7 @@ def generate_launch_description():
     flir_node = Node(
         package='r5sr_teleop',
         executable='flir_ax8_rtsp',
+        namespace='thermo',
         parameters=[teleop_yaml_file],
     )
 

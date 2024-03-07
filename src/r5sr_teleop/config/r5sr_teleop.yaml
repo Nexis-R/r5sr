@@ -4,12 +4,12 @@ joy:
     autorepeat_rate: 100.0
     deadzone: 0.1
 
-flir_ax8_rtsp:
+thermo/flir_ax8_rtsp:
   ros__parameters:
     ip_addr: "192.168.1.3"
     encoding: "mpeg4"
     text_overlay: "off"
-    rate_hz: 10
+    rate_hz: 20
 
 darknet_ros:
   ros__parameters:

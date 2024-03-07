@@ -12,7 +12,7 @@ def generate_launch_description():
             get_package_share_directory('r5sr_bringup'),
             'config',
             'mapping.yaml'))
-    
+
     mid360_param_dir = launch.substitutions.LaunchConfiguration(
         'user_config_path',
         default=os.path.join(
@@ -43,13 +43,6 @@ def generate_launch_description():
         output='screen'
     )
 
-    tf = launch_ros.actions.Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        arguments=['0', '0', '0', '0', '0', '0',
-                   '1', 'base_link', 'livox_frame']
-    )
-
     return launch.LaunchDescription([
         launch.actions.DeclareLaunchArgument(
             'mapping_param_dir',
@@ -61,6 +54,5 @@ def generate_launch_description():
             description='Full path to livox parameter file to load'),
         livox_driver,
         mapping,
-        tf,
         graphbasedslam,
     ])

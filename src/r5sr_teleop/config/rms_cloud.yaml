@@ -1,0 +1,10 @@
+/**:
+  ros__parameters:
+    server_ip: "52.193.111.81"
+    plant_name: "NagaokaPlant"
+    robot_id: 15
+    mrt_id: "K1"
+    site:
+      id: 22
+      name: "Lab1"
+    user_id: 5
