@@ -168,12 +168,7 @@ def generate_launch_description():
                     get_file_path("realsense2_camera", "launch/rs_launch.py")
                 ),
                 launch_arguments=[
-                    ('pointcloud.enable', 'true'),
-                    ('align_depth.enable', 'true'),
-                    ('enable_gyro', 'true'),
-                    ('enable_accel', 'true'),
-                    ('unite_imu_method', '1'),
-                    ('enable_sync', 'true'),
+                    ('rgb_camera.profile', '640x480x30')
                 ],
             ),
             Node(

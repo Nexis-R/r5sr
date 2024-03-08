@@ -1,12 +1,13 @@
 #include "move_with_jointstate.hpp"
 
 #include <array>
+#include <chrono>
 
 using namespace r5sr_manipulator_control;
 using std::placeholders::_1;
 
 MoveWithJointState::MoveWithJointState()
-: Node("MoveWithJointState"),
+: Node("move_with_jointstate"),
   hand_pulse(1000),
   vision_angle(
     {std::get<2>(jointname_id_model_map.at("overhead_elbow_joint")),
@@ -51,6 +52,9 @@ MoveWithJointState::MoveWithJointState()
     "/joint_states", 1, std::bind(&MoveWithJointState::handle_joint_state, this, _1));
   hand_command_sub = this->create_subscription<std_msgs::msg::Float32>(
     "/hand", 1, std::bind(&MoveWithJointState::handle_hand_command, this, _1));
+
+  status_pub_timer = this->create_wall_timer(
+    std::chrono::milliseconds{100}, std::bind(&MoveWithJointState::status_pub_callback, this));
 }
 
 void MoveWithJointState::handle_joint_state(
@@ -85,14 +89,6 @@ void MoveWithJointState::handle_hand_command(const std_msgs::msg::Float32::Share
   const int max_limit = 3000;
   const float current_limit = 300.0;  // mA
 
-  uint16_t voltage_raw;
-  packetHandler->read2ByteTxRx(portHandler.get(), hand_id, 144, &voltage_raw);
-  const float voltage = voltage_raw * 0.1;  // V
-
-  std_msgs::msg::Float32 voltage_msg;
-  voltage_msg.data = voltage;
-  voltage_pub->publish(voltage_msg);
-
   uint16_t current_raw;
   packetHandler->read2ByteTxRx(portHandler.get(), hand_id, 126, &current_raw);
   const float current = (int16_t)current_raw * 1.34;  // mA
@@ -110,4 +106,16 @@ void MoveWithJointState::handle_hand_command(const std_msgs::msg::Float32::Share
 
   packetHandler->write4ByteTxRx(
     portHandler.get(), hand_id, std::get<1>(model_addr_map.at(XH430)), hand_pulse);
+}
+
+void MoveWithJointState::status_pub_callback()
+{
+  const int hand_id = 8;
+  uint16_t voltage_raw;
+  packetHandler->read2ByteTxRx(portHandler.get(), hand_id, 144, &voltage_raw);
+  const float voltage = voltage_raw * 0.1;  // V
+
+  std_msgs::msg::Float32 voltage_msg;
+  voltage_msg.data = voltage;
+  voltage_pub->publish(voltage_msg);
 }
