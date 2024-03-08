@@ -32,14 +32,14 @@ scan_matcher:
     ndt_resolution: 2.0 
     ndt_num_threads: 0
     gicp_corr_dist_threshold: 5.0
-    trans_for_mapupdate: 0.3
-    vg_size_for_input: 1.0
-    vg_size_for_map: 0.1
+    trans_for_mapupdate: 1.5
+    vg_size_for_input: 0.3
+    vg_size_for_map: 0.3
     use_min_max_filter: true
     scan_min_range: 0.3
     scan_max_range: 100.0
     scan_period: 0.2
-    map_publish_period: 5.0
+    map_publish_period: 10.0
     num_targeted_cloud: 30
     set_initial_pose: true
     initial_pose_x: 0.0

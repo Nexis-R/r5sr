@@ -11,3 +11,5 @@ map.pcd
 pose_graph.g2o
 
 **/__pycache__/**
+
+rosbag2*

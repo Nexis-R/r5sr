@@ -3,45 +3,45 @@ hand_camera/hand_camera:
     video_device: "/dev/video_hand"
     framerate: 30.0
     io_method: "mmap"
-    frame_id: "camera"
+    frame_id: "hand_camera_link"
     pixel_format: "yuyv2rgb"
     image_width: 640
     image_height: 480
     camera_name: "hand_camera"
-    .image_raw.jpeg_quality: 80
+    .image_raw.jpeg_quality: 60
 
 vision_front_camera/vision_front_camera:
   ros__parameters:
     video_device: "/dev/video_vision_front"
     framerate: 30.0
     io_method: "mmap"
-    frame_id: "camera"
+    frame_id: "vision_front_link"
     pixel_format: "mjpeg2rgb"
     image_width: 1280
     image_height: 960
     camera_name: "vision_front_camera"
-    .image_raw.jpeg_quality: 80
+    .image_raw.jpeg_quality: 60
 
 vision_rear_camera/vision_rear_camera:
   ros__parameters:
     video_device: "/dev/video_vision_rear"
     framerate: 30.0
     io_method: "mmap"
-    frame_id: "camera"
-    pixel_format: "yuyv2rgb"
+    frame_id: "vision_rear_link"
+    pixel_format: "mjpeg2rgb"
     image_width: 640
     image_height: 480
     camera_name: "vision_rear_camera"
-    .image_raw.jpeg_quality: 40
+    .image_raw.jpeg_quality: 30
 
 fisheye_front_camera/fisheye_front_camera:
   ros__parameters:
     video_device: "/dev/video_fisheye_front"
     framerate: 10.0
     io_method: "mmap"
-    frame_id: "camera"
-    pixel_format: "yuyv2rgb"
+    frame_id: "fisheye_front_link"
+    pixel_format: "mjpeg2rgb"
     image_width: 640
     image_height: 480
     camera_name: "fisheye_front_camera"
-    .image_raw.jpeg_quality: 40
+    .image_raw.jpeg_quality: 20
