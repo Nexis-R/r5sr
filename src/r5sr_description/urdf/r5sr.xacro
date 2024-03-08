@@ -306,7 +306,7 @@
         <joint name="vision_rear_joint" type="fixed">
             <parent link="overhead_wrist_2_link" />
             <child link="vision_rear_link" />
-            <origin xyz="-0.01 0 -0.001" rpy="3.1415 -0.5 0" />
+            <origin xyz="-0.01 0 -0.001" rpy="0 3.141592 -1.57079632679" />
         </joint>
         <link name="vision_rear_link" />
 

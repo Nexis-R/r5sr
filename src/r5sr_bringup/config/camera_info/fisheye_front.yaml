@@ -1,0 +1,26 @@
+image_width: 640
+image_height: 480
+camera_name: fisheye_front
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [236.79922,   3.1624 , 320.57424,
+           0.     , 236.45145, 240.27919,
+           0.     ,   0.     ,   1.     ]
+distortion_model: equidistant
+distortion_coefficients:
+  rows: 1
+  cols: 4
+  data: [-0.007879, 0.209687, -0.478903, 0.111824]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1., 0., 0.,
+         0., 1., 0.,
+         0., 0., 1.]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [236.79922,   3.1624 , 320.57424,   0.     ,
+           0.     , 236.45145, 240.27919,   0.     ,
+           0.     ,   0.     ,   1.     ,   0.     ]
