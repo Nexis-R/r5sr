@@ -29,8 +29,8 @@ def load_file(package_name, file_path):
 
 def generate_launch_description():
     # Arguments
-    use_darknet_arg = DeclareLaunchArgument(
-        'use_darknet', default_value='false', description='Use darknet or not')
+    use_yolo_arg = DeclareLaunchArgument(
+        'use_yolo', default_value='true', description='Use yolo or not')
     use_audio_arg = DeclareLaunchArgument(
         'use_audio', default_value='false', description='Use audio or not')
 
@@ -77,32 +77,51 @@ def generate_launch_description():
     hazmat_label_yaml_file = get_file_path(
         'r5sr_teleop', 'config/yolo/robocup-hazmat-label-2022.yaml')
 
-    darknet_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration('use_darknet')),
+    yolo_group = GroupAction(
+        condition=IfCondition(LaunchConfiguration('use_yolo')),
         actions=[
             Node(
                 package='image_transport',
                 executable='republish',
-                name='vision_front_repub',
+                name='hand_repub',
                 arguments=['compressed', 'raw'],
                 remappings=[
-                        ('in/compressed', 'vision_front_camera/image_raw/compressed'),
-                        ('out', 'vision_front_camera/image_raw/uncompressed'),
+                        ('in/compressed', 'hand_camera/image_raw/compressed'),
+                        ('out', 'yolo/hand_camera/image_raw/uncompressed'),
                 ],
             ),
             Node(
-                package='darknet_ros',
-                executable='darknet_ros',
-                name='darknet_ros',
-                output='screen',
-                parameters=[
-                        teleop_yaml_file,
-                        hazmat_label_yaml_file,
-                        {'config_path': get_file_path(
-                            'r5sr_teleop', 'config/yolo/cfg')},
-                        {'weights_path': get_file_path(
-                            'r5sr_teleop', 'config/yolo/weights')},
+                package='r5sr_meter_inspection',
+                executable='image_converter_node',
+                name='image_converter_node',
+                remappings=[
+                        ('/image_raw', 'yolo/hand_camera/image_raw/uncompressed'),
+                        ('/image_processed', 'yolo/hand_camera/image_processed'),
                 ],
+            ),
+
+            Node(
+                package='r5sr_meter_inspection',
+                executable='meter_value_calculator_node',
+                name='meter_value_calculator_node',
+                remappings=[
+                        ('/image_processed', 'yolo/hand_camera/image_processed'),
+                ],
+            ),
+
+            Node(
+                package='r5sr_meter_inspection',
+                executable='inspection_result_node',
+                name='inspection_result_node'
+            ),
+
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(
+                    [get_file_path('r5sr_meter_inspection', 'launch/yolov8.launch.py')]),
+                launch_arguments={'input_image_topic': 'hand_camera/image_processed',
+                                  'model': get_file_path('r5sr_teleop', 'config/yolo/gauge_analysis.pt'),
+                                  'threshold': '0.5'}.items(),
+
             ),
         ],
     )
@@ -124,23 +143,37 @@ def generate_launch_description():
     )
 
     cloud_launch = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    [get_file_path('r5sr_teleop', 'launch/cloud.launch.py')]
-                )
+        PythonLaunchDescriptionSource(
+            [get_file_path('r5sr_teleop', 'launch/cloud.launch.py')]
+        )
     )
 
     dronecam_yaml_file = get_file_path('r5sr_teleop', 'config/drone_cam.yaml')
-    dronecam_node = Node(
-        package="usb_cam",
-        executable="usb_cam_node_exe",
-        name="drone_camera",
-        namespace="drone_camera",
-        parameters=[dronecam_yaml_file]
-        )
+
+    drone_group = GroupAction(
+        actions=[
+            Node(
+                package="usb_cam",
+                executable="usb_cam_node_exe",
+                name="drone_camera",
+                namespace="drone_camera",
+                parameters=[dronecam_yaml_file]
+            ),
+            Node(
+                package='r5sr_meter_inspection',
+                executable='image_converter_node',
+                name='drone_image_converter',
+                remappings=[
+                        ('/image_raw', '/drone_camera/image_raw'),
+                        ('/image_processed', '/drone_camera/image_processed'),
+                ],
+            ),
+        ]
+    )
 
     return LaunchDescription(
         [
-            use_darknet_arg,
+            use_yolo_arg,
             use_audio_arg,
             exp_arg,
             vsting_arg,
@@ -150,10 +183,10 @@ def generate_launch_description():
             foxglove_node,
             flir_node,
 
-            darknet_group,
+            yolo_group,
             audio_group,
 
             cloud_launch,
-            dronecam_node,
+            drone_group,
         ]
     )
