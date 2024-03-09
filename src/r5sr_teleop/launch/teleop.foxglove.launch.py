@@ -129,6 +129,15 @@ def generate_launch_description():
                 )
     )
 
+    dronecam_yaml_file = get_file_path('r5sr_teleop', 'config/drone_cam.yaml')
+    dronecam_node = Node(
+        package="usb_cam",
+        executable="usb_cam_node_exe",
+        name="drone_camera",
+        namespace="drone_camera",
+        parameters=[dronecam_yaml_file]
+        )
+
     return LaunchDescription(
         [
             use_darknet_arg,
@@ -145,5 +154,6 @@ def generate_launch_description():
             audio_group,
 
             cloud_launch,
+            dronecam_node,
         ]
     )

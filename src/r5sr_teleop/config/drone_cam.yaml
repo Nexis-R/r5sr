@@ -1,0 +1,11 @@
+drone_camera/drone_camera:
+  ros__parameters:
+    video_device: "/dev/video0"
+    framerate: 30.0
+    io_method: "mmap"
+    frame_id: "drone_camera_link"
+    pixel_format: "mjpeg2rgb"
+    image_width: 1280
+    image_height: 720
+    camera_name: "drone_camera"
+    .image_raw.jpeg_quality: 80
