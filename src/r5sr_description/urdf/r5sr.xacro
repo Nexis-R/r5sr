@@ -285,7 +285,7 @@
         <joint name="hand_camera_joint" type="fixed">
             <parent link="end_effector_link" />
             <child link="hand_camera_link" />
-            <origin xyz="0.05 0 0" rpy="0 0 0" />
+            <origin xyz="0.05 0 0" rpy="-1.57079632679 0 -1.57079632679" />
         </joint>
         <link name="hand_camera_link" />
 
@@ -299,14 +299,14 @@
         <joint name="vision_front_joint" type="fixed">
             <parent link="overhead_wrist_2_link" />
             <child link="vision_front_link" />
-            <origin xyz="0.03 0 0.001" rpy="0 0.1 0" />
+            <origin xyz="0.03 0 0.001" rpy="-1.57079632679 0 -1.57079632679" />
         </joint>
         <link name="vision_front_link" />
 
         <joint name="vision_rear_joint" type="fixed">
             <parent link="overhead_wrist_2_link" />
             <child link="vision_rear_link" />
-            <origin xyz="-0.01 0 -0.001" rpy="3.1415 -0.5 0" />
+            <origin xyz="-0.01 0 -0.001" rpy="0 3.141592 -1.57079632679" />
         </joint>
         <link name="vision_rear_link" />
 

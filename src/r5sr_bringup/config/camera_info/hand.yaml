@@ -1,0 +1,26 @@
+image_width: 640
+image_height: 480
+camera_name: hand_camera
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [457.03464,   0.     , 330.21281,
+           0.     , 456.71973, 237.33852,
+           0.     ,   0.     ,   1.     ]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [-0.003647, 0.025611, 0.001765, -0.000282, 0.000000]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1., 0., 0.,
+         0., 1., 0.,
+         0., 0., 1.]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [462.54266,   0.     , 329.1707 ,   0.     ,
+           0.     , 461.72739, 237.91647,   0.     ,
+           0.     ,   0.     ,   1.     ,   0.     ]

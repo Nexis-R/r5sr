@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <rclcpp/timer.hpp>
 #include <string_view>
 
 #include "dynamixel_sdk/dynamixel_sdk.h"
@@ -50,8 +51,10 @@ private:
   rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr hand_command_sub;
   rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr voltage_pub;
   rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr hand_current_pub;
+  rclcpp::TimerBase::SharedPtr status_pub_timer;
 
   void handle_joint_state(const sensor_msgs::msg::JointState::SharedPtr joint_state);
   void handle_hand_command(const std_msgs::msg::Float32::SharedPtr command);
+  void status_pub_callback();
 };
 }  // namespace r5sr_manipulator_control

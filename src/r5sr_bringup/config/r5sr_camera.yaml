@@ -8,6 +8,7 @@ hand_camera/hand_camera:
     image_width: 640
     image_height: 480
     camera_name: "hand_camera"
+    camera_info_url: "package://r5sr_bringup/config/camera_info/hand.yaml"
     .image_raw.jpeg_quality: 60
 
 vision_front_camera/vision_front_camera:
@@ -20,6 +21,7 @@ vision_front_camera/vision_front_camera:
     image_width: 1280
     image_height: 960
     camera_name: "vision_front_camera"
+    camera_info_url: "package://r5sr_bringup/config/camera_info/vision_front.yaml"
     .image_raw.jpeg_quality: 60
 
 vision_rear_camera/vision_rear_camera:
@@ -32,6 +34,7 @@ vision_rear_camera/vision_rear_camera:
     image_width: 640
     image_height: 480
     camera_name: "vision_rear_camera"
+    camera_info_url: "package://r5sr_bringup/config/camera_info/vision_rear.yaml"
     .image_raw.jpeg_quality: 30
 
 fisheye_front_camera/fisheye_front_camera:
@@ -44,4 +47,5 @@ fisheye_front_camera/fisheye_front_camera:
     image_width: 640
     image_height: 480
     camera_name: "fisheye_front_camera"
+    camera_info_url: "package://r5sr_bringup/config/camera_info/fisheye_front.yaml"
     .image_raw.jpeg_quality: 20
