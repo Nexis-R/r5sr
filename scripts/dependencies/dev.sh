@@ -13,7 +13,9 @@ sudo apt install -y -qq ros-humble-rmw-cyclonedds-cpp \
   clang-format \
   cmake-format \
   wget \
-  busybox
+  busybox \
+  python3-pyocr \
+  git-lfs
 
 if ! command -v just >/dev/null 2>&1; then
   echo "Installing just..."

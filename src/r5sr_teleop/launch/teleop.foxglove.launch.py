@@ -77,8 +77,8 @@ def generate_launch_description():
     hazmat_label_yaml_file = get_file_path(
         'r5sr_teleop', 'config/yolo/robocup-hazmat-label-2022.yaml')
 
-    darknet_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration('use_darknet')),
+    yolo_group = GroupAction(
+        condition=IfCondition(LaunchConfiguration('use_yolo')),
         actions=[
             Node(
                 package='image_transport',
@@ -86,23 +86,39 @@ def generate_launch_description():
                 name='vision_front_repub',
                 arguments=['compressed', 'raw'],
                 remappings=[
-                        ('in/compressed', 'vision_front_camera/image_raw/compressed'),
-                        ('out', 'vision_front_camera/image_raw/uncompressed'),
+                        ('in/compressed', 'hand_camera/image_raw/compressed'),
+                        ('out', 'hand_camera/image_raw/uncompressed'),
                 ],
             ),
             Node(
-                package='darknet_ros',
-                executable='darknet_ros',
-                name='darknet_ros',
-                output='screen',
-                parameters=[
-                        teleop_yaml_file,
-                        hazmat_label_yaml_file,
-                        {'config_path': get_file_path(
-                            'r5sr_teleop', 'config/yolo/cfg')},
-                        {'weights_path': get_file_path(
-                            'r5sr_teleop', 'config/yolo/weights')},
+                package='r5sr_meter_inspection',
+                executable='image_converter_node',
+                name='image_converter_node',
+                remappings=[
+                        ('/image_raw', 'hand_camera/image_raw/uncompressed'),
+                        ('/image_processed', 'hand_camera/image_processed'),
                 ],
+            ),
+            
+           Node(
+                package='r5sr_meter_inspection',
+                executable='meter_value_calculator_node',
+                name='meter_value_calculator_node',
+                remappings=[
+                        ('/image_processed', 'hand_camera/image_processed'),
+                ],
+            ),
+
+            Node(
+                package='r5sr_meter_inspection',
+                executable='inspection_result_node',
+                name='inspection_result_node'
+            ),
+
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(
+                    [get_file_path('r5sr_meter_inspection', 'launch/yolov8.launch.py')]),
+                launch_arguments={'input_image_topic': 'hand_camera/image_processed'}.items(),
             ),
         ],
     )
