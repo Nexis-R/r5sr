@@ -1,0 +1,2 @@
+# genki shadow cast
+SUBSYSTEM=="video4linux", ATTR{index}=="0", ATTR{name}=="ShadowCast: ShadowCast", SYMLINK+="video_shadowcast"
