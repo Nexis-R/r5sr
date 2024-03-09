@@ -2,7 +2,9 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
+import numpy as np
 import cv2
+
 
 class ImageConverterNode(Node):
     def __init__(self):
@@ -31,19 +33,21 @@ class ImageConverterNode(Node):
         left = int((width - min_edge) / 2)
         square_image = cv_image[top:top+min_edge, left:left+min_edge]
 
-        # HSV色空間に変換
-        hsv_image = cv2.cvtColor(square_image, cv2.COLOR_BGR2HSV)
+        # ホワイトバランスの自動調整
+        def adjust_white_balance(image):
+            result = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+            avg_a = np.average(result[:, :, 1])
+            avg_b = np.average(result[:, :, 2])
+            result[:, :, 1] = result[:, :, 1] - ((avg_a - 128) * (result[:, :, 0] / 255.0) * 1.1)
+            result[:, :, 2] = result[:, :, 2] - ((avg_b - 128) * (result[:, :, 0] / 255.0) * 1.1)
+            return cv2.cvtColor(result, cv2.COLOR_LAB2BGR)
 
-        # CLAHEをVチャンネルに適用
-        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
-        hsv_image[:, :, 2] = clahe.apply(hsv_image[:, :, 2])
-
-        # HSVからBGRに変換
-        contrast_adjusted_image = cv2.cvtColor(hsv_image, cv2.COLOR_HSV2BGR)
+        white_balanced_image = adjust_white_balance(square_image)
 
         # 加工した画像をROSのImageメッセージに変換してパブリッシュ
-        image_message = self.bridge.cv2_to_imgmsg(contrast_adjusted_image, encoding="bgr8")
+        image_message = self.bridge.cv2_to_imgmsg(white_balanced_image, encoding="bgr8")
         self.publisher.publish(image_message)
+
 
 def main(args=None):
     rclpy.init(args=args)

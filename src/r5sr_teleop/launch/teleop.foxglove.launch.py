@@ -119,7 +119,9 @@ def generate_launch_description():
                 PythonLaunchDescriptionSource(
                     [get_file_path('r5sr_meter_inspection', 'launch/yolov8.launch.py')]),
                 launch_arguments={'input_image_topic': 'hand_camera/image_processed',
-                                  'model': get_file_path('r5sr_teleop', 'config/yolo/gauge_analysis.pt')}.items(),
+                                  'model': get_file_path('r5sr_teleop', 'config/yolo/gauge_analysis.pt'),
+                                  'threshold': '0.5'}.items(),
+
             ),
         ],
     )
@@ -147,12 +149,26 @@ def generate_launch_description():
     )
 
     dronecam_yaml_file = get_file_path('r5sr_teleop', 'config/drone_cam.yaml')
-    dronecam_node = Node(
-        package="usb_cam",
-        executable="usb_cam_node_exe",
-        name="drone_camera",
-        namespace="drone_camera",
-        parameters=[dronecam_yaml_file]
+
+    drone_group = GroupAction(
+        actions=[
+            Node(
+                package="usb_cam",
+                executable="usb_cam_node_exe",
+                name="drone_camera",
+                namespace="drone_camera",
+                parameters=[dronecam_yaml_file]
+            ),
+            Node(
+                package='r5sr_meter_inspection',
+                executable='image_converter_node',
+                name='drone_image_converter',
+                remappings=[
+                        ('/image_raw', '/drone_camera/image_raw'),
+                        ('/image_processed', '/drone_camera/image_processed'),
+                ],
+            ),
+        ]
     )
 
     return LaunchDescription(
@@ -171,6 +187,6 @@ def generate_launch_description():
             audio_group,
 
             cloud_launch,
-            dronecam_node,
+            drone_group,
         ]
     )

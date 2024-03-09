@@ -75,8 +75,8 @@ class MeterValueCalculatorNode(Node):
         if not decimal_numbers:
             if self.last_decimal_number is not None:
                 decimal_numbers = [self.last_decimal_number]
-            else:
-                self.get_logger().info('No numbers found and no last number to fallback.')
+            # else:
+            #     self.get_logger().info('No numbers found and no last number to fallback.')
         else:
             processed_numbers = []
             for number in decimal_numbers:
@@ -120,7 +120,7 @@ class MeterValueCalculatorNode(Node):
         msg = Float32()
         msg.data = value  # Assign the floating point value directly
         self.publisher_.publish(msg)
-        self.get_logger().info(f'Published Meter Value: {msg.data}')
+        # self.get_logger().info(f'Published Meter Value: {msg.data}')
 
 
     def map_value(self, x, in_min, in_max, out_min, out_max):
