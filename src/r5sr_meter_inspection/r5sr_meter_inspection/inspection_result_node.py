@@ -29,7 +29,7 @@ class InspectionResultNode(Node):
         
         self.compressed_publisher_ = self.create_publisher(
             CompressedImage,
-            '/meter_inspection_image/compressed',
+            '/meter_inspection_snapshot',
             10)
         
         self.service = self.create_service(

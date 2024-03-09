@@ -46,7 +46,6 @@ class MeterValueCalculatorNode(Node):
 
     def image_callback(self, msg):
         if self.maximum_bbox is None or self.ocr_tool is None:
-            self.get_logger().info('No maximum bounding box available or OCR tool not available.')
             return
 
         try:
