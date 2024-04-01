@@ -15,7 +15,7 @@ using namespace std;
 class qrcv : public rclcpp::Node{
     public:
     qrcv(): Node("qr_processer"){
-        publisher_ = this->create_publisher<foxglove_msgs::msg::ImageAnnotations>("qr_text", 10);
+        publisher_ = this->create_publisher<foxglove_msgs::msg::ImageAnnotations>("image_processed", 10);
         subscription_ = this->create_subscription<sensor_msgs::msg::Image>(
             "image_raw", 10, std::bind(&qrcv::topic_callback, this, _1)
         );
