@@ -60,17 +60,17 @@ def generate_launch_description():
                 }
             ]
         ),
-        # Node(
-        #     package='topic_tools',
-        #     executable='relay',
-        #     name='topic_relay_map',
-        #     parameters=[
-        #         {
-        #             'input_topic': '/map',
-        #             'output_topic': '/cloud_1'
-        #         }
-        #     ]
-        # ),
+        Node(
+            package='topic_tools',
+            executable='relay',
+            name='topic_relay_map',
+            parameters=[
+                {
+                    'input_topic': '/map',
+                    'output_topic': '/cloud_1'
+                }
+            ]
+        ),
         # Node(
         #     package='topic_tools',
         #     executable='relay',
@@ -89,7 +89,7 @@ def generate_launch_description():
                  '/chassis_main_camera/image/compressed',
                  '/chassis_sub_camera/image/compressed',
                  '/thermo_camera/image/compressed',
-                #  '/cloud_1', 
+                 '/cloud_1', 
                 #  '/cloud_2'
                  ]
         )
