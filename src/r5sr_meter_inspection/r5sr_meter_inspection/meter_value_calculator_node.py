@@ -16,7 +16,7 @@ class MeterValueCalculatorNode(Node):
         super().__init__('meter_value_calculator_node')
         self.subscription = self.create_subscription(
             DetectionArray,
-            'yolo/detections',
+            '/detections',
             self.detection_callback,
             10)
         

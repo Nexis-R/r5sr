@@ -1,14 +1,15 @@
 import os
-from launch import Condition, LaunchDescription
+
+from blinker import Namespace
+from launch import LaunchDescription
 from launch.conditions import IfCondition
 from launch.actions import DeclareLaunchArgument, GroupAction, IncludeLaunchDescription, OpaqueFunction
 from ament_index_python.packages import get_package_share_directory
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch_ros.actions import ComposableNodeContainer
-from launch_ros.descriptions import ComposableNode
 from launch_ros.actions import Node
+from launch.actions import ExecuteProcess
 
 
 def get_file_path(package_name, file_path):
@@ -47,6 +48,13 @@ def generate_launch_description():
         executable='joy_node',
         name='joy',
         parameters=[teleop_yaml_file],
+        remappings=[
+            ('/joy', '/joy_raw'),
+        ],
+    )
+    joy_throttle = ExecuteProcess(
+        cmd=['ros2', 'run', 'topic_tools', 'throttle',
+             'messages', 'joy_raw', '100.0', 'joy']
     )
     joy2command_node = Node(
         package='r5sr_teleop',
@@ -74,29 +82,32 @@ def generate_launch_description():
         parameters=[teleop_yaml_file],
     )
 
-    hazmat_label_yaml_file = get_file_path(
-        'r5sr_teleop', 'config/yolo/robocup-hazmat-label-2022.yaml')
+    servo_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [get_file_path('r5sr_teleop', 'launch/servo.launch.py')]),
+    )
 
-    yolo_group = GroupAction(
+    hand_yolo_group = GroupAction(
         condition=IfCondition(LaunchConfiguration('use_yolo')),
         actions=[
             Node(
                 package='image_transport',
                 executable='republish',
-                name='hand_repub',
+                name='repub',
                 arguments=['compressed', 'raw'],
                 remappings=[
                         ('in/compressed', 'hand_camera/image_raw/compressed'),
-                        ('out', 'yolo/hand_camera/image_raw/uncompressed'),
+                        ('out', 'yolo/hand/image_raw/uncompressed'),
                 ],
             ),
             Node(
                 package='r5sr_meter_inspection',
                 executable='image_converter_node',
                 name='image_converter_node',
+                namespace='yolo/hand',
                 remappings=[
-                        ('/image_raw', 'yolo/hand_camera/image_raw/uncompressed'),
-                        ('/image_processed', 'yolo/hand_camera/image_processed'),
+                        ('/image_raw', '/yolo/hand/image_raw/uncompressed'),
+                        ('/image_processed', '/yolo/hand/image_processed'),
                 ],
             ),
 
@@ -104,22 +115,96 @@ def generate_launch_description():
                 package='r5sr_meter_inspection',
                 executable='meter_value_calculator_node',
                 name='meter_value_calculator_node',
+                namespace='yolo/hand',
                 remappings=[
-                        ('/image_processed', 'yolo/hand_camera/image_processed'),
+                        ('/image_processed', '/yolo/hand/image_processed'),
+                        ('/meter_value', '/yolo/hand/meter_value'),
+                        ('/detections', '/yolo/hand/detections'),
                 ],
             ),
 
             Node(
                 package='r5sr_meter_inspection',
                 executable='inspection_result_node',
-                name='inspection_result_node'
+                name='inspection_result_node',
+                namespace='yolo/hand',
+                remappings=[
+                        ('/yolo/dbg_image', '/yolo/hand/dbg_image'),
+                        ('/meter_value', '/yolo/hand/meter_value'),
+                        ('/meter_inspection_image', '/yolo/hand/meter_inspection_image'),
+                        ('/meter_inspection_snapshot', '/yolo/meter_inspection_snapshot'),
+                        ('/compress_and_publish_image', '/yolo/hand/compress_and_publish_image'),
+                ],
             ),
 
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     [get_file_path('r5sr_meter_inspection', 'launch/yolov8.launch.py')]),
-                launch_arguments={'input_image_topic': 'hand_camera/image_processed',
-                                  'model': get_file_path('r5sr_teleop', 'config/yolo/gauge_analysis.pt'),
+                launch_arguments={'namespace':'yolo/hand',
+                                  'input_image_topic': 'image_processed',
+                                  'model': get_file_path('r5sr_teleop', 'config/yolo/gauge-analysis-wrs-trial-2024.pt'),
+                                  'threshold': '0.5'}.items(),
+
+            ),
+        ],
+    )
+
+    vision_yolo_group = GroupAction(
+        condition=IfCondition(LaunchConfiguration('use_yolo')),
+        actions=[
+            Node(
+                package='image_transport',
+                executable='republish',
+                name='repub',
+                arguments=['compressed', 'raw'],
+                remappings=[
+                        ('in/compressed', 'vision_front_camera/image_raw/compressed'),
+                        ('out', 'yolo/vision/image_raw/uncompressed'),
+                ],
+            ),
+            Node(
+                package='r5sr_meter_inspection',
+                executable='image_converter_node',
+                name='image_converter_node',
+                namespace='yolo/vision',
+                remappings=[
+                        ('/image_raw', '/yolo/vision/image_raw/uncompressed'),
+                        ('/image_processed', '/yolo/vision/image_processed'),
+                ],
+            ),
+
+            Node(
+                package='r5sr_meter_inspection',
+                executable='meter_value_calculator_node',
+                name='meter_value_calculator_node',
+                namespace='yolo/vision',
+                remappings=[
+                        ('/image_processed', '/yolo/vision/image_processed'),
+                        ('/meter_value', '/yolo/vision/meter_value'),
+                        ('/detections', '/yolo/vision/detections'),
+                ],
+            ),
+
+            Node(
+                package='r5sr_meter_inspection',
+                executable='inspection_result_node',
+                name='inspection_result_node',
+                namespace='yolo/vision',
+                remappings=[
+                        ('/yolo/dbg_image', '/yolo/vision/dbg_image'),
+                        ('/meter_value', '/yolo/vision/meter_value'),
+                        ('/meter_inspection_image', '/yolo/vision/meter_inspection_image'),
+                        ('/meter_inspection_snapshot', '/yolo/meter_inspection_snapshot'),
+                        ('/compress_and_publish_image', '/yolo/vision/compress_and_publish_image'),
+                ],
+            ),
+
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(
+                    [get_file_path('r5sr_meter_inspection', 'launch/yolov8.launch.py')]),
+                launch_arguments={'namespace':'yolo/vision',
+                                  'input_image_topic': 'image_processed',
+                                  'model': get_file_path('r5sr_teleop', 'config/yolo/gauge-analysis-wrs-trial-2024.pt'),
                                   'threshold': '0.5'}.items(),
 
             ),
@@ -179,14 +264,18 @@ def generate_launch_description():
             vsting_arg,
 
             joy_node,
+            joy_throttle,
             joy2command_node,
             foxglove_node,
             flir_node,
 
-            yolo_group,
+            servo_launch,
+
+            hand_yolo_group,
+            vision_yolo_group,
             audio_group,
 
             cloud_launch,
-            drone_group,
+            # drone_group,
         ]
     )

@@ -123,7 +123,7 @@ void Joy2Command::handle_joy(const sensor_msgs::msg::Joy::SharedPtr msg)
       // flippers
       {
         auto flipper_speed = [](const bool button, const float stick) -> float {
-          return button ? stick * 0.005 : 0.0;
+          return button ? stick * 0.0050 : 0.0;
         };
 
         this->flippers_position = {

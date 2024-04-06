@@ -60,6 +60,11 @@ def generate_launch_description():
         "input_image_topic",
         default_value="/image_processed",
         description="Name of the input image topic")
+    dbg_image_topic = LaunchConfiguration("dbg_image_topic")
+    dbg_image_topic_cmd = DeclareLaunchArgument(
+        "dbg_image_topic",
+        default_value="dbg_image",
+        description="Name of the input image topic")
 
     image_reliability = LaunchConfiguration("image_reliability")
     image_reliability_cmd = DeclareLaunchArgument(
@@ -112,7 +117,8 @@ def generate_launch_description():
         parameters=[{"image_reliability": image_reliability}],
         remappings=[
             ("image_raw", input_image_topic),
-            ("detections", "tracking")
+            ("detections", "tracking"),
+            ("dbg_image", dbg_image_topic)
         ]
     )
 
@@ -124,6 +130,7 @@ def generate_launch_description():
     ld.add_action(enable_cmd)
     ld.add_action(threshold_cmd)
     ld.add_action(input_image_topic_cmd)
+    ld.add_action(dbg_image_topic_cmd)
     ld.add_action(image_reliability_cmd)
     ld.add_action(namespace_cmd)
 
