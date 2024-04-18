@@ -38,7 +38,7 @@ build parallel='1' : _cd
   colcon build --parallel-workers {{parallel}} --symlink-install --mixin ccache clang release compile-commands
 
 # launch teleop with foxglove
-teleop-foxglove args='use_darknet:=false use_audio:=false': _cd
+teleop-foxglove args='use_wrs:=false use_audio:=false exp:=false vsting:=false': _cd
   source install/setup.bash
   ros2 launch r5sr_teleop teleop.foxglove.launch.py {{args}}
 

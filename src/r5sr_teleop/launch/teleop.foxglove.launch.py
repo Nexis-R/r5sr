@@ -30,8 +30,8 @@ def load_file(package_name, file_path):
 
 def generate_launch_description():
     # Arguments
-    use_yolo_arg = DeclareLaunchArgument(
-        'use_yolo', default_value='true', description='Use yolo or not')
+    use_wrs_arg = DeclareLaunchArgument(
+        'use_wrs', default_value='false', description='when wrs or not')
     use_audio_arg = DeclareLaunchArgument(
         'use_audio', default_value='false', description='Use audio or not')
 
@@ -88,7 +88,7 @@ def generate_launch_description():
     )
 
     hand_yolo_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration('use_yolo')),
+        condition=IfCondition(LaunchConfiguration('use_wrs')),
         actions=[
             Node(
                 package='image_transport',
@@ -150,7 +150,7 @@ def generate_launch_description():
     )
 
     vision_yolo_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration('use_yolo')),
+        condition=IfCondition(LaunchConfiguration('use_wrs')),
         actions=[
             Node(
                 package='image_transport',
@@ -227,15 +227,20 @@ def generate_launch_description():
         ],
     )
 
-    cloud_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [get_file_path('r5sr_teleop', 'launch/cloud.launch.py')]
-        )
+    cloud_group = GroupAction(
+        condition=IfCondition(LaunchConfiguration('use_wrs')),
+        actions=[
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(
+                    [get_file_path('r5sr_teleop', 'launch/cloud.launch.py')]),
+            ),
+        ],
     )
 
     dronecam_yaml_file = get_file_path('r5sr_teleop', 'config/drone_cam.yaml')
 
     drone_group = GroupAction(
+        condition=IfCondition(LaunchConfiguration('use_wrs')),
         actions=[
             Node(
                 package="usb_cam",
@@ -258,7 +263,7 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
-            use_yolo_arg,
+            use_wrs_arg,
             use_audio_arg,
             exp_arg,
             vsting_arg,
@@ -275,7 +280,7 @@ def generate_launch_description():
             vision_yolo_group,
             audio_group,
 
-            cloud_launch,
-            # drone_group,
+            cloud_group,
+            drone_group,
         ]
     )
