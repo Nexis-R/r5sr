@@ -288,6 +288,30 @@ def generate_launch_description():
         ]
     )
 
+    qr_detector_group = GroupAction(
+        actions=[
+            Node(
+                package='image_transport',
+                executable='republish',
+                name='repub',
+                arguments=['compressed', 'raw'],
+                remappings=[
+                        ('in/compressed', 'hand_camera/image_raw/compressed'),
+                        ('out', 'hand_camera/image_raw/uncompressed'),
+                ],
+            ),
+            Node(
+                package='r5sr_qr_detecter',
+                executable='qr_detector_node',
+                name='qr_detector_node',
+                remappings=[
+                        ('image_raw', 'hand_camera/image_raw/uncompressed'),
+                        ('image_processed', 'hand_camera/image_raw/qr_detector_image'),
+                ],
+            ),
+        ]
+    )
+
     return LaunchDescription(
         [
             use_wrs_arg,
@@ -307,9 +331,11 @@ def generate_launch_description():
             vision_yolo_group,
             audio_group,
 
-            hazmat_group,
+            # hazmat_group,
 
             cloud_group,
             drone_group,
+
+            qr_detector_group,
         ]
     )
