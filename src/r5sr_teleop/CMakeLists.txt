@@ -39,6 +39,7 @@ ament_target_dependencies(
   rclcpp_components
   r5sr_interface
   std_srvs
+  std_msgs
   sensor_msgs
   trajectory_msgs
   geometry_msgs

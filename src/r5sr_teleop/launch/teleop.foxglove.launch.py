@@ -82,6 +82,13 @@ def generate_launch_description():
         parameters=[teleop_yaml_file],
     )
 
+    emergency_stop_node = Node(
+        package='r5sr_emergency_stop',
+        executable='r5sr_emergency_stop_node',
+        name='r5sr_emergency_stop_node'
+    )
+
+
     servo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [get_file_path('r5sr_teleop', 'launch/servo.launch.py')]),
@@ -324,6 +331,7 @@ def generate_launch_description():
             joy2command_node,
             foxglove_node,
             flir_node,
+            emergency_stop_node,
 
             servo_launch,
 

@@ -25,6 +25,9 @@ Joy2Command::Joy2Command(const rclcpp::NodeOptions & options) : Node("joy2comman
   mode_change_subscription = this->create_subscription<r5sr_interface::msg::OperationMode>(
     "mode_change", 10, std::bind(&Joy2Command::handle_change_mode, this, std::placeholders::_1));
 
+  emergency_status_subscription = this->create_subscription<std_msgs::msg::Bool>(
+    "is_emergency_stopped", 10, std::bind(&Joy2Command::handle_emergency_status, this, std::placeholders::_1));
+
   servo_start_client = this->create_client<std_srvs::srv::Trigger>("/servo_node/start_servo");
   servo_start_client->wait_for_service(std::chrono::seconds(1));
   servo_start_client->async_send_request(std::make_shared<std_srvs::srv::Trigger::Request>());
@@ -52,7 +55,7 @@ void Joy2Command::handle_joy(const sensor_msgs::msg::Joy::SharedPtr msg)
   const auto & axes = msg->axes;
 
   // operation mode
-  if (operation_mode.teleop_mode != r5sr_interface::msg::TeleopMode::STOP) {
+  if (emergency_status_msg.data != true) {
     if (buttons[Button::LEFT_STICK]) {
       auto operation_mode_msg = operation_mode;
       operation_mode_msg.teleop_mode = r5sr_interface::msg::TeleopMode::CRAWLER;
@@ -65,6 +68,12 @@ void Joy2Command::handle_joy(const sensor_msgs::msg::Joy::SharedPtr msg)
 
       mode_change_publisher->publish(operation_mode_msg);
     }
+  }else{
+      auto operation_mode_msg = operation_mode;
+      operation_mode_msg.teleop_mode = r5sr_interface::msg::TeleopMode::STOP;
+
+      mode_change_publisher->publish(operation_mode_msg);
+
   }
 
   switch (operation_mode.teleop_mode) {
@@ -270,6 +279,14 @@ void Joy2Command::handle_change_mode(const r5sr_interface::msg::OperationMode::S
 {
   operation_mode = *msg;
 }
+
+
+void Joy2Command::handle_emergency_status(const std_msgs::msg::Bool::SharedPtr msg)
+{
+  emergency_status_msg = *msg;
+}
+
+
 }  // namespace r5sr_teleop
 
 #include <rclcpp_components/register_node_macro.hpp>

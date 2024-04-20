@@ -4,10 +4,10 @@ from std_msgs.msg import Bool
 import tkinter as tk
 from threading import Thread
 
-class EmergencyStopPublisher(Node):
+class EmergencyStopNode(Node):
     def __init__(self):
         super().__init__('r5sr_emergency_stop_node')
-        self.publisher_ = self.create_publisher(Bool, 'emergency_stop', 10)
+        self.publisher_ = self.create_publisher(Bool, 'is_emergency_stopped', 10)
         self.is_active = False
         
         # tkinter GUI setup
@@ -71,7 +71,7 @@ class EmergencyStopPublisher(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = EmergencyStopPublisher()
+    node = EmergencyStopNode()
     node.run()
 
 if __name__ == '__main__':
