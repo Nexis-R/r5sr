@@ -31,14 +31,14 @@ def load_file(package_name, file_path):
 def generate_launch_description():
     # Arguments
     use_wrs_arg = DeclareLaunchArgument(
-        'use_wrs', default_value='false', description='when wrs or not')
+        "use_wrs", default_value="false", description='when wrs or not')
     use_audio_arg = DeclareLaunchArgument(
-        'use_audio', default_value='false', description='Use audio or not')
+        "use_audio", default_value="false", description='Use audio or not')
 
     exp_arg = DeclareLaunchArgument(
-        'exp', default_value='false', description='Exploration mode')
+        "exp", default_value="false", description='Exploration mode')
     vsting_arg = DeclareLaunchArgument(
-        'vsting', default_value='false', description='vsting mode')
+        "vsting", default_value="false", description='vsting mode')
 
     teleop_yaml_file = get_file_path('r5sr_teleop', 'config/r5sr_teleop.yaml')
 
@@ -87,8 +87,26 @@ def generate_launch_description():
             [get_file_path('r5sr_teleop', 'launch/servo.launch.py')]),
     )
 
+    audio_group = GroupAction(
+        condition=IfCondition(LaunchConfiguration("use_audio")),
+        actions=[
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(
+                    get_file_path("audio_capture", "launch/capture.launch.py")
+                ),
+                launch_arguments=[("ns", "audio_robot_to_ope")],
+            ),
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(
+                    get_file_path("audio_play", "launch/play.launch.py")
+                ),
+                launch_arguments=[("ns", "audio_ope_to_robot")],
+            ),
+        ],
+    )
+
     hand_yolo_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration('use_wrs')),
+        condition=IfCondition(LaunchConfiguration("use_wrs")),
         actions=[
             Node(
                 package='image_transport',
@@ -150,7 +168,7 @@ def generate_launch_description():
     )
 
     vision_yolo_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration('use_wrs')),
+        condition=IfCondition(LaunchConfiguration("use_wrs")),
         actions=[
             Node(
                 package='image_transport',
@@ -211,24 +229,8 @@ def generate_launch_description():
         ],
     )
 
-    audio_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration('use_audio')),
-        actions=[
-            IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    [get_file_path('audio_play', 'launch/play.launch.xml')]),
-                launch_arguments={'ns': 'audio_robot_to_ope'}.items(),
-            ),
-            IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    [get_file_path('audio_capture', 'launch/capture.launch.xml')]),
-                launch_arguments={'ns': 'audio_ope_to_robot'}.items(),
-            ),
-        ],
-    )
-
     cloud_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration('use_wrs')),
+        condition=IfCondition(LaunchConfiguration("use_wrs")),
         actions=[
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
@@ -240,7 +242,7 @@ def generate_launch_description():
     dronecam_yaml_file = get_file_path('r5sr_teleop', 'config/drone_cam.yaml')
 
     drone_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration('use_wrs')),
+        condition=IfCondition(LaunchConfiguration("use_wrs")),
         actions=[
             Node(
                 package="usb_cam",
@@ -257,6 +259,31 @@ def generate_launch_description():
                         ('/image_raw', '/drone_camera/image_raw'),
                         ('/image_processed', '/drone_camera/image_processed'),
                 ],
+            ),
+        ]
+    )
+
+    hazmat_group = GroupAction(
+        actions=[
+            Node(
+                package='image_transport',
+                executable='republish',
+                name='repub',
+                arguments=['compressed', 'raw'],
+                remappings=[
+                        ('in/compressed', 'hand_camera/image_raw/compressed'),
+                        ('out', 'yolo/hand/image_raw/uncompressed'),
+                ],
+            ),
+
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(
+                    [get_file_path('yolov8_bringup', 'launch/yolov8.launch.py')]),
+                launch_arguments={'namespace':'yolo/hand',
+                                  'input_image_topic': 'image_raw/uncompressed',
+                                  'model': get_file_path('r5sr_teleop', 'config/yolo/rrl_hazmat_label_2024.pt'),
+                                  'threshold': '0.5'}.items(),
+
             ),
         ]
     )
@@ -279,6 +306,8 @@ def generate_launch_description():
             hand_yolo_group,
             vision_yolo_group,
             audio_group,
+
+            hazmat_group,
 
             cloud_group,
             drone_group,
