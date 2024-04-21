@@ -299,8 +299,8 @@ def generate_launch_description():
                     [get_file_path('yolov8_bringup', 'launch/yolov8.launch.py')]),
                 launch_arguments={'namespace':'yolo/hand',
                                   'input_image_topic': 'image_processed',
-                                  'model': get_file_path('r5sr_teleop', 'config/yolo/hazmat2024-0421.pt'),
-                                  'threshold': '0.6'}.items(),
+                                  'model': get_file_path('r5sr_teleop', 'config/yolo/hazmat2024-0421-yolov8m.pt'),
+                                  'threshold': '0.9'}.items(),
 
             ),
         ]
