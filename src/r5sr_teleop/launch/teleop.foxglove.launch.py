@@ -283,13 +283,24 @@ def generate_launch_description():
                 ],
             ),
 
+            Node(
+                package='r5sr_meter_inspection',
+                executable='image_converter_node',
+                name='image_converter_node',
+                namespace='yolo/vision',
+                remappings=[
+                        ('/image_raw', '/yolo/hand/image_raw/uncompressed'),
+                        ('/image_processed', '/yolo/hand/image_processed'),
+                ],
+            ),
+
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     [get_file_path('yolov8_bringup', 'launch/yolov8.launch.py')]),
                 launch_arguments={'namespace':'yolo/hand',
-                                  'input_image_topic': 'image_raw/uncompressed',
-                                  'model': get_file_path('r5sr_teleop', 'config/yolo/rrl_hazmat_label_2024.pt'),
-                                  'threshold': '0.5'}.items(),
+                                  'input_image_topic': 'image_processed',
+                                  'model': get_file_path('r5sr_teleop', 'config/yolo/hazmat2024-0421.pt'),
+                                  'threshold': '0.6'}.items(),
 
             ),
         ]
@@ -363,7 +374,7 @@ def generate_launch_description():
             vision_yolo_group,
             audio_group,
 
-            # hazmat_group,
+            hazmat_group,
 
             cloud_group,
             drone_group,
