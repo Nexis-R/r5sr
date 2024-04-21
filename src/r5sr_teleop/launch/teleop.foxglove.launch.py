@@ -101,13 +101,13 @@ def generate_launch_description():
                 PythonLaunchDescriptionSource(
                     get_file_path("audio_capture", "launch/capture.launch.py")
                 ),
-                launch_arguments=[("ns", "audio_robot_to_ope")],
+                launch_arguments=[("ns", "audio_ope_to_robot")],
             ),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     get_file_path("audio_play", "launch/play.launch.py")
                 ),
-                launch_arguments=[("ns", "audio_ope_to_robot")],
+                launch_arguments=[("ns", "audio_robot_to_ope")],
             ),
         ],
     )
@@ -295,7 +295,7 @@ def generate_launch_description():
         ]
     )
 
-    qr_detector_group = GroupAction(
+    hand_qr_detector_group = GroupAction(
         actions=[
             Node(
                 package='image_transport',
@@ -314,6 +314,30 @@ def generate_launch_description():
                 remappings=[
                         ('image_raw', 'hand_camera/image_raw/uncompressed'),
                         ('image_processed', 'hand_camera/image_raw/qr_detector_image'),
+                ],
+            ),
+        ]
+    )
+
+    vision_qr_detector_group = GroupAction(
+        actions=[
+            Node(
+                package='image_transport',
+                executable='republish',
+                name='repub',
+                arguments=['compressed', 'raw'],
+                remappings=[
+                        ('in/compressed', 'vision_front_camera/image_raw/compressed'),
+                        ('out', 'vision_front_camera/image_raw/uncompressed'),
+                ],
+            ),
+            Node(
+                package='r5sr_qr_detecter',
+                executable='qr_detector_node',
+                name='qr_detector_node',
+                remappings=[
+                        ('image_raw', 'vision_front_camera/image_raw/uncompressed'),
+                        ('image_processed', 'vision_front_camera/image_raw/qr_detector_image'),
                 ],
             ),
         ]
@@ -344,6 +368,9 @@ def generate_launch_description():
             cloud_group,
             drone_group,
 
-            qr_detector_group,
+            hand_qr_detector_group,
+            vision_qr_detector_group,
+
+            
         ]
     )

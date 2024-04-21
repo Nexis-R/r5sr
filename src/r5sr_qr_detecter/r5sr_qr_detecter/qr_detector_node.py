@@ -39,9 +39,9 @@ class ImageConverterNode(Node):
             # QRコードが検出された場合、境界ボックスとデコードされたテキストを画像に描画
             bbox = np.int32(bbox)
             for i in range(len(bbox)):
-                cv2.line(cv_image, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(0, 255, 0), thickness=2)
+                cv2.line(cv_image, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
             cv2.putText(cv_image, data, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX,
-                        0.5, (0, 255, 0), 1, cv2.LINE_AA)
+                        0.5, (0, 0, 255), 1, cv2.LINE_AA)
 
         # 加工後の画像をROSのImageメッセージに変換してパブリッシュ
         image_message = self.bridge.cv2_to_imgmsg(cv_image, encoding="bgr8")
