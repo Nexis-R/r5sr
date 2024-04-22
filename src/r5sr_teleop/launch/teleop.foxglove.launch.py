@@ -95,20 +95,19 @@ def generate_launch_description():
     )
 
     audio_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration("use_audio")),
+        condition=IfCondition(LaunchConfiguration('use_audio')),
         actions=[
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
-                    get_file_path("audio_capture", "launch/capture.launch.py")
-                ),
-                launch_arguments=[("ns", "audio_ope_to_robot")],
+                    [get_file_path('audio_play', 'launch/play.launch.py')]),
+                launch_arguments={'ns': 'audio_robot_to_ope'}.items(),
             ),
-            IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    get_file_path("audio_play", "launch/play.launch.py")
-                ),
-                launch_arguments=[("ns", "audio_robot_to_ope")],
-            ),
+            # audio_ope_to_robotを入れると音が聞こえなくなる
+            # IncludeLaunchDescription(
+            #     PythonLaunchDescriptionSource(
+            #         [get_file_path('audio_capture', 'launch/capture.launch.py')]),
+            #     launch_arguments={'ns': 'audio_ope_to_robot'}.items(),
+            # ),
         ],
     )
 
@@ -380,7 +379,7 @@ def generate_launch_description():
             drone_group,
 
             hand_qr_detector_group,
-            vision_qr_detector_group,
+            # vision_qr_detector_group,
 
             
         ]
