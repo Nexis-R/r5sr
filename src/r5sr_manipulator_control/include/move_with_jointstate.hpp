@@ -31,7 +31,7 @@ const static std::map<std::string, std::tuple<Model, uint8_t, float, float>> joi
   {"wrist_yaw_joint", {H42, 6, 0.0, 1.0}},
   {"wrist_roll_joint", {H42, 7, 0.0, 1.0}},
   {"overhead_elbow_joint", {H42, 9, 35.0, 1.0}},
-  {"overhead_wrist_yaw_joint", {XH430, 10, 100.0, -1.0}},
+  {"overhead_wrist_yaw_joint", {XH430, 10, 130.0, -1.0}},
   {"overhead_wrist_pitch_joint", {XH430, 11, 180.0, 1.0}},
   {"hand", {XH430, 8, 0.0, 0.0}}};
 

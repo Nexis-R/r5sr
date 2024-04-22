@@ -1,0 +1,11 @@
+<launch>
+    <!-- Include play.launch.xml from audio_play package -->
+    <include file="$(find-pkg-share audio_play)/launch/play.launch.xml">
+        <arg name="ns" value="audio_ope_to_robot" />
+    </include>
+
+    <!-- Include capture.launch.xml from audio_capture package -->
+    <include file="$(find-pkg-share audio_capture)/launch/capture.launch.xml">
+        <arg name="ns" value="audio_robot_to_ope" />
+    </include>
+</launch>

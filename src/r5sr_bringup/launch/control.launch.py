@@ -36,16 +36,6 @@ def generate_launch_description():
         .robot_description_kinematics(file_path="config/kinematics.yaml")
         .to_moveit_configs()
     )
-
-    # Get parameters for the Servo node
-    servo_yaml = load_yaml("r5sr_moveit_teleop",
-                           "config/arm_servo.yaml")
-    servo_params = {"moveit_servo": servo_yaml}
-
-    overhead_servo_yaml = load_yaml("r5sr_moveit_teleop",
-                           "config/overhead_arm_servo.yaml")
-    overhead_servo_params = {"moveit_servo": overhead_servo_yaml}
-
     # ros2_control using FakeSystem as hardware
     ros2_controllers_path = os.path.join(
         get_package_share_directory("r5sr_moveit_config"),
@@ -91,43 +81,16 @@ def generate_launch_description():
 
     # Launch as much as possible in components
     container = ComposableNodeContainer(
-        name="moveit_servo_container",
+        name="moveit_container",
         namespace="/",
         package="rclcpp_components",
         executable="component_container_mt",
         composable_node_descriptions=[
             ComposableNode(
-                package="moveit_servo",
-                plugin="moveit_servo::ServoNode",
-                name="servo_node",
-                parameters=[
-                    servo_params,
-                    moveit_config.robot_description,
-                    moveit_config.robot_description_semantic,
-                    moveit_config.robot_description_kinematics,
-                ],
-            ),
-            ComposableNode(
-                package="moveit_servo",
-                plugin="moveit_servo::ServoNode",
-                name="overhead_servo_node",
-                parameters=[
-                    overhead_servo_params,
-                    moveit_config.robot_description,
-                    moveit_config.robot_description_semantic,
-                    moveit_config.robot_description_kinematics,
-                ],
-            ),
-            ComposableNode(
                 package="robot_state_publisher",
                 plugin="robot_state_publisher::RobotStatePublisher",
                 name="robot_state_publisher",
                 parameters=[moveit_config.robot_description],
-            ),
-            ComposableNode(
-                package="r5sr_moveit_teleop",
-                plugin="r5sr_moveit_teleop::PresetPose",
-                name="preset_pose_node",
             ),
         ],
         output="screen",

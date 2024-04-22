@@ -63,11 +63,6 @@ def camera_opaque_function(context):
                 namespace="hand_camera",
                 parameters=[camera_yaml_file],
             ),
-            Node(
-                package="zbar_ros",
-                executable="barcode_reader",
-                remappings=[("image", "/vision_front_camera/image_raw")],
-            ),
         ],
     )
 
@@ -125,6 +120,12 @@ def generate_launch_description():
                 '/epos/motor2/move_to_position'),
         ],
     )
+
+    control_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [get_file_path('r5sr_bringup', 'launch/control.launch.py')]),
+    )
+
     move_with_jointstate_node = Node(
         package="r5sr_manipulator_control",
         executable="move_with_jointstate",
@@ -138,19 +139,18 @@ def generate_launch_description():
     )
 
     audio_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration("use_audio")),
+        condition=IfCondition(LaunchConfiguration('use_audio')),
         actions=[
+            # audio_ope_to_robotを入れると音が聞こえなくなる
+            # IncludeLaunchDescription(
+            #     PythonLaunchDescriptionSource(
+            #         [get_file_path('audio_play', 'launch/play.launch.py')]),
+            #     launch_arguments={'ns': 'audio_ope_to_robot'}.items(),
+            # ),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
-                    get_file_path("audio_capture", "launch/capture.launch.py")
-                ),
-                launch_arguments=[("ns", "audio_robot_to_ope")],
-            ),
-            IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    get_file_path("audio_play", "launch/play.launch.py")
-                ),
-                launch_arguments=[("ns", "audio_ope_to_robot")],
+                    [get_file_path('audio_capture', 'launch/capture.launch.py')]),
+                launch_arguments={'ns': 'audio_robot_to_ope'}.items(),
             ),
         ],
     )
@@ -171,27 +171,7 @@ def generate_launch_description():
                     ('rgb_camera.profile', '640x480x30')
                 ],
             ),
-            Node(
-                package="tf2_ros",
-                executable="static_transform_publisher",
-                output="log",
-                arguments=[
-                    "0",
-                    "0",
-                    "0",
-                    "0",
-                    "0",
-                    "0",
-                    "camera_gyro_optical_frame",
-                    "camera_imu_optical_frame",
-                ],
-            ),
         ],
-    )
-
-    servo_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [get_file_path('r5sr_bringup', 'launch/servo.launch.py')]),
     )
 
     remap_record_launch = IncludeLaunchDescription(
@@ -213,13 +193,12 @@ def generate_launch_description():
 
             epos_node,
             crawler_node,
+            control_launch,
             move_with_jointstate_node,
             rplidar_node,
 
             audio_group,
             slam_group,
-
-            servo_launch,
 
             remap_record_launch,
 
