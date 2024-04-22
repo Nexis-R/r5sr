@@ -163,6 +163,7 @@ def generate_launch_description():
                     get_file_path("r5sr_bringup", "launch/slam.launch.py")
                 ),
             ),
+            # RealSenseを使ってないのでコメントアウト
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     get_file_path("realsense2_camera", "launch/rs_launch.py")
