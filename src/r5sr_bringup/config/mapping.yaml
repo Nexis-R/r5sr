@@ -1,69 +1,74 @@
 /**:
   ros__parameters:
-    xfer_format: 0 # not custom
-    multi_topic: 0
-    data_src: 0
-    publish_freq: 5.0 # Hz
-    output_data_type: 0
-    frame_id: "mid360"
+    # 基本設定
+    xfer_format: 0 # データ転送形式（カスタム設定ではない）
+    multi_topic: 0 # 複数トピック使用の有無
+    data_src: 0 # データソース
+    publish_freq: 5.0 # 出版頻度 (Hz)
+    output_data_type: 0 # 出力データのタイプ
+    frame_id: "mid360" # フレームID
 
-    feature_extract_enable: false
-    point_filter_num: 3
-    max_iteration: 3
-    filter_size_surf: 0.5
-    filter_size_map: 0.5
-    cube_side_length: 1000.0
-    runtime_pos_log_enable: false
-    map_file_path: "./map.pcd"
+    # 特徴抽出の有効化設定
+    feature_extract_enable: false # 特徴抽出を有効にするか
+    point_filter_num: 3 # フィルタリングされる点の数
+    max_iteration: 3 # 最大繰り返し回数
+    filter_size_surf: 0.5 # 表面フィルタリングサイズ
+    filter_size_map: 0.5 # マップフィルタリングサイズ
+    cube_side_length: 1000.0 # キューブの一辺の長さ
+    runtime_pos_log_enable: false # 実行時位置ログの有効化
+    map_file_path: "./map.pcd" # マップファイルのパス
 
     common:
-      lid_topic: "/livox/lidar"
-      imu_topic: "/livox/imu"
-      time_sync_en: false # ONLY turn on when external time synchronization is really not possible
+      lid_topic: "/livox/lidar" # LiDARトピック
+      imu_topic: "/livox/imu" # IMUトピック
+      time_sync_en: false # 時間同期の有効化（外部時間同期が不可能な場合のみ）
       time_offset_lidar_to_imu:
-        0.0 # Time offset between lidar and IMU calibrated by other algorithms, e.g. LI-Init (can be found in README).
-        # This param will take effect no matter what time_sync_en is. So if the time offset is not known exactly, please set as 0.0
+        0.0 # LiDARとIMU間の時間オフセット
 
+# スキャンマッチング設定
 scan_matcher:
   ros__parameters:
-    global_frame_id: "map"
-    robot_frame_id: "base_footprint"
-    registration_method: "NDT"
-    ndt_resolution: 2.0 
-    ndt_num_threads: 0
-    gicp_corr_dist_threshold: 5.0
-    trans_for_mapupdate: 1.5
-    vg_size_for_input: 0.3
-    vg_size_for_map: 0.3
-    use_min_max_filter: true
-    scan_min_range: 0.3
-    scan_max_range: 100.0
-    scan_period: 0.2
-    map_publish_period: 10.0
-    num_targeted_cloud: 30
-    set_initial_pose: true
-    initial_pose_x: 0.0
-    initial_pose_y: 0.0
-    initial_pose_z: 0.0
-    initial_pose_qx: 0.0
-    initial_pose_qy: 0.0
-    initial_pose_qz: 0.0
-    initial_pose_qw: 1.0
-    use_imu: false
-    use_odom: false
-    debug_flag: false
+    global_frame_id: "map" # グローバルフレームID
+    robot_frame_id: "base_footprint" # ロボットフレームID
+    registration_method: "NDT" # 登録方法
+    ndt_resolution: 2.0 # NDT解像度
+    ndt_num_threads: 0 # NDT処理スレッド数
+    gicp_corr_dist_threshold: 5.0 # GICP距離閾値
+    trans_for_mapupdate: 1.5 # マップ更新のための変換
+    vg_size_for_input: 0.3 # 入力用のボクセルグリッドサイズ
+    vg_size_for_map: 0.3 # マップ用のボクセルグリッドサイズ
+    use_min_max_filter: true # 最小最大フィルタの使用
+    scan_min_range: 0.3 # スキャンの最小範囲
+    scan_max_range: 100.0 # スキャンの最大範囲
+    scan_period: 0.2 # スキャン周期
+    map_publish_period: 10.0 # マップ公開周期
+    num_targeted_cloud: 30 # 目標雲の数
+    set_initial_pose: true # 初期姿勢の設定
+    initial_pose_x: 0.0 # 初期姿勢のX座標
+    initial_pose_y: 0.0 # 初期姿勢のY座標
+    initial_pose_z: 0.0 # 初期姿勢のZ座標
+    initial_pose_qx: 0.0 # 初期姿勢のクォータニオンX
+    initial_pose_qy: 0.0 # 初期姿勢のクォータニオンY
+    initial_pose_qz: 0.0 # 初期姿勢のクォータニオンZ
+    initial_pose_qw: 1.0 # 初期姿勢のクォータニオンW
+    use_imu: false # IMUの使用
+    use_odom: false # オドメトリーの使用
+    debug_flag: false # デバッグフラグ
 
+# グラフベースSLAM設定
 graph_based_slam:
   ros__parameters:
-    registration_method: "NDT"
-    ndt_resolution: 5.0
-    ndt_num_threads: 0
-    voxel_leaf_size: 0.2
-    loop_detection_period: 5000
-    threshold_loop_closure_score: 2.5
-    distance_loop_closure: 100.0
-    range_of_searching_loop_closure: 20.0
-    search_submap_num: 4
-    num_adjacent_pose_cnstraints: 5
-    use_save_map_in_loop: true
-    debug_flag: true
+    registration_method: "NDT" # 登録方法
+    ndt_resolution: 5.0 # NDT解像度
+    ndt_num_threads: 0 # NDT処理スレッド数
+    voxel_leaf_size: 0.2 # ボクセルの葉サイズ
+    loop_detection_period: 5000 # ループ検出周期
+    threshold_loop_closure_score: 2.5 # ループ閉鎖スコアの閾値
+    distance_loop_closure: 100.0 # ループ閉鎖距離
+    range_of_searching_loop_closure: 20.0 # ループ閉鎖検索範囲
+    search_submap_num: 4 # 検索サブマップ数
+    num_adjacent_pose_cnstraints: 5 # 隣接ポーズ制約の数
+    use_save_map_in_loop: true # ループ内でのマップ保存の使用
+    debug_flag: true # デバッグフラグ
+
+

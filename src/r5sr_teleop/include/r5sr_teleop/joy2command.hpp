@@ -12,6 +12,7 @@
 #include <std_msgs/msg/float32.hpp>
 #include <std_msgs/msg/float32_multi_array.hpp>
 #include <std_srvs/srv/trigger.hpp>
+#include <std_msgs/msg/bool.hpp>
 
 namespace r5sr_teleop
 {
@@ -53,9 +54,11 @@ public:
 private:
   void handle_joy(const sensor_msgs::msg::Joy::SharedPtr msg);
   void handle_change_mode(const r5sr_interface::msg::OperationMode::SharedPtr msg);
+  void handle_emergency_status(const std_msgs::msg::Bool::SharedPtr msg);
 
   r5sr_interface::msg::OperationMode operation_mode;
   sensor_msgs::msg::Joy last_joy_msg;
+  std_msgs::msg::Bool emergency_status_msg;
 
   rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_subscription;
   rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr jointstate_subscription;
@@ -68,6 +71,7 @@ private:
   rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr hand_publisher;
   rclcpp::Publisher<r5sr_interface::msg::OperationMode>::SharedPtr mode_change_publisher;
   rclcpp::Publisher<r5sr_interface::msg::OperationMode>::SharedPtr operation_mode_publisher;
+  rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr emergency_status_subscription;
 
   rclcpp::Client<std_srvs::srv::Trigger>::SharedPtr servo_start_client;
   rclcpp::Client<std_srvs::srv::Trigger>::SharedPtr overhead_servo_start_client;
