@@ -1,0 +1,612 @@
+{
+  "configById": {
+    "Image!ckdhqo": {
+      "cameraState": {
+        "distance": 20,
+        "perspective": true,
+        "phi": 60,
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOffset": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "thetaOffset": 45,
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "followMode": "follow-pose",
+      "scene": {},
+      "transforms": {},
+      "topics": {},
+      "layers": {},
+      "publish": {
+        "type": "point",
+        "poseTopic": "/move_base_simple/goal",
+        "pointTopic": "/clicked_point",
+        "poseEstimateTopic": "/initialpose",
+        "poseEstimateXDeviation": 0.5,
+        "poseEstimateYDeviation": 0.5,
+        "poseEstimateThetaDeviation": 0.26179939
+      },
+      "imageMode": {
+        "imageTopic": "/vision_front_camera/image_raw/compressed"
+      },
+      "foxglovePanelTitle": "俯瞰前"
+    },
+    "Image!2w5tw2h": {
+      "cameraState": {
+        "distance": 20,
+        "perspective": true,
+        "phi": 60,
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOffset": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "thetaOffset": 45,
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "followMode": "follow-pose",
+      "scene": {},
+      "transforms": {},
+      "topics": {},
+      "layers": {},
+      "publish": {
+        "type": "point",
+        "poseTopic": "/move_base_simple/goal",
+        "pointTopic": "/clicked_point",
+        "poseEstimateTopic": "/initialpose",
+        "poseEstimateXDeviation": 0.5,
+        "poseEstimateYDeviation": 0.5,
+        "poseEstimateThetaDeviation": 0.26179939
+      },
+      "imageMode": {
+        "imageTopic": "/hand_camera/image_raw/compressed",
+        "calibrationTopic": "/hand_camera/camera_info"
+      },
+      "foxglovePanelTitle": "ハンド"
+    },
+    "CallService!1iozbx4": {
+      "requestPayload": "{}",
+      "layout": "horizontal",
+      "serviceName": "/preset_pose_node/move_to_default_pose",
+      "buttonText": "初期姿勢",
+      "buttonTooltip": "",
+      "buttonColor": "#274f00",
+      "foxglovePanelTitle": "初期姿勢",
+      "editingMode": false
+    },
+    "CallService!1b0kwf2": {
+      "requestPayload": "{}",
+      "layout": "horizontal",
+      "serviceName": "/preset_pose_node/move_to_high_pose",
+      "buttonColor": "#d01a72",
+      "foxglovePanelTitle": "高い姿勢",
+      "buttonText": "高い姿勢",
+      "editingMode": false
+    },
+    "CallService!3e63px9": {
+      "requestPayload": "{}",
+      "layout": "vertical",
+      "serviceName": "/preset_pose_node/move_to_slam_pose",
+      "foxglovePanelTitle": "SLAM姿勢",
+      "buttonText": "SLAM姿勢",
+      "buttonColor": "#0031e2",
+      "editingMode": false
+    },
+    "CallService!4bskkw3": {
+      "requestPayload": "{}",
+      "layout": "horizontal",
+      "serviceName": "/preset_pose_node/move_to_readiness_pose",
+      "foxglovePanelTitle": "レディネス姿勢（下向き）",
+      "editingMode": false,
+      "buttonTooltip": "",
+      "buttonText": "レディネス姿勢"
+    },
+    "CallService!lyzg9g": {
+      "requestPayload": "{}",
+      "layout": "horizontal",
+      "serviceName": "/map_save",
+      "buttonColor": "#19d1bc",
+      "foxglovePanelTitle": "マップ保存",
+      "buttonText": "マップ保存"
+    },
+    "Gauge!29m1hem": {
+      "path": "/move_with_jointstate/hand_current.data",
+      "minValue": -100,
+      "maxValue": 750,
+      "colorMap": "turbo",
+      "colorMode": "colormap",
+      "gradient": [
+        "#0000ff",
+        "#ff00ff"
+      ],
+      "reverse": false,
+      "foxglovePanelTitle": "ハンド負荷"
+    },
+    "Gauge!z6xhsq": {
+      "path": "/move_with_jointstate/voltage.data",
+      "minValue": 21,
+      "maxValue": 25,
+      "colorMap": "red-yellow-green",
+      "colorMode": "colormap",
+      "gradient": [
+        "#0000ff",
+        "#ff00ff"
+      ],
+      "reverse": false,
+      "foxglovePanelTitle": "電圧"
+    },
+    "Table!1bj1o4f": {
+      "topicPath": "/move_with_jointstate/voltage"
+    },
+    "3D!18i6zy7": {
+      "layers": {
+        "845139cb-26bc-40b3-8161-8ab60af4baf5": {
+          "visible": true,
+          "frameLocked": true,
+          "label": "Grid",
+          "instanceId": "845139cb-26bc-40b3-8161-8ab60af4baf5",
+          "layerId": "foxglove.Grid",
+          "size": 100,
+          "divisions": 100,
+          "lineWidth": 1,
+          "color": "#248eff",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "order": 1,
+          "frameId": "map"
+        }
+      },
+      "cameraState": {
+        "perspective": true,
+        "distance": 30.146795389281078,
+        "phi": 0.00005729832627056611,
+        "thetaOffset": 89.48496145116863,
+        "targetOffset": [
+          -2.155372588924963,
+          1.6422631574901316,
+          -1.549560503434434e-17
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "followMode": "follow-pose",
+      "scene": {
+        "meshUpAxis": "z_up",
+        "transforms": {
+          "editable": true,
+          "showLabel": false,
+          "lineWidth": 0.5,
+          "enablePreloading": true,
+          "labelSize": 0.01,
+          "axisScale": 0.1
+        }
+      },
+      "transforms": {},
+      "topics": {
+        "/robot_description": {
+          "visible": true
+        },
+        "/scan": {
+          "visible": true,
+          "colorField": "intensity",
+          "colorMode": "flat",
+          "colorMap": "turbo",
+          "pointSize": 6,
+          "flatColor": "#ff0000ff"
+        },
+        "/camera/cloud_from_depth": {
+          "visible": false
+        },
+        "/cloud_map": {
+          "visible": false
+        },
+        "/fisheye_front_camera/image_raw/compressed": {
+          "visible": false
+        },
+        "/map": {
+          "visible": true,
+          "colorField": "_auto_distance",
+          "colorMode": "colormap",
+          "colorMap": "turbo",
+          "pointSize": 4,
+          "pointShape": "circle"
+        },
+        "/livox/lidar": {
+          "visible": false,
+          "colorField": "intensity",
+          "colorMode": "colormap",
+          "colorMap": "turbo",
+          "pointSize": 3
+        },
+        "/modified_map": {
+          "visible": false
+        },
+        "/initial_pose": {
+          "visible": false
+        },
+        "/modified_path": {
+          "visible": false
+        },
+        "/path": {
+          "visible": false,
+          "lineWidth": 0.01
+        },
+        "/move_base_simple/goal": {
+          "visible": false
+        },
+        "/camera/color/image_raw/compressed": {
+          "visible": false,
+          "cameraInfoTopic": "/camera/color/camera_info",
+          "planarProjectionFactor": 0,
+          "distance": 2
+        },
+        "/camera/depth/camera_info": {
+          "visible": false
+        },
+        "/vision_rear_camera/camera_info": {
+          "visible": false
+        },
+        "/camera/depth/image_rect_raw/compressed": {
+          "visible": false,
+          "cameraInfoTopic": "/camera/depth/camera_info"
+        },
+        "/camera/depth/image_rect_raw/compressedDepth": {
+          "visible": false,
+          "cameraInfoTopic": "/camera/depth/camera_info"
+        },
+        "/camera/depth/color/points": {
+          "visible": false,
+          "colorField": "rgb",
+          "colorMode": "rgb",
+          "colorMap": "turbo",
+          "pointSize": 1,
+          "stixelsEnabled": false
+        },
+        "/camera/color/image_raw/compressedDepth": {
+          "visible": false
+        },
+        "/realsense/color/image_raw/compressed": {
+          "visible": true,
+          "cameraInfoTopic": "/realsense/color/camera_info"
+        },
+        "/vision_front_camera/image_raw": {
+          "visible": false,
+          "frameLocked": true,
+          "cameraInfoTopic": "/vision_front_camera/camera_info",
+          "distance": 1,
+          "planarProjectionFactor": 0,
+          "color": "#ffffff"
+        },
+        "/vision_front_camera/image_raw/compressed": {
+          "visible": false,
+          "cameraInfoTopic": "/vision_front_camera/camera_info",
+          "planarProjectionFactor": 0,
+          "distance": 1.5
+        },
+        "/hand_camera/image_raw/compressed": {
+          "visible": true,
+          "cameraInfoTopic": "/hand_camera/camera_info",
+          "distance": 1.2
+        },
+        "/vision_rear_camera/image_raw/compressed": {
+          "visible": true,
+          "cameraInfoTopic": "/vision_rear_camera/camera_info",
+          "distance": 1.5
+        },
+        "/fisheye_front_camera/image_raw": {
+          "visible": false,
+          "frameLocked": true,
+          "cameraInfoTopic": "/fisheye_front_camera/camera_info",
+          "distance": 1,
+          "planarProjectionFactor": 0,
+          "color": "#ffffff"
+        },
+        "/fisheye_front_camera/camera_info": {
+          "visible": false
+        },
+        "/vision_front_camera/camera_info": {
+          "visible": false
+        },
+        "/camera/color/camera_info": {
+          "visible": false
+        },
+        "/camera/color/image_raw": {
+          "visible": false
+        },
+        "/camera/depth/image_rect_raw": {
+          "visible": false
+        },
+        "/initialpose": {
+          "visible": false
+        },
+        "/current_pose": {
+          "visible": false
+        },
+        "/inspection_sub_camera/image/compressed": {
+          "visible": false
+        },
+        "/inspection_main_camera/image/compressed": {
+          "visible": false
+        },
+        "/visualization_marker_array": {
+          "visible": true,
+          "showOutlines": false,
+          "color": "#00ff7845"
+        },
+        "/hand_camera/image_raw": {
+          "visible": false,
+          "frameLocked": true,
+          "cameraInfoTopic": "/hand_camera/camera_info",
+          "distance": 1,
+          "planarProjectionFactor": 0,
+          "color": "#ffffff"
+        },
+        "/hand_camera/image_raw/uncompressed": {
+          "visible": false
+        }
+      },
+      "publish": {
+        "type": "point",
+        "poseTopic": "/move_base_simple/goal",
+        "pointTopic": "/clicked_point",
+        "poseEstimateTopic": "/initialpose",
+        "poseEstimateXDeviation": 0.5,
+        "poseEstimateYDeviation": 0.5,
+        "poseEstimateThetaDeviation": 0.26179939
+      },
+      "imageMode": {},
+      "followTf": "base_footprint"
+    },
+    "Image!3mnp456": {
+      "cameraState": {
+        "distance": 20,
+        "perspective": true,
+        "phi": 60,
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOffset": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "thetaOffset": 45,
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "followMode": "follow-pose",
+      "scene": {},
+      "transforms": {},
+      "topics": {},
+      "layers": {},
+      "publish": {
+        "type": "point",
+        "poseTopic": "/move_base_simple/goal",
+        "pointTopic": "/clicked_point",
+        "poseEstimateTopic": "/initialpose",
+        "poseEstimateXDeviation": 0.5,
+        "poseEstimateYDeviation": 0.5,
+        "poseEstimateThetaDeviation": 0.26179939
+      },
+      "imageMode": {
+        "imageTopic": "/thermo/image_raw/compressed"
+      },
+      "foxglovePanelTitle": "サーモ"
+    },
+    "Image!27rzn5r": {
+      "cameraState": {
+        "distance": 20,
+        "perspective": true,
+        "phi": 60,
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOffset": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "thetaOffset": 45,
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "followMode": "follow-pose",
+      "scene": {},
+      "transforms": {},
+      "topics": {},
+      "layers": {},
+      "publish": {
+        "type": "point",
+        "poseTopic": "/move_base_simple/goal",
+        "pointTopic": "/clicked_point",
+        "poseEstimateTopic": "/initialpose",
+        "poseEstimateXDeviation": 0.5,
+        "poseEstimateYDeviation": 0.5,
+        "poseEstimateThetaDeviation": 0.26179939
+      },
+      "imageMode": {
+        "imageTopic": "/fisheye_front_camera/image_raw/compressed"
+      },
+      "foxglovePanelTitle": "魚眼"
+    },
+    "Image!25ier13": {
+      "cameraState": {
+        "distance": 20,
+        "perspective": true,
+        "phi": 60,
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOffset": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "thetaOffset": 45,
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "followMode": "follow-pose",
+      "scene": {},
+      "transforms": {},
+      "topics": {},
+      "layers": {},
+      "publish": {
+        "type": "point",
+        "poseTopic": "/move_base_simple/goal",
+        "pointTopic": "/clicked_point",
+        "poseEstimateTopic": "/initialpose",
+        "poseEstimateXDeviation": 0.5,
+        "poseEstimateYDeviation": 0.5,
+        "poseEstimateThetaDeviation": 0.26179939
+      },
+      "imageMode": {
+        "imageTopic": "/vision_rear_camera/image_raw/compressed"
+      },
+      "foxglovePanelTitle": "俯瞰後"
+    }
+  },
+  "globalVariables": {
+    "globalVariable": 9
+  },
+  "userNodes": {},
+  "playbackConfig": {
+    "speed": 1
+  },
+  "layout": {
+    "first": {
+      "first": "Image!ckdhqo",
+      "second": "Image!2w5tw2h",
+      "direction": "column"
+    },
+    "second": {
+      "first": {
+        "first": {
+          "first": {
+            "first": "CallService!1iozbx4",
+            "second": "CallService!1b0kwf2",
+            "direction": "column"
+          },
+          "second": {
+            "first": {
+              "first": {
+                "first": "CallService!3e63px9",
+                "second": "CallService!4bskkw3",
+                "direction": "column"
+              },
+              "second": "CallService!lyzg9g",
+              "direction": "row"
+            },
+            "second": {
+              "first": "Gauge!29m1hem",
+              "second": {
+                "first": "Gauge!z6xhsq",
+                "second": "Table!1bj1o4f",
+                "direction": "column",
+                "splitPercentage": 62.76495830717261
+              },
+              "direction": "row",
+              "splitPercentage": 45.50786571686005
+            },
+            "direction": "row",
+            "splitPercentage": 58.477052532064
+          },
+          "direction": "row",
+          "splitPercentage": 21.439931272941575
+        },
+        "second": "3D!18i6zy7",
+        "direction": "column",
+        "splitPercentage": 25.264550264550266
+      },
+      "second": {
+        "first": "Image!3mnp456",
+        "second": {
+          "first": "Image!27rzn5r",
+          "second": "Image!25ier13",
+          "direction": "column",
+          "splitPercentage": 50.06385696040867
+        },
+        "direction": "column",
+        "splitPercentage": 22.398414271555996
+      },
+      "direction": "row",
+      "splitPercentage": 62.1011673151751
+    },
+    "direction": "row",
+    "splitPercentage": 26.458333333333332
+  }
+}

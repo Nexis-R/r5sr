@@ -35,6 +35,16 @@ public:
       "~/move_to_high_pose",
       std::bind(
         &PresetPose::moveToHighPoseCallback, this, std::placeholders::_1, std::placeholders::_2));
+    
+    move_to_readiness_pose_service = this->create_service<std_srvs::srv::Empty>(
+      "~/move_to_readiness_pose",
+      std::bind(
+        &PresetPose::moveToReadinessPoseCallback, this, std::placeholders::_1, std::placeholders::_2));
+    
+    move_to_slam_pose_service = this->create_service<std_srvs::srv::Empty>(
+      "~/move_to_slam_pose",
+      std::bind(
+        &PresetPose::moveToSlamPoseCallback, this, std::placeholders::_1, std::placeholders::_2));
 
     move_to_dex1_center_pose_service = this->create_service<std_srvs::srv::Empty>(
       "preset_pose_node/move_to_dex1_center_pose",
@@ -123,6 +133,24 @@ private:
        -1.96441695861549e-06, -2.9917298595345435e-05});
   }
 
+  void moveToReadinessPoseCallback(
+    const std_srvs::srv::Empty::Request::SharedPtr request,
+    const std_srvs::srv::Empty::Response::SharedPtr response)
+  {
+    moveToPositions(
+      {-0.007062110752234625, 0.6272903909317806, -1.080438138749501, 1.999862020919871,
+       0.006990311952976178, -0.010846626372819844});
+  }
+
+  void moveToSlamPoseCallback(
+    const std_srvs::srv::Empty::Request::SharedPtr request,
+    const std_srvs::srv::Empty::Response::SharedPtr response)
+  {
+    moveToPositions(
+      {0.04162208752746325, -0.02789408772266047, -0.7114715716361589, 0.7909540647217957,
+       -0.009827169341971143, 0.05818771788184778});
+  }
+
   void moveToDex1CenterPoseCallback(
     const std_srvs::srv::Empty::Request::SharedPtr request,
     const std_srvs::srv::Empty::Response::SharedPtr response)
@@ -189,6 +217,10 @@ private:
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr move_to_default_pose_service;
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr move_to_floor_pose_service;
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr move_to_high_pose_service;
+  rclcpp::Service<std_srvs::srv::Empty>::SharedPtr move_to_readiness_pose_service;
+  rclcpp::Service<std_srvs::srv::Empty>::SharedPtr move_to_slam_pose_service;
+
+
 
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr move_to_dex1_center_pose_service;
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr move_to_dex1_diaright_pose_service;
