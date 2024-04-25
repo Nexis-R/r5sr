@@ -299,7 +299,7 @@ def generate_launch_description():
                 launch_arguments={'namespace':'yolo/hand',
                                   'input_image_topic': 'image_processed',
                                   'model': get_file_path('r5sr_teleop', 'config/yolo/hazmat2024-0421-yolov8m.pt'),
-                                  'threshold': '0.9'}.items(),
+                                  'threshold': '0.8'}.items(),
 
             ),
         ]
