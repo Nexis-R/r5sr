@@ -1,4 +1,8 @@
 .cache
+src/r5sr_teleop/config/yolo/
+src/**/*.pt
+src/**/*.cfg
+
 
 src/*
 !src/r5sr*/

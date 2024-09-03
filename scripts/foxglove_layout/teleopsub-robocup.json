@@ -1,49 +1,45 @@
 {
   "configById": {
-    "Image!3eepf94": {
-      "cameraState": {
-        "distance": 20,
-        "perspective": true,
-        "phi": 60,
-        "target": [
-          0,
-          0,
-          0
-        ],
-        "targetOffset": [
-          0,
-          0,
-          0
-        ],
-        "targetOrientation": [
-          0,
-          0,
-          0,
-          1
-        ],
-        "thetaOffset": 45,
-        "fovy": 45,
-        "near": 0.5,
-        "far": 5000
-      },
-      "followMode": "follow-pose",
-      "scene": {},
-      "transforms": {},
-      "topics": {},
-      "layers": {},
-      "publish": {
-        "type": "point",
-        "poseTopic": "/move_base_simple/goal",
-        "pointTopic": "/clicked_point",
-        "poseEstimateTopic": "/initialpose",
-        "poseEstimateXDeviation": 0.5,
-        "poseEstimateYDeviation": 0.5,
-        "poseEstimateThetaDeviation": 0.26179939
-      },
-      "imageMode": {
-        "imageTopic": "/hand_camera/image_raw/qr_detector_image"
-      },
-      "foxglovePanelTitle": "QRコード判定"
+    "CallService!2pk8g1g": {
+      "requestPayload": "{}",
+      "layout": "horizontal",
+      "serviceName": "/preset_pose_node/move_to_dex1_right_pose",
+      "foxglovePanelTitle": "Dex1_左末端姿勢",
+      "buttonText": "Dex1_左末端姿勢",
+      "editingMode": false
+    },
+    "CallService!3ip827a": {
+      "requestPayload": "{}",
+      "layout": "horizontal",
+      "serviceName": "/preset_pose_node/move_to_dex1_left_pose",
+      "foxglovePanelTitle": "Dex1_右末端姿勢",
+      "buttonText": "Dex1_右末端姿勢",
+      "editingMode": false
+    },
+    "CallService!lb3h4k": {
+      "requestPayload": "{}",
+      "layout": "horizontal",
+      "serviceName": "/preset_pose_node/move_to_dex1_dialeft_pose",
+      "buttonText": "Dex1_左45度姿勢",
+      "foxglovePanelTitle": "Dex1_左45度姿勢",
+      "editingMode": false
+    },
+    "CallService!2b4t3ro": {
+      "requestPayload": "{}",
+      "layout": "horizontal",
+      "serviceName": "/preset_pose_node/move_to_dex1_diaright_pose",
+      "foxglovePanelTitle": "Dex1_右45度姿勢",
+      "editingMode": false,
+      "buttonText": "Dex1_右45度姿勢"
+    },
+    "CallService!bhwnwk": {
+      "requestPayload": "{}",
+      "layout": "horizontal",
+      "serviceName": "/preset_pose_node/move_to_dex1_center_pose",
+      "editingMode": false,
+      "foxglovePanelTitle": "Dex1_センター姿勢",
+      "buttonTooltip": "",
+      "buttonText": "Dex1_センター姿勢"
     },
     "Image!2tdtjfd": {
       "cameraState": {
@@ -89,6 +85,95 @@
         "imageTopic": "/yolo/hand/dbg_image"
       },
       "foxglovePanelTitle": "Hazmat Label 判定"
+    },
+    "Image!12bkvxx": {
+      "cameraState": {
+        "distance": 20,
+        "perspective": true,
+        "phi": 60,
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOffset": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "thetaOffset": 45,
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "followMode": "follow-pose",
+      "scene": {},
+      "transforms": {},
+      "topics": {},
+      "layers": {},
+      "publish": {
+        "type": "point",
+        "poseTopic": "/move_base_simple/goal",
+        "pointTopic": "/clicked_point",
+        "poseEstimateTopic": "/initialpose",
+        "poseEstimateXDeviation": 0.5,
+        "poseEstimateYDeviation": 0.5,
+        "poseEstimateThetaDeviation": 0.26179939
+      },
+      "imageMode": {
+        "imageTopic": "/vision_front_camera/image_raw/qr_detector_image"
+      }
+    },
+    "Image!3eepf94": {
+      "cameraState": {
+        "distance": 20,
+        "perspective": true,
+        "phi": 60,
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOffset": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "thetaOffset": 45,
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "followMode": "follow-pose",
+      "scene": {},
+      "transforms": {},
+      "topics": {},
+      "layers": {},
+      "publish": {
+        "type": "point",
+        "poseTopic": "/move_base_simple/goal",
+        "pointTopic": "/clicked_point",
+        "poseEstimateTopic": "/initialpose",
+        "poseEstimateXDeviation": 0.5,
+        "poseEstimateYDeviation": 0.5,
+        "poseEstimateThetaDeviation": 0.26179939
+      },
+      "imageMode": {
+        "imageTopic": "/hand_camera/image_raw/qr_detector_image"
+      },
+      "foxglovePanelTitle": "QRコード判定"
     }
   },
   "globalVariables": {},
@@ -98,7 +183,38 @@
   },
   "layout": {
     "direction": "row",
-    "first": "Image!2tdtjfd",
-    "second": "Image!3eepf94"
+    "first": {
+      "first": {
+        "first": "CallService!2pk8g1g",
+        "second": {
+          "first": "CallService!3ip827a",
+          "second": "CallService!lb3h4k",
+          "direction": "column",
+          "splitPercentage": 18.105263157894743
+        },
+        "direction": "column",
+        "splitPercentage": 16.666666666666664
+      },
+      "second": {
+        "first": "CallService!2b4t3ro",
+        "second": "CallService!bhwnwk",
+        "direction": "column",
+        "splitPercentage": 47.29729729729729
+      },
+      "direction": "column",
+      "splitPercentage": 59.65250965250966
+    },
+    "second": {
+      "direction": "row",
+      "first": {
+        "first": "Image!2tdtjfd",
+        "second": "Image!12bkvxx",
+        "direction": "row",
+        "splitPercentage": 42.8082191780822
+      },
+      "second": "Image!3eepf94",
+      "splitPercentage": 65.43566070398153
+    },
+    "splitPercentage": 9.739583333333334
   }
 }

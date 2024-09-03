@@ -299,7 +299,7 @@ def generate_launch_description():
                 launch_arguments={'namespace':'yolo/hand',
                                   'input_image_topic': 'image_processed',
                                   'model': get_file_path('r5sr_teleop', 'config/yolo/hazmat2024-0421-yolov8m.pt'),
-                                  'threshold': '0.8'}.items(),
+                                  'threshold': '0.9'}.items(),
 
             ),
         ]
@@ -318,7 +318,7 @@ def generate_launch_description():
                 ],
             ),
             Node(
-                package='r5sr_qr_detecter',
+                package='r5sr_image_proccesing',
                 executable='qr_detector_node',
                 name='qr_detector_node',
                 remappings=[
@@ -342,7 +342,7 @@ def generate_launch_description():
                 ],
             ),
             Node(
-                package='r5sr_qr_detecter',
+                package='r5sr_image_proccesing',
                 executable='qr_detector_node',
                 name='qr_detector_node',
                 remappings=[
@@ -379,8 +379,7 @@ def generate_launch_description():
             drone_group,
 
             hand_qr_detector_group,
-            # vision_qr_detector_group,
-
+            vision_qr_detector_group,
             
         ]
     )

@@ -110,15 +110,6 @@
       "buttonText": "高い姿勢",
       "editingMode": false
     },
-    "CallService!3e63px9": {
-      "requestPayload": "{}",
-      "layout": "vertical",
-      "serviceName": "/preset_pose_node/move_to_slam_pose",
-      "foxglovePanelTitle": "SLAM姿勢",
-      "buttonText": "SLAM姿勢",
-      "buttonColor": "#0031e2",
-      "editingMode": false
-    },
     "CallService!4bskkw3": {
       "requestPayload": "{}",
       "layout": "horizontal",
@@ -127,6 +118,15 @@
       "editingMode": false,
       "buttonTooltip": "",
       "buttonText": "レディネス姿勢"
+    },
+    "CallService!3e63px9": {
+      "requestPayload": "{}",
+      "layout": "vertical",
+      "serviceName": "/preset_pose_node/move_to_slam_pose",
+      "foxglovePanelTitle": "SLAM姿勢",
+      "buttonText": "SLAM姿勢",
+      "buttonColor": "#0031e2",
+      "editingMode": false
     },
     "CallService!lyzg9g": {
       "requestPayload": "{}",
@@ -148,6 +148,9 @@
       ],
       "reverse": false,
       "foxglovePanelTitle": "ハンド負荷"
+    },
+    "Table!25a1jil": {
+      "topicPath": "/mode_change"
     },
     "Gauge!z6xhsq": {
       "path": "/move_with_jointstate/voltage.data",
@@ -193,13 +196,13 @@
       },
       "cameraState": {
         "perspective": true,
-        "distance": 30.146795389281078,
-        "phi": 0.00005729832627056611,
-        "thetaOffset": 89.48496145116863,
+        "distance": 6.147137354221064,
+        "phi": 43.94371926379988,
+        "thetaOffset": 103.28855673580921,
         "targetOffset": [
-          -2.155372588924963,
-          1.6422631574901316,
-          -1.549560503434434e-17
+          1.189328831966587,
+          0.07321302009346929,
+          -4.3542563939656806e-17
         ],
         "target": [
           0,
@@ -557,40 +560,44 @@
       "first": {
         "first": {
           "first": {
-            "first": "CallService!1iozbx4",
-            "second": "CallService!1b0kwf2",
+            "first": {
+              "first": "CallService!1iozbx4",
+              "second": "CallService!1b0kwf2",
+              "direction": "column"
+            },
+            "second": {
+              "first": "CallService!4bskkw3",
+              "second": "CallService!3e63px9",
+              "direction": "column"
+            },
             "direction": "column"
           },
           "second": {
-            "first": {
+            "first": "CallService!lyzg9g",
+            "second": {
               "first": {
-                "first": "CallService!3e63px9",
-                "second": "CallService!4bskkw3",
+                "first": "Gauge!29m1hem",
+                "second": "Table!25a1jil",
                 "direction": "column"
               },
-              "second": "CallService!lyzg9g",
-              "direction": "row"
-            },
-            "second": {
-              "first": "Gauge!29m1hem",
               "second": {
                 "first": "Gauge!z6xhsq",
                 "second": "Table!1bj1o4f",
                 "direction": "column",
-                "splitPercentage": 62.76495830717261
+                "splitPercentage": 50.29411764705881
               },
               "direction": "row",
-              "splitPercentage": 45.50786571686005
+              "splitPercentage": 69.51435994117381
             },
             "direction": "row",
-            "splitPercentage": 58.477052532064
+            "splitPercentage": 16.26555806505862
           },
           "direction": "row",
-          "splitPercentage": 21.439931272941575
+          "splitPercentage": 12.056632698497513
         },
         "second": "3D!18i6zy7",
         "direction": "column",
-        "splitPercentage": 25.264550264550266
+        "splitPercentage": 33.696729435084244
       },
       "second": {
         "first": "Image!3mnp456",
@@ -607,6 +614,6 @@
       "splitPercentage": 62.1011673151751
     },
     "direction": "row",
-    "splitPercentage": 26.458333333333332
+    "splitPercentage": 17.916666666666668
   }
 }

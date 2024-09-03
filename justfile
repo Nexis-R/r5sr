@@ -47,6 +47,16 @@ bringup args='use_camera:=true use_audio:=true use_slam:=true use_rplidar:=false
   source install/setup.bash
   ros2 launch r5sr_bringup bringup.launch.py {{args}}
 
+# launch hazmat (teleop)
+hazmat:
+  source install/setup.bash
+  ros2 launch r5sr_teleop hazmat_yolov3.launch.py
+
+# launch motion (teleop)
+motion:
+  source install/setup.bash
+  ros2 launch r5sr_teleop image_motion.launch.py
+  
 # clean build, install, log
 clean: _cd
   -rm -rf build install log
