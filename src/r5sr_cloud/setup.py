@@ -22,6 +22,8 @@ setup(
         'console_scripts': [
             'rms_plant_node = r5sr_cloud.rms_plant:main',
             'rms_robot_node = r5sr_cloud.rms_robot:main',
+            'rms_image_saver_node = r5sr_cloud.rms_image_saver_node:main',
+            'rms_ros2_client_eqpt_updater = r5sr_cloud.rms_ros2_client_eqpt_updater:main',
         ],
     },
 )

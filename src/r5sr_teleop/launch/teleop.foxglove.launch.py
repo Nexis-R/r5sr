@@ -41,6 +41,8 @@ def generate_launch_description():
         "vsting", default_value="false", description='vsting mode')
 
     teleop_yaml_file = get_file_path('r5sr_teleop', 'config/r5sr_teleop.yaml')
+    
+    rms_cloud_dir = get_package_share_directory('r5sr_meter_inspection')
 
     # Nodes
     joy_node = Node(
@@ -126,11 +128,48 @@ def generate_launch_description():
             ),
             Node(
                 package='r5sr_meter_inspection',
-                executable='image_snap_shot_node',
-                name='image_snap_shot_node',
+                executable='image_snapshot_publisher_node',
+                name='image_snapshot_publisher_node',
                 remappings=[
                         ('/image_raw', 'hand_camera/image_raw/uncompressed'),
                         ('/image_snap_shot', 'hand_camera/image_raw/uncompressed/image_snap_shot'),
+                ],
+                parameters=[
+                    # パッケージ内のディレクトリパスを使用
+                    {'save_directory': os.path.join(rms_cloud_dir, 'snaps')},
+                    {'file_name': 'result.jpg'}
+                ],
+            ),
+
+            Node(
+                package='r5sr_meter_inspection',
+                executable='dummy_recognition_value_node',
+                name='dummy_recognition_value_node',
+                remappings=[
+                        ('/recognition_value', 'recognition_value'),
+                ],
+            ),
+        ],
+    )
+
+    rms_group = GroupAction(
+        condition=IfCondition(LaunchConfiguration("use_wrs")),
+        actions=[
+            Node(
+                package='r5sr_cloud',
+                executable='rms_ros2_client_eqpt_updater',
+                name='rms_ros2_client_eqpt_updater',
+                remappings=[
+                    ('/qrcode_info', '/qrcode_info'),
+                    ('/recognition_value', '/recognition_value'),
+                    ('/update_result', '/update_result')
+                ],
+                parameters=[
+                    # パッケージ内のディレクトリパスを使用
+                    {'ip': '52.193.111.81'},
+                    {'robot_id': 16},
+                    # {'mac_id': ''},
+                    {'image_path': os.path.join(rms_cloud_dir, 'snaps/result.jpg')}
                 ],
             ),
         ],
@@ -232,6 +271,7 @@ def generate_launch_description():
             # hazmat認識グループ
             # cloud_group,
 
-            hand_qr_detector_group,            
+            hand_qr_detector_group,     
+            rms_group,       
         ]
     )

@@ -29,7 +29,9 @@ setup(
             'meter_value_calculator_node = r5sr_meter_inspection.meter_value_calculator_node:main',
             'inspection_result_node = r5sr_meter_inspection.inspection_result_node:main',
             'qr_detector_node = r5sr_meter_inspection.qr_detector_node:main',
-            'image_snap_shot_node = r5sr_meter_inspection.image_snap_shot_node:main',
+            'image_snapshot_publisher_node = r5sr_meter_inspection.image_snapshot_publisher_node:main',
+            'dummy_recognition_value_node = r5sr_meter_inspection.dummy_recognition_value_node:main',
+
         ],
     },
 )

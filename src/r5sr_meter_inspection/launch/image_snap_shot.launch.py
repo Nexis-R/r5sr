@@ -22,14 +22,14 @@ def generate_launch_description():
         name='usb_cam'
     )
 
-    image_snap_shot_node = Node(
+    image_snapshot_publisher_node = Node(
         package='r5sr_meter_inspection',
-        executable='image_snap_shot_node',
-        name='image_snap_shot_node'
+        executable='image_snapshot_publisher_node',
+        name='image_snapshot_publisher_node'
     )
 
     return LaunchDescription([
         usb_cam_node,
-        image_snap_shot_node,
+        image_snapshot_publisher_node,
 
     ])
