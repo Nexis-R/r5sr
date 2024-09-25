@@ -111,7 +111,7 @@ def generate_launch_description():
         ],
     )
 
-    hand_yolo_group = GroupAction(
+    hand_inspection_group = GroupAction(
         condition=IfCondition(LaunchConfiguration("use_wrs")),
         actions=[
             Node(
@@ -121,116 +121,17 @@ def generate_launch_description():
                 arguments=['compressed', 'raw'],
                 remappings=[
                         ('in/compressed', 'hand_camera/image_raw/compressed'),
-                        ('out', 'yolo/hand/image_raw/uncompressed'),
+                        ('out', 'hand_camera/image_raw/uncompressed'),
                 ],
             ),
             Node(
                 package='r5sr_meter_inspection',
-                executable='image_converter_node',
-                name='image_converter_node',
-                namespace='yolo/hand',
+                executable='image_snap_shot_node',
+                name='image_snap_shot_node',
                 remappings=[
-                        ('/image_raw', '/yolo/hand/image_raw/uncompressed'),
-                        ('/image_processed', '/yolo/hand/image_processed'),
+                        ('/image_raw', 'hand_camera/image_raw/uncompressed'),
+                        ('/image_snap_shot', 'hand_camera/image_raw/uncompressed/image_snap_shot'),
                 ],
-            ),
-
-            Node(
-                package='r5sr_meter_inspection',
-                executable='meter_value_calculator_node',
-                name='meter_value_calculator_node',
-                namespace='yolo/hand',
-                remappings=[
-                        ('/image_processed', '/yolo/hand/image_processed'),
-                        ('/meter_value', '/yolo/hand/meter_value'),
-                        ('/detections', '/yolo/hand/detections'),
-                ],
-            ),
-
-            Node(
-                package='r5sr_meter_inspection',
-                executable='inspection_result_node',
-                name='inspection_result_node',
-                namespace='yolo/hand',
-                remappings=[
-                        ('/yolo/dbg_image', '/yolo/hand/dbg_image'),
-                        ('/meter_value', '/yolo/hand/meter_value'),
-                        ('/meter_inspection_image', '/yolo/hand/meter_inspection_image'),
-                        ('/meter_inspection_snapshot', '/yolo/meter_inspection_snapshot'),
-                        ('/compress_and_publish_image', '/yolo/hand/compress_and_publish_image'),
-                ],
-            ),
-
-            IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    [get_file_path('r5sr_meter_inspection', 'launch/yolov8.launch.py')]),
-                launch_arguments={'namespace':'yolo/hand',
-                                  'input_image_topic': 'image_processed',
-                                  'model': get_file_path('r5sr_teleop', 'config/yolo/gauge-analysis-wrs-trial-2024.pt'),
-                                  'threshold': '0.5'}.items(),
-
-            ),
-        ],
-    )
-
-    vision_yolo_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration("use_wrs")),
-        actions=[
-            Node(
-                package='image_transport',
-                executable='republish',
-                name='repub',
-                arguments=['compressed', 'raw'],
-                remappings=[
-                        ('in/compressed', 'vision_front_camera/image_raw/compressed'),
-                        ('out', 'yolo/vision/image_raw/uncompressed'),
-                ],
-            ),
-            Node(
-                package='r5sr_meter_inspection',
-                executable='image_converter_node',
-                name='image_converter_node',
-                namespace='yolo/vision',
-                remappings=[
-                        ('/image_raw', '/yolo/vision/image_raw/uncompressed'),
-                        ('/image_processed', '/yolo/vision/image_processed'),
-                ],
-            ),
-
-            Node(
-                package='r5sr_meter_inspection',
-                executable='meter_value_calculator_node',
-                name='meter_value_calculator_node',
-                namespace='yolo/vision',
-                remappings=[
-                        ('/image_processed', '/yolo/vision/image_processed'),
-                        ('/meter_value', '/yolo/vision/meter_value'),
-                        ('/detections', '/yolo/vision/detections'),
-                ],
-            ),
-
-            Node(
-                package='r5sr_meter_inspection',
-                executable='inspection_result_node',
-                name='inspection_result_node',
-                namespace='yolo/vision',
-                remappings=[
-                        ('/yolo/dbg_image', '/yolo/vision/dbg_image'),
-                        ('/meter_value', '/yolo/vision/meter_value'),
-                        ('/meter_inspection_image', '/yolo/vision/meter_inspection_image'),
-                        ('/meter_inspection_snapshot', '/yolo/meter_inspection_snapshot'),
-                        ('/compress_and_publish_image', '/yolo/vision/compress_and_publish_image'),
-                ],
-            ),
-
-            IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    [get_file_path('r5sr_meter_inspection', 'launch/yolov8.launch.py')]),
-                launch_arguments={'namespace':'yolo/vision',
-                                  'input_image_topic': 'image_processed',
-                                  'model': get_file_path('r5sr_teleop', 'config/yolo/gauge-analysis-wrs-trial-2024.pt'),
-                                  'threshold': '0.5'}.items(),
-
             ),
         ],
     )
@@ -243,30 +144,6 @@ def generate_launch_description():
                     [get_file_path('r5sr_teleop', 'launch/cloud.launch.py')]),
             ),
         ],
-    )
-
-    dronecam_yaml_file = get_file_path('r5sr_teleop', 'config/drone_cam.yaml')
-
-    drone_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration("use_wrs")),
-        actions=[
-            Node(
-                package="usb_cam",
-                executable="usb_cam_node_exe",
-                name="drone_camera",
-                namespace="drone_camera",
-                parameters=[dronecam_yaml_file]
-            ),
-            Node(
-                package='r5sr_meter_inspection',
-                executable='image_converter_node',
-                name='drone_image_converter',
-                remappings=[
-                        ('/image_raw', '/drone_camera/image_raw'),
-                        ('/image_processed', '/drone_camera/image_processed'),
-                ],
-            ),
-        ]
     )
 
     hazmat_group = GroupAction(
@@ -323,31 +200,6 @@ def generate_launch_description():
                 name='qr_detector_node',
                 remappings=[
                         ('image_raw', 'hand_camera/image_raw/uncompressed'),
-                        ('image_processed', 'hand_camera/image_raw/qr_detector_image'),
-                ],
-            ),
-        ]
-    )
-
-    vision_qr_detector_group = GroupAction(
-        actions=[
-            Node(
-                package='image_transport',
-                executable='republish',
-                name='repub',
-                arguments=['compressed', 'raw'],
-                remappings=[
-                        ('in/compressed', 'vision_front_camera/image_raw/compressed'),
-                        ('out', 'vision_front_camera/image_raw/uncompressed'),
-                ],
-            ),
-            Node(
-                package='r5sr_meter_inspection',
-                executable='qr_detector_node',
-                name='qr_detector_node',
-                remappings=[
-                        ('image_raw', 'vision_front_camera/image_raw/uncompressed'),
-                        ('image_processed', 'vision_front_camera/image_raw/qr_detector_image'),
                 ],
             ),
         ]
@@ -369,17 +221,17 @@ def generate_launch_description():
 
             servo_launch,
 
-            hand_yolo_group,
-            vision_yolo_group,
+            # yoloによるメータ認識グループ
+            hand_inspection_group,
+
             audio_group,
 
-            hazmat_group,
+            # hazmat認識グループ
+            # hazmat_group,
 
+            # hazmat認識グループ
             # cloud_group,
-            drone_group,
 
-            hand_qr_detector_group,
-            vision_qr_detector_group,
-            
+            hand_qr_detector_group,            
         ]
     )
