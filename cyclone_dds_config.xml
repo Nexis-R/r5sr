@@ -1,0 +1,11 @@
+<CycloneDDS>
+	<Domain id="any">
+		<Internal>
+			<MinimumSocketReceiveBufferSize>1GB</MinimumSocketReceiveBufferSize>
+		</Internal>
+		<Tracing>
+			<Verbosity>info</Verbosity>
+			<OutputFile>stderr</OutputFile>
+		</Tracing>
+	</Domain>
+</CycloneDDS>

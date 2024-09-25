@@ -21,13 +21,13 @@ def generate_launch_description():
         name='usb_cam'
     )
     # QRコードノードを起動する
-    image_motion_detect_node = Node(
-        package='r5sr_image_proccesing',
-        executable='image_motion_detect_node',
-        name='image_motion_detect_node'
+    qr_detector_node = Node(
+        package='r5sr_meter_inspection',
+        executable='qr_detector_node',
+        name='qr_detector_node'
     )
 
     return LaunchDescription([
         usb_cam_node,
-        image_motion_detect_node
+        qr_detector_node
     ])

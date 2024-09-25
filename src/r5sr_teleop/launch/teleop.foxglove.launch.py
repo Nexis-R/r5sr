@@ -298,7 +298,7 @@ def generate_launch_description():
                     [get_file_path('yolov8_bringup', 'launch/yolov8.launch.py')]),
                 launch_arguments={'namespace':'yolo/hand',
                                   'input_image_topic': 'image_processed',
-                                  'model': get_file_path('r5sr_teleop', 'config/yolo/hazmat2024-0421-yolov8m.pt'),
+                                  'model': get_file_path('r5sr_teleop', 'config/yolo/rrl_hazmat_label_2024.pt'),
                                   'threshold': '0.9'}.items(),
 
             ),
@@ -318,7 +318,7 @@ def generate_launch_description():
                 ],
             ),
             Node(
-                package='r5sr_image_proccesing',
+                package='r5sr_meter_inspection',
                 executable='qr_detector_node',
                 name='qr_detector_node',
                 remappings=[
@@ -342,7 +342,7 @@ def generate_launch_description():
                 ],
             ),
             Node(
-                package='r5sr_image_proccesing',
+                package='r5sr_meter_inspection',
                 executable='qr_detector_node',
                 name='qr_detector_node',
                 remappings=[
@@ -375,7 +375,7 @@ def generate_launch_description():
 
             hazmat_group,
 
-            cloud_group,
+            # cloud_group,
             drone_group,
 
             hand_qr_detector_group,

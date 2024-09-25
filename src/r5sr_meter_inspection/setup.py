@@ -28,6 +28,7 @@ setup(
             'image_converter_node = r5sr_meter_inspection.image_converter_node:main',
             'meter_value_calculator_node = r5sr_meter_inspection.meter_value_calculator_node:main',
             'inspection_result_node = r5sr_meter_inspection.inspection_result_node:main',
+            'qr_detector_node = r5sr_meter_inspection.qr_detector_node:main',
 
         ],
     },
