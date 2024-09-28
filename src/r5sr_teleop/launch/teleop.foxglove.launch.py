@@ -42,7 +42,7 @@ def generate_launch_description():
 
     teleop_yaml_file = get_file_path('r5sr_teleop', 'config/r5sr_teleop.yaml')
     
-    rms_cloud_dir = get_package_share_directory('r5sr_meter_inspection')
+    rms_cloud_dir = get_package_share_directory('rms_ros2_client')
 
     # Nodes
     joy_node = Node(
@@ -127,7 +127,7 @@ def generate_launch_description():
                 ],
             ),
             Node(
-                package='r5sr_meter_inspection',
+                package='rms_ros2_client',
                 executable='image_snapshot_publisher_node',
                 name='image_snapshot_publisher_node',
                 remappings=[
@@ -142,11 +142,11 @@ def generate_launch_description():
             ),
 
             Node(
-                package='r5sr_meter_inspection',
+                package='rms_ros2_client',
                 executable='dummy_recognition_value_node',
                 name='dummy_recognition_value_node',
                 remappings=[
-                        ('/recognition_value', 'recognition_value'),
+                        ('/recognition_value', '/hand_camera/recognition_value'),
                 ],
             ),
         ],
@@ -160,9 +160,9 @@ def generate_launch_description():
                 executable='rms_ros2_client_eqpt_updater',
                 name='rms_ros2_client_eqpt_updater',
                 remappings=[
-                    ('/qrcode_info', '/qrcode_info'),
-                    ('/recognition_value', '/recognition_value'),
-                    ('/update_result', '/update_result')
+                    ('/qrcode_info', 'hand_camera/qrcode_info'),
+                    ('/recognition_value', '/hand_camera/recognition_value'),
+                    ('/update_result', '/hand_camera/update_result')
                 ],
                 parameters=[
                     # パッケージ内のディレクトリパスを使用
@@ -234,11 +234,13 @@ def generate_launch_description():
                 ],
             ),
             Node(
-                package='r5sr_meter_inspection',
+                package='rms_ros2_client',
                 executable='qr_detector_node',
                 name='qr_detector_node',
                 remappings=[
                         ('image_raw', 'hand_camera/image_raw/uncompressed'),
+                        ('qrcode_info', 'hand_camera/qrcode_info'),
+
                 ],
             ),
         ]
