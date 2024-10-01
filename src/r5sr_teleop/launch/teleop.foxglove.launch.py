@@ -113,68 +113,6 @@ def generate_launch_description():
         ],
     )
 
-    hand_inspection_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration("use_wrs")),
-        actions=[
-            Node(
-                package='image_transport',
-                executable='republish',
-                name='repub',
-                arguments=['compressed', 'raw'],
-                remappings=[
-                        ('in/compressed', 'hand_camera/image_raw/compressed'),
-                        ('out', 'hand_camera/image_raw/uncompressed'),
-                ],
-            ),
-            Node(
-                package='rms_ros2_client',
-                executable='image_snapshot_publisher_node',
-                name='image_snapshot_publisher_node',
-                remappings=[
-                        ('/image_raw', 'hand_camera/image_raw/uncompressed'),
-                        ('/image_snap_shot', 'hand_camera/image_raw/uncompressed/image_snap_shot'),
-                ],
-                parameters=[
-                    # パッケージ内のディレクトリパスを使用
-                    {'save_directory': os.path.join(rms_cloud_dir, 'snaps')},
-                    {'file_name': 'result.jpg'}
-                ],
-            ),
-
-            Node(
-                package='rms_ros2_client',
-                executable='dummy_recognition_value_node',
-                name='dummy_recognition_value_node',
-                remappings=[
-                        ('/recognition_value', '/hand_camera/recognition_value'),
-                ],
-            ),
-        ],
-    )
-
-    rms_group = GroupAction(
-        condition=IfCondition(LaunchConfiguration("use_wrs")),
-        actions=[
-            Node(
-                package='r5sr_cloud',
-                executable='rms_ros2_client_eqpt_updater',
-                name='rms_ros2_client_eqpt_updater',
-                remappings=[
-                    ('/qrcode_info', 'hand_camera/qrcode_info'),
-                    ('/recognition_value', '/hand_camera/recognition_value'),
-                    ('/update_result', '/hand_camera/update_result')
-                ],
-                parameters=[
-                    # パッケージ内のディレクトリパスを使用
-                    {'ip': '52.193.111.81'},
-                    {'robot_id': 16},
-                    # {'mac_id': ''},
-                    {'image_path': os.path.join(rms_cloud_dir, 'snaps/result.jpg')}
-                ],
-            ),
-        ],
-    )
-
     cloud_group = GroupAction(
         condition=IfCondition(LaunchConfiguration("use_wrs")),
         actions=[
@@ -184,6 +122,17 @@ def generate_launch_description():
             ),
         ],
     )
+    
+    rms_inspection_group = GroupAction(
+        condition=IfCondition(LaunchConfiguration("use_wrs")),
+        actions=[
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(
+                    [get_file_path('r5sr_teleop', 'launch/rms_inspection.launch.py')]),
+            ),
+        ],
+    )
+
 
     hazmat_group = GroupAction(
         actions=[
@@ -221,31 +170,6 @@ def generate_launch_description():
         ]
     )
 
-    hand_qr_detector_group = GroupAction(
-        actions=[
-            Node(
-                package='image_transport',
-                executable='republish',
-                name='repub',
-                arguments=['compressed', 'raw'],
-                remappings=[
-                        ('in/compressed', 'hand_camera/image_raw/compressed'),
-                        ('out', 'hand_camera/image_raw/uncompressed'),
-                ],
-            ),
-            Node(
-                package='rms_ros2_client',
-                executable='qr_detector_node',
-                name='qr_detector_node',
-                remappings=[
-                        ('image_raw', 'hand_camera/image_raw/uncompressed'),
-                        ('qrcode_info', 'hand_camera/qrcode_info'),
-
-                ],
-            ),
-        ]
-    )
-
     return LaunchDescription(
         [
             use_wrs_arg,
@@ -262,18 +186,12 @@ def generate_launch_description():
 
             servo_launch,
 
-            # yoloによるメータ認識グループ
-            hand_inspection_group,
-
             audio_group,
 
-            # hazmat認識グループ
             # hazmat_group,
-
-            # hazmat認識グループ
             # cloud_group,
 
-            hand_qr_detector_group,     
-            rms_group,       
+            rms_inspection_group,
+
         ]
     )

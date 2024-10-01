@@ -3,6 +3,7 @@ src/r5sr_teleop/config/yolo/
 src/**/*.pt
 src/**/*.cfg
 
+.vscode/
 
 src/*
 !src/r5sr*/

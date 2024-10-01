@@ -1,0 +1,222 @@
+{
+  "configById": {
+    "Publish!4l80tem": {
+      "buttonText": "Publish",
+      "buttonTooltip": "",
+      "advancedView": true,
+      "value": "{\n  \"data\": \"hello\"\n}",
+      "topicName": "/vision_front_camera/input_string",
+      "datatype": "std_msgs/msg/String",
+      "foxglovePanelTitle": "Report Value Publisher"
+    },
+    "RawMessages!5twvtj": {
+      "diffEnabled": false,
+      "diffMethod": "custom",
+      "diffTopicPath": "",
+      "showFullMessageForDiff": false,
+      "topicPath": "/vision_front_camera/update_result"
+    },
+    "RawMessages!3av934v": {
+      "diffEnabled": false,
+      "diffMethod": "previous message",
+      "diffTopicPath": "",
+      "showFullMessageForDiff": false,
+      "topicPath": "/vision_front_camera/qrcode_info"
+    },
+    "Image!3mnp456": {
+      "cameraState": {
+        "distance": 20,
+        "perspective": true,
+        "phi": 60,
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOffset": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "thetaOffset": 45,
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "followMode": "follow-pose",
+      "scene": {},
+      "transforms": {},
+      "topics": {},
+      "layers": {},
+      "publish": {
+        "type": "point",
+        "poseTopic": "/move_base_simple/goal",
+        "pointTopic": "/clicked_point",
+        "poseEstimateTopic": "/initialpose",
+        "poseEstimateXDeviation": 0.5,
+        "poseEstimateYDeviation": 0.5,
+        "poseEstimateThetaDeviation": 0.26179939
+      },
+      "imageMode": {
+        "imageTopic": "/vision_front_camera/image_raw/uncompressed",
+        "rotation": 0,
+        "flipVertical": false,
+        "flipHorizontal": false,
+        "synchronize": false
+      },
+      "foxglovePanelTitle": "ドローンカメラ映像"
+    },
+    "Image!2q9gl4x": {
+      "cameraState": {
+        "distance": 20,
+        "perspective": true,
+        "phi": 60,
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOffset": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "thetaOffset": 45,
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "followMode": "follow-pose",
+      "scene": {
+        "ignoreColladaUpAxis": false,
+        "enableStats": true
+      },
+      "transforms": {},
+      "topics": {},
+      "layers": {},
+      "publish": {
+        "type": "point",
+        "poseTopic": "/move_base_simple/goal",
+        "pointTopic": "/clicked_point",
+        "poseEstimateTopic": "/initialpose",
+        "poseEstimateXDeviation": 0.5,
+        "poseEstimateYDeviation": 0.5,
+        "poseEstimateThetaDeviation": 0.26179939
+      },
+      "imageMode": {
+        "imageTopic": "/vision_front_camera/meter_inspection_image"
+      },
+      "foxglovePanelTitle": "点検データ映像"
+    },
+    "Image!168r53y": {
+      "cameraState": {
+        "distance": 20,
+        "perspective": true,
+        "phi": 60,
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOffset": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "thetaOffset": 45,
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "followMode": "follow-pose",
+      "scene": {},
+      "transforms": {},
+      "topics": {},
+      "layers": {},
+      "publish": {
+        "type": "point",
+        "poseTopic": "/move_base_simple/goal",
+        "pointTopic": "/clicked_point",
+        "poseEstimateTopic": "/initialpose",
+        "poseEstimateXDeviation": 0.5,
+        "poseEstimateYDeviation": 0.5,
+        "poseEstimateThetaDeviation": 0.26179939
+      },
+      "imageMode": {
+        "imageTopic": "/vision_front_camera/image_snap_shot"
+      },
+      "foxglovePanelTitle": "点検結果報告アップロード画像"
+    },
+    "CallService!2cvx0j": {
+      "requestPayload": "{}",
+      "layout": "vertical",
+      "timeoutSeconds": 10,
+      "serviceName": "/vision_front_camera/compress_and_publish_image",
+      "foxglovePanelTitle": "点検結果画像更新サービス"
+    },
+    "CallService!2y9ipsf": {
+      "requestPayload": "{}",
+      "layout": "vertical",
+      "timeoutSeconds": 10,
+      "serviceName": "/vision_front_camera/send_request_service",
+      "foxglovePanelTitle": "RMSアップロードサービス"
+    }
+  },
+  "globalVariables": {},
+  "userNodes": {},
+  "playbackConfig": {
+    "speed": 1
+  },
+  "layout": {
+    "direction": "row",
+    "first": "Publish!4l80tem",
+    "second": {
+      "direction": "row",
+      "first": {
+        "first": "RawMessages!5twvtj",
+        "second": "RawMessages!3av934v",
+        "direction": "column",
+        "splitPercentage": 46.08523290386521
+      },
+      "second": {
+        "first": "Image!3mnp456",
+        "second": {
+          "first": {
+            "first": "Image!2q9gl4x",
+            "second": "Image!168r53y",
+            "direction": "column"
+          },
+          "second": {
+            "first": "CallService!2cvx0j",
+            "second": "CallService!2y9ipsf",
+            "direction": "column",
+            "splitPercentage": 66.11969111969111
+          },
+          "direction": "row"
+        },
+        "direction": "row",
+        "splitPercentage": 29.166666666666675
+      },
+      "splitPercentage": 22.63294422827497
+    },
+    "splitPercentage": 17.833981841763944
+  }
+}
