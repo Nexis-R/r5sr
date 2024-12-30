@@ -36,8 +36,6 @@
   <exec_depend>audio_capture</exec_depend>
   <exec_depend>audio_play</exec_depend>
   <exec_depend>r5sr_description</exec_depend>
-  <exec_depend>r5sr_cloud</exec_depend>
-  <exec_depend>r5sr_meter_inspection</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
