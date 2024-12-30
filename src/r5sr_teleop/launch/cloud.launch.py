@@ -33,11 +33,11 @@ def generate_launch_description():
     )
 
     return launch.LaunchDescription([
-        launch.actions.DeclareLaunchArgument(
-            'config_dir',
-            default_value=config_dir,
-            description='Full path to config file to load'),
+        # launch.actions.DeclareLaunchArgument(
+        #     'config_dir',
+        #     default_value=config_dir,
+        #     description='Full path to config file to load'),
 
-        rms_plant,
-        rms_robot
+        # rms_plant,
+        # rms_robot
     ])

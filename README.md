@@ -75,3 +75,6 @@ just bringup
 just teleop
 # or just t
 ```
+
+# Foxgloveの起動方法
+操縦用UIはFoxgloveを採用しています。使い方に関しては[Foxgloveの使い方](docs/how_to_use_foxglove.md)

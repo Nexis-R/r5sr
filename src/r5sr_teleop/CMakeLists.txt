@@ -58,9 +58,6 @@ target_include_directories(
 
 target_link_libraries(flir_ax8_rtsp ${OpenCV_LIBRARIES})
 
-add_executable(alert_battery src/alert_battery.cpp)
-ament_target_dependencies(alert_battery rclcpp std_msgs rviz_2d_overlay_msgs)
-
 install(
   TARGETS joy2command_lib
   ARCHIVE DESTINATION lib
@@ -70,14 +67,8 @@ install(TARGETS joy2command_node DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS flir_ax8_rtsp DESTINATION lib/${PROJECT_NAME})
 
-install(TARGETS alert_battery DESTINATION lib/${PROJECT_NAME})
-
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 
 install(DIRECTORY config DESTINATION share/${PROJECT_NAME})
-
-install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME})
-
-install(DIRECTORY rqt DESTINATION share/${PROJECT_NAME})
 
 ament_package()
