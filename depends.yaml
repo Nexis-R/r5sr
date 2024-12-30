@@ -1,7 +1,7 @@
 repositories:
   epos:
     type: git
-    url: https://gitlab.com/kimuralab_opensource/ros2/epos.git
+    url: https://github.com/Nexis-R/epos.git
     version: master
 
   rplidar_ros2:
@@ -21,15 +21,15 @@ repositories:
 
   audio_common:
     type: git
-    url: https://gitlab.com/nexis2/r5sr/audio_common.git
+    url: https://github.com/Nexis-R/audio_common.git
     version: humble_without_sound_play
 
-  yolov8_ros:
+  yolo_ros:
     type: git
-    url: https://github.com/mgonzs13/yolov8_ros.git
+    url: https://github.com/mgonzs13/yolo_ros.git
     version: main
 
   rms_ros2_client:
     type: git
-    url: https://github.com:Nexis-R/rms_ros2_client.git
+    url: https://github.com/Nexis-R/rms_ros2_client.git
     version: develop
