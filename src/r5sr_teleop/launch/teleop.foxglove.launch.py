@@ -149,7 +149,7 @@ def generate_launch_description():
 
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
-                    [get_file_path('yolov8_bringup', 'launch/yolov8.launch.py')]),
+                    [get_file_path('yolo_bringup', 'launch/yolov8.launch.py')]),
                 launch_arguments={'namespace':'yolo/hand',
                                   'input_image_topic': 'image_raw/uncompressed',
                                   'model': get_file_path('r5sr_teleop', 'config/yolo/rrl_hazmat_label_2024.pt'),

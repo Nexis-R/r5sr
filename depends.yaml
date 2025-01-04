@@ -1,35 +1,35 @@
 repositories:
   epos:
     type: git
-    url: https://github.com/Nexis-R/epos.git
+    url: git@github.com:Nexis-R/epos.git
     version: master
 
   rplidar_ros2:
     type: git
-    url: https://github.com/lopenguin/rplidar_ros2.git
+    url: git@github.com:lopenguin/rplidar_ros2.git
     version: ros2
 
   livox_ros_driver2:
     type: git
-    url: https://github.com/Ericsii/livox_ros_driver2.git
+    url: git@github.com:Ericsii/livox_ros_driver2.git
     version: feature/use-standard-unit
   
   lidarslam:
     type: git
-    url: https://github.com/rsasaki0109/lidarslam_ros2.git
+    url: git@github.com:rsasaki0109/lidarslam_ros2.git
     version: develop
 
   audio_common:
     type: git
-    url: https://github.com/Nexis-R/audio_common.git
+    url: git@github.com:Nexis-R/audio_common.git
     version: humble_without_sound_play
 
   yolo_ros:
     type: git
-    url: https://github.com/mgonzs13/yolo_ros.git
+    url: git@github.com:mgonzs13/yolo_ros.git
     version: main
 
   rms_ros2_client:
     type: git
-    url: https://github.com/Nexis-R/rms_ros2_client.git
+    url: git@github.com:Nexis-R/rms_ros2_client.git
     version: develop

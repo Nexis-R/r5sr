@@ -43,7 +43,9 @@ cd r5sr
 ### 依存関係のインストール
 
 vcs import, rosdep install, その他の依存関係をインストールする。
-
+```bash
+sudo apt install python3-rosdep2 git python3-colcon-common-extensions python3-vcstool
+```
 #### ロボット
 
 ```bash
